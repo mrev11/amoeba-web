@@ -1,0 +1,269 @@
+
+/*
+ *  CCC - The Clipper to C++ Compiler
+ *  Copyright (C) 2005 ComFirm BT.
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
+
+#define BUTTON(ID,VALUE); 
+'<input id="ID" type="button" value="VALUE" style="width:150px;height:50px;font-size:20px" onclick="XCODE.onclick_formdata(this.id)" ></input>'::strtran("ID",#ID)::strtran("VALUE",#VALUE)
+
+
+
+******************************************************************************************
+function table_canvas()
+local canvas:=;
+<<CANVAS>>
+<h1 style="color:#000;margin-left:20px">Amoeba 1.4.0 for the WEB</h1>
+
+<hr style="margin-bottom:30px;width:98%"/>
+
+<label id="bestline" style="font-size:20px;color:#000;padding:20px">Best line: <span style="color:red">Próba</span> szerencse</label>
+
+
+<div style="display:flex">
+    <div>
+        <div id="canvas">
+            <canvas id="table" width="710" height="710" style="border:0px solid #d3d3d3;"/>
+        </div>
+        <div style="display:flex;padding:0px;margin-left:60px;align-items:center">
+            <label id="lastmove" style="font-size:20px;color:#000;flex:4">Last move:</label>
+            <label id="turnlab"  style="font-size:20px;color:#000;flex:1">Turn:</label>
+            <label id="turnfig"  style="flex:3"></label>
+            <label id="rating"   style="font-size:20px;color:#000;flex:3">Rating:</label>
+        </div>
+    </div>
+
+    <div id="buttons" style="flex;padding:10px;padding-top:40px"> 
+        <div style="width:180px;margin:10;display:flex;align-items:center">
+            <label id=statfig style="flex:1"></label>
+            <label id=statlab style="flex:3;font-size:20px;color:#000">Ready</label>
+        </div>
+        <p>BUTTON_MOVE
+        <p>BUTTON_BACK
+        <p>BUTTON_FORW
+        <hr style="margin:20px;width:60%"/>
+
+        <div style="width:150px;margin:10;display:flex;align-items:center;">
+            <input id="info" type="checkbox" style="flex:1;height:20px" onclick="XCODE.onclick_formdata(this.id)"/>
+            <span style="flex:3;color:#000;font-size:20px">Info</span>
+        </div>
+        
+        
+        <p>BUTTON_RECALC
+
+        <p><select id="power" style="font-size:20px;width:150px;margin-top:20px" onchange="XCODE.onclick_formdata(this.id)" >
+            <option value="0">auto</option>
+            <option value="1">4,4,3,3,2,2,1,1</option>
+            <option value="2">5,5,4,4,3,3,2,2,1,1</option>
+            <option value="3">6,5,5,4,4,3,3,2,2,1,1</option>
+            <option value="4">6,6,5,5,4,4,3,3,2,2,1,1</option>
+            <option value="5">7,6,6,5,5,4,4,3,3,2,2,1,1</option>
+            <option value="6">7,7,6,6,5,5,4,4,3,3,2,2,1,1</option>
+            <option value="7">8,7,7,6,6,5,5,4,4,3,3,2,2,1,1</option>
+            <option value="8">8,8,7,7,6,6,5,5,4,4,3,3,2,2,1,1</option>
+        </select>
+
+        <hr style="margin:20px;width:60%"/>
+        <p>BUTTON_NEW
+    </div>
+</div>
+
+<p><input   id="coord_x"  type="text" hidden  value="99"/>
+<p><input   id="coord_y"  type="text" hidden  value="99"/>
+
+<<CANVAS>>
+
+
+    canvas::=strtran("BUTTON_MOVE",BUTTON(move,Move))
+    canvas::=strtran("BUTTON_BACK",BUTTON(back,Back))
+    canvas::=strtran("BUTTON_FORW",BUTTON(forw,Forward))
+    canvas::=strtran("BUTTON_RECALC",BUTTON(recalc,Recalc))
+    canvas::=strtran("BUTTON_NEW",BUTTON(new,New))
+
+    return canvas
+
+
+******************************************************************************************
+function table_script()
+local script:=;
+<<SCRIPT>>
+
+const region=document.getElementById("region_webapp");
+const canvas=document.getElementById("table");
+const ctx=canvas.getContext("2d");
+
+const tablesize=16;
+const cellsize=40;
+const origo_x=40;
+const origo_y=40;
+const color_empty="#ccaa22";
+const color_black="#000000";
+const color_white="#ffffff";
+const radius=cellsize/3;
+
+region.style.background="#c0c0c0";
+
+
+let delay=function(millis)
+{
+    return new Promise( resolve => setTimeout(resolve,millis) );
+}
+
+let draw_circle=function(x,y,fig) // block scope (de hol?)
+{
+    // fig==0 empty
+    // fig==1 black
+    // fig==2 white
+    // fig==3 alt-black
+    // fig==4 alt-white
+    // fig==5 top-black
+    // fig==6 top-white
+
+    let rd=radius;
+    let color=color_empty;
+    if( fig==0 )
+    {
+        rd++;
+        color=color_empty;
+    }
+    else if( (fig%2)==1 )
+    {
+        color=color_black;
+    }
+    else// if( (fig%2)==0 )
+    {
+        color=color_white;
+    }
+    
+    ctx.beginPath();
+    ctx.arc( origo_x+x*cellsize+cellsize/2, origo_y+y*cellsize+cellsize/2, rd,0,2*Math.PI);
+    ctx.fillStyle=color;
+    ctx.fill();
+
+    if( fig>=3 )
+    {
+        rd=radius*0.75;
+        ctx.beginPath();
+        ctx.arc( origo_x+x*cellsize+cellsize/2, origo_y+y*cellsize+cellsize/2, rd,0,2*Math.PI);
+        ctx.fillStyle=color_empty;
+        ctx.fill();
+    }    
+
+    if( fig>=5 )
+    {
+        rd=radius*0.4;
+        ctx.beginPath();
+        ctx.arc( origo_x+x*cellsize+cellsize/2, origo_y+y*cellsize+cellsize/2, rd,0,2*Math.PI);
+        ctx.fillStyle=color;
+        ctx.fill();
+    }    
+}
+XCODE.draw_circle=draw_circle;
+
+
+let event_mouse=function(event)
+{
+    let rect=canvas.getBoundingClientRect();
+    let x=event.clientX-origo_x-rect.left;
+    let y=event.clientY-origo_y-rect.top;
+
+         if( x%cellsize<2 ){}
+    else if( y%cellsize<2 ){}
+    else if( x%cellsize>cellsize-2 ){}
+    else if( y%cellsize>cellsize-2 ){}
+    else
+    {
+        x=Math.floor(x/cellsize);
+        y=Math.floor(y/cellsize);
+        
+             if( x<0 ){}
+        else if( y<0 ){}
+        else if( x>=tablesize ){}
+        else if( y>=tablesize ){}
+        else
+        {
+            //console.log("MOUSE",x,y);
+            //for( i=0; i<3; i++ )
+            //{
+            //    let j=2*i;
+            //    delay( (j+0)*100 ).then( () => draw_circle(x,y,2));
+            //    delay( (j+1)*100 ).then( () => draw_circle(x,y,6));
+            //}
+            document.getElementById("coord_x").value=x;
+            document.getElementById("coord_y").value=y;
+            XCODE.formdata(this.id);
+        }
+    }
+}
+canvas.addEventListener("click",event_mouse);
+
+
+ctx.beginPath();
+ctx.fillStyle=color_empty;
+ctx.fillRect(origo_x,origo_y,tablesize*cellsize,tablesize*cellsize); // x,y,sizex,sizey
+
+//ctx.beginPath();
+//ctx.rect(origo_x,origo_y,tablesize*cellsize,tablesize*cellsize);
+//ctx.lineWidth=5;
+//ctx.strokeStyle="red";
+//ctx.stroke();
+
+for( i=0; i<=tablesize; i++ )
+{
+    ctx.beginPath();
+    ctx.moveTo( origo_x+i*cellsize, origo_y)
+    ctx.lineTo( origo_x+i*cellsize, origo_y+tablesize*cellsize)
+    ctx.lineWidth=1;
+    ctx.strokeStyle="black";
+    ctx.stroke();
+}
+
+for( i=0; i<=tablesize; i++ )
+{
+    ctx.beginPath();                      
+    ctx.moveTo( origo_x                   , origo_y+i*cellsize)
+    ctx.lineTo( origo_x+tablesize*cellsize, origo_y+i*cellsize)
+    ctx.lineWidth=1;
+    ctx.strokeStyle="black";
+    ctx.stroke();
+}
+
+for( i=0; i<tablesize; i++ )
+{
+    ctx.textAlign="center";
+    ctx.font="16px Arial";
+    ctx.fillStyle="black";
+    ctx.fillText((i+1).toString(),origo_x+i*cellsize+cellsize/2,origo_y-cellsize/5);
+    ctx.fillText(String.fromCharCode(i+97),origo_x-cellsize/3,origo_y+i*cellsize+cellsize*0.6);
+}
+
+//draw_circle(0,0,1);
+//draw_circle(0,0,0);
+//draw_circle(1,1,1);
+//draw_circle(2,2,2);
+//draw_circle(3,3,3);
+//draw_circle(4,4,4);
+//draw_circle(5,5,5);
+//draw_circle(6,6,6);
+<<SCRIPT>>
+
+    return script
+
+
+******************************************************************************************
+
