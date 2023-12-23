@@ -20,7 +20,7 @@
 
 
 function svgcircle(color)
-local svg:='<svg width="40" height="40"><circle cx="20" cy="20" r="14" fill="COLOR"/></svg>'
+local svg:='<svg width="40" height="40"><circle cx="20" cy="20" r="12" fill="COLOR"/></svg>'
     return svg::strtran("COLOR",color)
 
     

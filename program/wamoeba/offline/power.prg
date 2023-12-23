@@ -105,10 +105,18 @@ local w
 
 *****************************************************************************
 function setpower(p)
-    if( p=="0" )
-        power:=NIL
+    if( valtype(p)=="N" )
+        if( p==0 )
+            power:=NIL
+        else
+            power:=width[p]
+        end
     else
-        power:=width[val(p)]
+        if( p=="auto" )
+            power:=NIL
+        else
+            power:=powinit(p)
+        end
     end
 
 // power==NIL  vagy  power=={4,3,2,1...}

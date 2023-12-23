@@ -26,7 +26,7 @@ function label_bestline(x)
 function label_fdbestline(fd,x)
     if( infolevel()>0 )
         x::=strtran("color='","style='color:")
-        fd:put("bestline","Best line: <b>"+x+"</b>")
+        fd:put("bestline","Best line: "+x)
         fd:update
     end
 
@@ -37,7 +37,7 @@ function label_state(fd,flag)
         fd:put("statlab","Ready")
     else
         fd:put("statfig",svgcircle("red"))
-        fd:put("statlab","Thinking")
+        fd:put("statlab","Think")
     end
     fd:update
 
