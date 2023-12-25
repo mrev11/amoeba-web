@@ -34,12 +34,12 @@ local msg,data
     webapp.script(table_script())
 
     // init
-    data:=webapp.formdataNew()
-    label_fdbestline(data,"")
-    label_state(data,.t.)
-    label_move(data)
-    label_turn(data)
-    label_fdrate(data,array(576))
+    fd(data:=webapp.formdataNew())
+    label_bestline("")
+    label_state(.t.)
+    label_move()
+    label_turn()
+    label_rate(array(576))
     data:put("info",.t.)
     data:update
 
@@ -85,15 +85,15 @@ local cx
     end
     
     if( !game_over() )
-        //label_fdbestline(fd,"")
+        //label_bestline("")
         if( topcell()!=NIL )
             drawcell(topcell()) // -> normal shape
         end
         cx:=y*TABLESIZE+x
         forw(cx)
         drawtop()
-        label_move(fd)
-        label_turn(fd)
+        label_move()
+        label_turn()
         if( winner()==32 )
             cb_move(fd)
         end
@@ -103,15 +103,15 @@ local cx
 ******************************************************************************************
 static function cb_move(fd)
     if( !game_over() )
-        label_state(fd,.f.)
+        label_state(.f.)
         if( topcell()!=NIL )
             drawcell(topcell()) // -> normal shape
         end
         go_move()
-        label_state(fd,.t.)
+        label_state(.t.)
         markmovecount()
-        label_move(fd)
-        label_turn(fd)
+        label_move()
+        label_turn()
     end
 
 
@@ -123,9 +123,9 @@ local cx:=topcell()
         drawcell(cx)
         drawtop()
     end
-    label_move(fd)
-    label_turn(fd)
-    label_fdrate(fd)
+    label_move()
+    label_turn()
+    label_rate()
 
 
 ******************************************************************************************
@@ -137,24 +137,24 @@ local cx:=topcell()
     end
     drawtop()
 
-    label_move(fd)
-    label_turn(fd)
-    label_fdrate(fd)
+    label_move()
+    label_turn()
+    label_rate()
 
 
 ******************************************************************************************
 static function cb_info(fd)
 local info:=fd["info"]=="true"
     if( !info )
-        label_fdbestline(fd,"")
+        label_bestline("")
     end
     infolevel( info )
 
 ******************************************************************************************
 static function cb_recalc(fd)
-    label_state(fd,.f.)
+    label_state(.f.)
     go_recalc()
-    label_state(fd,.t.)
+    label_state(.t.)
 
 
 ******************************************************************************************
@@ -166,9 +166,9 @@ static function cb_power(fd)
 static function cb_new(fd)
     c_cb_new()
     drawall()
-    label_fdbestline(fd,"")
-    label_move(fd)
-    label_fdrate(fd,array(576))
+    label_bestline("")
+    label_move()
+    label_rate(array(576))
 
 
 ******************************************************************************************

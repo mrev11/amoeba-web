@@ -1,9 +1,8 @@
-48e5f76d58f06c4e639edfbc5d81c5b5b26bd45e 2023122315:22:26-UTC ./log-webapp
-0f085f984de5b351badae8e84deef32569d7e23d 2023122315:21:50-UTC ./log-wamoeba
-1a78c8ab58036b4b1ec73c59a228696d14270d14 2023122315:19:32-UTC ./CHANGELOG_vermes
-3ca338948c3830657ba51db7ea8550fcee3f524e 2023122315:12:43-UTC ./program/wamoeba/wamoeba.prg
+a6fc9837c96cefe7c9630d53318cadf4b437a713 2023122416:00:14-UTC ./CHANGELOG_vermes
+1d03e7e86bd050b1f2d871d5577806e5a7780d19 2023122415:52:09-UTC ./program/wamoeba/wamoeba.prg
+fa00f26a071e3597ed38be12a35c8262ed0ac7ce 2023122415:51:04-UTC ./program/wamoeba/label.prg
+bc6e8c16ccd5f398e8eacf60771cb984ce4a6149 2023122415:25:06-UTC ./program/wamoeba/offline/go.prg
 c71333f4ed6e90c4ceeed0afb4422efaa1f23f7d 2023122314:45:03-UTC ./program/wamoeba/svgcircle.prg
-0104fca38109be4f6bb845c579fa550a79788bcb 2023122314:43:19-UTC ./program/wamoeba/label.prg
 b6596eee7fac978975b389a60363c8b77ddda4d6 2023122312:54:45-UTC ./program/wamoeba/offline/power.prg
 a12a237198642722bc8b47f72be2e811a348ad8a 2023122312:10:44-UTC ./program/wamoeba/offline/stat.cpp
 9263a421ab030c32e89a696d33420f28309936b9 2023122210:05:51-UTC ./.gitignore
@@ -17,7 +16,6 @@ c5a8aef135324b52722efd319514ee1a9f69dbfb 2023122117:55:54-UTC ./program/wamoeba/
 e160183fb504481431b9f234a7f679bef576d451 2023122116:22:03-UTC ./program/wamoeba/draw.prg
 ea538508b982a30d7199e23609fa68f297946c64 2023122115:23:23-UTC ./program/wamoeba/offline/cell.cpp
 f06fa95363335ff98346913fb5c55e93d10e5c3e 2023122013:42:40-UTC ./m
-01ca36ef35c562990449b13b5e312cd95bbe0c0a 2023121821:15:45-UTC ./program/wamoeba/offline/go.prg
 fd73fde36dab6c4fc2728da51f5cbfecb85a9669 2023121814:05:15-UTC ./program/wamoeba/offline/draw.ch
 0bdfe7101ec967bac93360f6a9219e6d191f190f 2023121810:55:09-UTC ./program/wamoeba/offline/minimax.prg
 1515a78cf9e3763ae1cf45e11f01467efbf237cb 2023121510:28:46-UTC ./program/wamoeba/offline/tabsize.ch

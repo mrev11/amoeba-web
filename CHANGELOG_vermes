@@ -1,3 +1,7 @@
+2023-12-24
+  a label_*() függvények egységesen fd()-vel veszik elő fd-t;
+  recalc is állítgatja label_turn-t;
+
 2023-12-23 oszlop koordináták 1-től számozva;
 
 initial import

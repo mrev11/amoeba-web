@@ -21,9 +21,7 @@
 
 ******************************************************************************
 function label_bestline(x)
-    label_fdbestline(fd(),x)
-
-function label_fdbestline(fd,x)
+local fd:=fd()
     if( infolevel()>0 )
         x::=strtran("color='","style='color:")
         fd:put("bestline","Best line: "+x)
@@ -31,7 +29,8 @@ function label_fdbestline(fd,x)
     end
 
 ******************************************************************************
-function label_state(fd,flag)
+function label_state(flag)
+local fd:=fd()
     if( flag )
         fd:put("statfig",svgcircle("green"))
         fd:put("statlab","Ready")
@@ -43,7 +42,8 @@ function label_state(fd,flag)
 
 
 ******************************************************************************
-function label_move(fd)
+function label_move()
+local fd:=fd()
 local m:=movecount()
 local x:=topcell()
 
@@ -56,7 +56,8 @@ local x:=topcell()
 
 
 ******************************************************************************
-function label_turn(fd)
+function label_turn()
+local fd:=fd()
 local m:=movecount()
     if( (m%2)==0 )
         fd:put("turnfig",svgcircle("black"))
@@ -68,11 +69,8 @@ local m:=movecount()
 
 ******************************************************************************
 function label_rate(x)
-    label_fdrate(fd(),x)
-
-
-function label_fdrate(fd,x)
 static rating
+local fd:=fd()
 local mc1:=movecount()+1
 
     if( x==NIL )
