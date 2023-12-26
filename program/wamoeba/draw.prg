@@ -62,9 +62,13 @@ local code:="XCODE.draw_circle(xx,yy,fig)"
 
 
 ******************************************************************************************
-function drawalt(cx)
-local fig
-    fig:=figure(cx)
+function drawalt()
+local top,fig
+    top:=topcell()
+    if( top==NIL )
+        return NIL
+    end
+    fig:=figure(top)
     if( fig==ascx )
         fig:=FIG_XA
     elseif( fig==asco )
@@ -72,23 +76,25 @@ local fig
     else
         fig:=FIG_EMPTY
     end
-    drawcell(cx,fig)
+    drawcell(top,fig)
 
 
 ******************************************************************************************
 function drawtop()
 local top,fig
-    if( (top:=topcell())!=NIL )
-        fig:=figure(top)
-        if( fig==ascx )
-            fig:=FIG_XT
-        elseif( fig==asco )
-            fig:=FIG_OT
-        else
-            fig:=FIG_EMPTY
-        end
-        drawcell(top,fig)
+    top:=topcell()
+    if( top==NIL )
+        return NIL
     end
+    fig:=figure(top)
+    if( fig==ascx )
+        fig:=FIG_XT
+    elseif( fig==asco )
+        fig:=FIG_OT
+    else
+        fig:=FIG_EMPTY
+    end
+    drawcell(top,fig)
 
 
 ******************************************************************************************
