@@ -18,39 +18,29 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
 #include "amoeba.ch"
 #include "tabsize.ch"
 
 
-******************************************************************************
-function fd(data)
-static fd
-    if( data!=NIL )
-        fd:=data
-    end
-    return fd
-
 
 ******************************************************************************
-function game_over()
-    if( winner()==asc('X') )
-        webapp.alert('<span style="font-size:20px">Game over, black won!</span>')
-    elseif( winner()==asc('O') )
-        webapp.alert('<span style="font-size:20px">Game over, white won!</span>')
-    elseif( movecount()>=ROWCOL )
-        webapp.alert("Table is full, draw!")
+function pos2rc(pos)
+local r,c
+    if( pos==NIL )
+        r:="-"
+        c:="-"
     else
-        return .f.     
+        r:=chr(97+int(pos/TABLESIZE))
+        c:=(1+(pos%TABLESIZE))::str::alltrim
     end
-    //callstack()
-    return .t.
+    return r+c
 
 
 ******************************************************************************
-function tablesize()
-    return 16
+function rc2pos(rc)
+local row:=rc[1..1]::asc-97
+local col:=rc[2..]::val-1
+    return  row*TABLESIZE+col
 
 
 ******************************************************************************
-

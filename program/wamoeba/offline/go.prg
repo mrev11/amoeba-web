@@ -31,6 +31,7 @@ function treshold()
 function go_recalc()
 
 local cx,x,v,n
+local curlev
 
     label_bestline("")
 
@@ -46,16 +47,17 @@ local cx,x,v,n
     drawcell(cx)
     label_turn()
 
-    setwidth(movecount(),.t.)
+    curlev:=setwidth(movecount(),.t.)
     v:=minimax(0,-PVALUE_INFIN,PVALUE_INFIN,"")
     x:=xbest()
-
-    ? turn(), "["+v::int::str(5)+"]", rc(x)::padr(3), node(), any2str(width())
-
-    label_rate(v)
+    
 
     if( NIL!=x )
         forw(x)
+
+        recalc_store({v,curlev,x})
+        label_rate()
+
         for n:=1 to 5
             drawcell(x)
             sleep(300)
@@ -72,10 +74,14 @@ local cx,x,v,n
     cell_restore()
 
 
+    ? turn(), "["+v::int::str(5)+"]", pos2rc(x)::padr(3), node(), any2str(width())
+
+
 ******************************************************************************************
 function go_move()
 
 local x,v,n
+local curlev
 
     label_bestline("")
     if( topcell()!=NIL )
@@ -84,14 +90,16 @@ local x,v,n
 
     ? "-----------------------------------------------------------------------------";?
 
-    setwidth(movecount())
+    curlev:=setwidth(movecount())
     v:=minimax(0,-PVALUE_INFIN,PVALUE_INFIN,"")
     x:=xbest()
 
-    ? turn(), "["+v::int::str(5)+"]", rc(x)::padr(3), node(), any2str(width())
-
     if( NIL!=x )
         forw(x)
+
+        rating_store({v,curlev})
+        label_rate()
+
         for n:=1 to 3
             drawcell(x)
             sleep(80)
@@ -100,7 +108,7 @@ local x,v,n
         next
     end
 
-    label_rate(v)
+    ? turn(), "["+v::int::str(5)+"]", pos2rc(x)::padr(3), node(), any2str(width())
     
 
 

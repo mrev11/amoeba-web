@@ -28,7 +28,7 @@
 function table_canvas()
 local canvas:=;
 <<CANVAS>>
-<h1 style="color:#000;margin-left:20px">Amoeba 1.4.0 for the WEB</h1>
+<h1 style="color:#000;margin-left:20px">Amoeba 1.5.0 for the WEB</h1>
 
 <hr style="margin-bottom:30px;width:98%"/>
 
@@ -40,11 +40,11 @@ local canvas:=;
         <div id="canvas">
             <canvas id="table" width="710" height="710" style="border:0px solid #d3d3d3;"/>
         </div>
-        <div style="display:flex;padding:0px;margin-left:60px;align-items:center">
-            <label id="lastmove" style="font-size:20px;color:#000;flex:4">Last move:</label>
+        <div style="display:flex;padding:0px;margin-left:50px;margin-right:30px;align-items:center">
+            <label id="lastmove" style="font-size:20px;text-align:left;color:#000;flex:4">Last move:</label>
             <label id="turnlab"  style="font-size:20px;color:#000;flex:1">Turn:</label>
-            <label id="turnfig"  style="flex:3"></label>
-            <label id="rating"   style="font-size:20px;color:#000;flex:3">Rating:</label>
+            <label id="turnfig"  style="flex:1.8"></label>
+            <label id="rating"   style="font-size:20px;text-align:left;color:#000;flex:5">Rating:</label>
         </div>
     </div>
 

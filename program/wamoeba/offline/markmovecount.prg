@@ -19,38 +19,12 @@
  */
 
 
-#include "amoeba.ch"
-#include "tabsize.ch"
+******************************************************************************
+function markmovecount()
+local mc:=movecount(),n
+    c_markmovecount()
+    rating_reset(mc)
+    recalc_reset(mc)
 
 
 ******************************************************************************
-function fd(data)
-static fd
-    if( data!=NIL )
-        fd:=data
-    end
-    return fd
-
-
-******************************************************************************
-function game_over()
-    if( winner()==asc('X') )
-        webapp.alert('<span style="font-size:20px">Game over, black won!</span>')
-    elseif( winner()==asc('O') )
-        webapp.alert('<span style="font-size:20px">Game over, white won!</span>')
-    elseif( movecount()>=ROWCOL )
-        webapp.alert("Table is full, draw!")
-    else
-        return .f.     
-    end
-    //callstack()
-    return .t.
-
-
-******************************************************************************
-function tablesize()
-    return 16
-
-
-******************************************************************************
-

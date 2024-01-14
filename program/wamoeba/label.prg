@@ -19,6 +19,8 @@
  */
 
 
+#include "amoeba.ch"
+
 ******************************************************************************
 function label_bestline(x)
 local fd:=fd()
@@ -48,10 +50,10 @@ local m:=movecount()
 local x:=topcell()
 
     if( x==NIL )
-        fd:put("lastmove","Last move: <b>"+m::str::alltrim+"</b>")
+        fd:put("lastmove","Last move: "+m::str::alltrim)
     else
-        x:=rc(x)
-        fd:put("lastmove","Last move: <b>"+m::str::alltrim+":"+x+"</b>")
+        x:=pos2rc(x)
+        fd:put("lastmove","Last move: "+m::str::alltrim+":"+x)
     end
 
 
@@ -69,28 +71,18 @@ local m:=movecount()
 
 ******************************************************************************
 function label_rate(x)
-static rating
-local fd:=fd()
-local mc1:=movecount()+1
-
-    if( x==NIL )
-        x:=rating[mc1]
-        if( x==NIL )
-            x:="n.a."
+local rating:=rating_string()
+local recalc:=recalc_string(),r
+    if( !empty(recalc) )
+        r:=recalc_load()[1]
+        if( abs(r)>PVALUE_INFIN-100 )
+            recalc:="<span style='color:red'>"+recalc+"</span>"
         else
-            x::=str::alltrim
+            recalc:="<span style='color:green'>"+recalc+"</span>"
         end
-
-    elseif( valtype(x)=="A" )
-        rating:=x
-        x:="0"
-
-    else
-        rating[mc1]:=x
-        x::=str::alltrim
     end
 
-    fd:put("rating","Rating: "+"<b>"+x+"</b>")
+    fd():put("rating","Rating: "+rating+recalc)
 
 
 ******************************************************************************

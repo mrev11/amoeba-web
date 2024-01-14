@@ -92,6 +92,7 @@ local cx
         cx:=y*TABLESIZE+x
         forw(cx)
         drawtop()
+        markmovecount()
         label_move()
         label_turn()
         if( winner()==32 )
