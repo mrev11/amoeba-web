@@ -18,6 +18,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include "amoeba.ch"
 
 #define BUTTON(ID,VALUE); 
 '<input id="ID" type="button" value="VALUE" style="width:150px;height:50px;font-size:20px" onclick="XCODE.onclick_formdata(this.id)" ></input>'::strtran("ID",#ID)::strtran("VALUE",#VALUE)
@@ -28,7 +29,7 @@
 function table_canvas()
 local canvas:=;
 <<CANVAS>>
-<h1 style="color:#000;margin-left:20px">Amoeba 1.5.0 for the WEB</h1>
+<h1 style="color:#000;margin-left:20px">VERSION_WEB</h1>
 
 <hr style="margin-bottom:30px;width:98%"/>
 
@@ -94,6 +95,7 @@ local canvas:=;
     canvas::=strtran("BUTTON_FORW",BUTTON(forw,Forward))
     canvas::=strtran("BUTTON_RECALC",BUTTON(recalc,Recalc))
     canvas::=strtran("BUTTON_NEW",BUTTON(new,New))
+    canvas::=strtran("VERSION_WEB",VERSION_WEB)
 
     return canvas
 
@@ -116,7 +118,7 @@ const color_black="#000000";
 const color_white="#ffffff";
 const radius=cellsize/3;
 
-region.style.background="#c0c0c0";
+region.style.background="#b8b8b8";
 
 
 let delay=function(millis)
