@@ -1,10 +1,8 @@
+cfe446cae94e2d1da8d9b4b7dafa13e8f741b903 2024012214:11:52-UTC ./program/wamoeba/offline/amoeba.ch
+384026f1446e6fa8e614cf91c36ae7583dd0a40d 2024012214:09:24-UTC ./program/wamoeba/offline/go.prg
 7dbc85c87e53ca2f9ffa24733870427feb87b383 2024011811:15:06-UTC ./CHANGELOG_vermes
-87fea12d5dace9d1aebbfe1091d92337a454efcc 2024011811:09:50-UTC ./log-wamoeba
-c579475dc9c63d868e9e63a9b2f4a8d8fd58766a 2024011811:09:50-UTC ./log-webapp
 9769b11be845e40c19dfc253607c99687c84bf7d 2024011811:08:33-UTC ./program/wamoeba/table.prg
-761771d0bfaa2a091a38847430423455ae9996c7 2024011811:05:07-UTC ./program/wamoeba/offline/amoeba.ch
 5c4045bd47ba054b82345e1a673ab353a9daf7a5 2024011810:44:52-UTC ./program/wamoeba/offline/minimax.prg
-a1c34b666ccff486ea4cbe3681aa1a2df2ad96e9 2024011809:43:06-UTC ./program/wamoeba/offline/go.prg
 16d525911a127712f0c12543a236ae9410ed4b1b 2024011413:03:00-UTC ./program/wamoeba/offline/pos2rc.prg
 5b8670803b266816411e31153d9ad7fbe23505ca 2024011412:09:05-UTC ./program/wamoeba/label.prg
 0d4cc3dc3fc7b64c629e3476ca71010df74ec316 2024011411:13:28-UTC ./program/wamoeba/wamoeba.prg
