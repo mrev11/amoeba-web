@@ -27,11 +27,13 @@ function treshold()
     return len(width())*0.5
 
 
+
 ******************************************************************************************
 function go_recalc()
 
 local cx,x,v,n
 local curlev
+local bestline:={}
 
     //label_bestline("")
 
@@ -47,11 +49,13 @@ local curlev
     drawcell(cx)
     label_turn()
 
+    setmaxenf()
     curlev:=setwidth(movecount(),.t.)
-    v:=minimax(0,-PVALUE_INFIN,PVALUE_INFIN,"")
+    v:=minimax(0,-PVALUE_INFIN,PVALUE_INFIN,@bestline,0)
     x:=xbest()
-    
-    ? turn(), "["+v::int::str(5)+"]", pos2rc(x)::padr(3), node(), any2str(width())
+
+    ? turn(), "["+v::int::str(5)+"]", pos2rc(x)::padr(3), node(), bestline::line2str(v) 
+
 
     if( NIL!=x )
         forw(x)
@@ -82,19 +86,35 @@ function go_move()
 
 local x,v,n
 local curlev
+local bestline:={}
 
     //label_bestline("")
     if( topcell()!=NIL )
         drawcell(topcell())
     end
 
-    ? "-----------------------------------------------------------------------------";?
 
+    ? "-----------------------------------------------------------------------------"
+
+    if( continuous_play()>1 )
+        ? "move/game/draw", (1+movecount())::str::alltrim+"/"+;
+                            (1+gamecount())::str::alltrim+"of"+continuous_play()::str::alltrim+"/"+;
+                            drawmeter()::str::alltrim
+    end
+    ?
+
+    setmaxenf()
     curlev:=setwidth(movecount())
-    v:=minimax(0,-PVALUE_INFIN,PVALUE_INFIN,"")
+    v:=minimax(0,-PVALUE_INFIN,PVALUE_INFIN,@bestline,0)
     x:=xbest()
 
-    ? turn(), "["+v::int::str(5)+"]", pos2rc(x)::padr(3), node(), any2str(width())
+    if( v==0 )
+        drawmeter(drawmeter()+1)
+    else
+        drawmeter(0)
+    end
+
+    ? turn(), "["+v::int::str(5)+"]", pos2rc(x)::padr(3), node(), bestline::line2str(v)
 
     if( NIL!=x )
         forw(x)
@@ -110,7 +130,21 @@ local curlev
         next
     end
 
-    
+
+******************************************************************************************
+static function line2str(line,v)
+local x:="",n
+    if( !empty(line) )
+        x:=str(len(line),4)+":"
+        x+=line[1]::pos2rc
+        for n:=2 to len(line)
+            x+=","+line[n]::pos2rc
+        next
+        if( abs(v)>9000 )
+            x+="#"
+        end
+    end
+    return x
 
 
 ******************************************************************************************
