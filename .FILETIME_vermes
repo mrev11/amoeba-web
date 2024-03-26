@@ -1,12 +1,13 @@
-9ec58b6b6623b28325f1a91dc63284146f33d45b 2024021112:47:39-UTC ./CHANGELOG_vermes
-4818232ab9f5f4804a26965fdce86e5373f600d7 2024021112:46:52-UTC ./log-webapp
-8d7e963825aa76d0109a5e7ef98c2ae9120f62ee 2024021112:46:40-UTC ./log-wamoeba
+d751e990d80e9ebecb0936ac2477365fbe35e811 2024032615:19:23-UTC ./log-webapp
+db1747024f2cd52498712ed41c92cf4f06c35083 2024032615:19:22-UTC ./log-wamoeba
+45cb81f5bdbebed8bbd9ff92733b00c750e0993e 2024032615:16:37-UTC ./program/wamoeba/offline/amoeba.ch
+f124b9f5feeadbe7291365cf47dd0906d2b7278e 2024032615:04:36-UTC ./CHANGELOG_vermes
+b012ce8395ff25a94d3064359c9e62e15a453ab4 2024032614:49:16-UTC ./program/wamoeba/offline/pattern.cpp
+5560fb8e09f0fc5b70b4438d9f7cb1f4ece0788e 2024032522:23:20-UTC ./program/wamoeba/offline/cell.cpp
 ae34664463860190fce61c4eb9f8f746279901f7 2024021112:33:03-UTC ./program/wamoeba/compat.prg
-08d7f7fa39eaed413712a8a64897ca76d4aad8c2 2024021110:42:10-UTC ./program/wamoeba/offline/amoeba.ch
 fe06054f54544182ce64dc8b56f9950046bfe1c9 2024021021:52:09-UTC ./program/wamoeba/offline/go.prg
 de607c7eb059b684c53a0191d6f1361d0819d609 2024021015:21:59-UTC ./program/wamoeba/offline/power.prg
 d24f1006262a2a61de516743c4f806938409e6cf 2024021009:55:26-UTC ./program/wamoeba/offline/minimax.prg
-341b13c03d2e247c2d8052168fa5ef238ddd2666 2024020809:43:03-UTC ./program/wamoeba/offline/cell.cpp
 b489b2cf0a93c43c1bfed303774b482df6559d0f 2024020713:49:59-UTC ./program/wamoeba/offline/cell.h
 ddc17ddf20f7622be1eda50b0ce35771b132c587 2024020314:36:39-UTC ./program/wamoeba/offline/movegen.cpp
 c5a28db1a307bb9c40d6ab5c4fa9e9336da90b91 2024020314:36:21-UTC ./program/wamoeba/offline/movegen1.cpp
@@ -32,7 +33,6 @@ f06fa95363335ff98346913fb5c55e93d10e5c3e 2023122013:42:40-UTC ./m
 fd73fde36dab6c4fc2728da51f5cbfecb85a9669 2023121814:05:15-UTC ./program/wamoeba/offline/draw.ch
 1515a78cf9e3763ae1cf45e11f01467efbf237cb 2023121510:28:46-UTC ./program/wamoeba/offline/tabsize.ch
 055b61102ca10d8d61546579ffc1a701ebf26fa7 2023121019:40:37-UTC ./program/wamoeba/offline/posvalue.cpp
-4c2015bb6e54a30210f990e2c9650fd80e671fee 2023120408:41:37-UTC ./program/wamoeba/offline/pattern.cpp
 94064d91c8190ae2359bcd13060743c24b9a5fd9 2023112914:48:19-UTC ./program/wamoeba/offline/pattern.h
 6a915bde4b72ae6e1737136273523d2a00fd3537 2022042922:17:19-UTC ./common/m
 58e245d8da8b6e9ec69235c7ca948c59070d61ff 2020020509:09:34-UTC ./common/webapp.js
