@@ -50,10 +50,10 @@ local m:=movecount()
 local x:=topcell()
 
     if( x==NIL )
-        fd:put("lastmove","Last move: "+m::str::alltrim)
+        fd:put("lastmove","Last move: <b>"+m::str::alltrim+"</b>")
     else
         x:=pos2rc(x)
-        fd:put("lastmove","Last move: "+m::str::alltrim+":"+x)
+        fd:put("lastmove","Last move: <b>"+m::str::alltrim+":"+x+"</b>")
     end
 
 
@@ -82,7 +82,7 @@ local recalc:=recalc_string(),r
         end
     end
 
-    fd():put("rating","Rating: "+rating+recalc)
+    fd():put("rating","Rating: <b>"+rating+recalc+"</b>")
 
 
 ******************************************************************************

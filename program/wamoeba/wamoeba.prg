@@ -19,7 +19,7 @@
  */
 
 #include "amoeba.ch"
-#include "tabsize.ch"
+
 
 ******************************************************************************************
 function main(sessionid,sckstr,*)
@@ -29,6 +29,10 @@ local msg,data
     printlog()
     ? {*}
     webapp.demo.defaults()
+
+    tablesize(12)
+    cellsize(48)
+    cell_classinit()
 
     webapp.uploaddisplay(table_canvas())
     webapp.script(table_script())
@@ -79,22 +83,19 @@ local x:=fd["coord_x"]::val
 local y:=fd["coord_y"]::val
 local cx
 
-    if( movecount()==0 )
-        ? "RANDOMIZE",y,x
-        cell_randomize(y,x)
-    end
-    
-    if( !game_over() )
-        //label_bestline("")
+    cx:=y*TABLESIZE+x
+    if( !game_over() .and. figure(cx)==32  )
         if( topcell()!=NIL )
             drawcell(topcell()) // -> normal shape
         end
-        cx:=y*TABLESIZE+x
         forw(cx)
-        drawtop()
         markmovecount()
+        rating_store() //delete
+        recalc_store() //delete
+        drawtop()
         label_move()
         label_turn()
+        label_rate()
         if( winner()==32 )
             cb_move(fd)
         end
@@ -104,6 +105,13 @@ local cx
 ******************************************************************************************
 static function cb_move(fd)
     if( !game_over() )
+
+        if( movecount()==0 )
+            cell_randomize()
+        elseif( movecount()==1 )
+            cell_randomize(topcell())
+        end
+
         label_state(.f.)
         if( topcell()!=NIL )
             drawcell(topcell()) // -> normal shape

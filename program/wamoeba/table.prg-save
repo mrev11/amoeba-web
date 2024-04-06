@@ -33,7 +33,7 @@ local canvas:=;
 
 <hr style="margin-bottom:30px;width:98%"/>
 
-<label id="bestline" style="font-size:LABELFONT;color:#000;padding:20px">Best line: <span style="color:red">Próba</span> szerencse</label>
+<label id="bestline" style="font-size:20px;color:#000;padding:20px">Best line: <span style="color:red">Próba</span> szerencse</label>
 
 
 <div style="display:flex">
@@ -42,10 +42,10 @@ local canvas:=;
             <canvas id="table" width="CANVAS_WIDTH" height="CANVAS_HEIGHT" style="border:0px solid #d3d3d3;"/>
         </div>
         <div style="display:flex;padding:0px;margin-left:20px;margin-right:20px;align-items:center">
-            <label id="lastmove" style="font-size:LABELFONT;text-align:left;color:#000;flex:4">Last move:</label>
-            <label id="turnlab"  style="font-size:LABELFONT;color:#000;flex:1">Turn:</label>
+            <label id="lastmove" style="font-size:20px;text-align:left;color:#000;flex:4">Last move:</label>
+            <label id="turnlab"  style="font-size:20px;color:#000;flex:1">Turn:</label>
             <label id="turnfig"  style="flex:1.8"></label>
-            <label id="rating"   style="font-size:LABELFONT;text-align:left;color:#000;flex:5">Rating:</label>
+            <label id="rating"   style="font-size:20px;text-align:left;color:#000;flex:5">Rating:</label>
         </div>
     </div>
 
@@ -67,7 +67,7 @@ local canvas:=;
         
         <p>BUTTON_RECALC
 
-        <p><select id="power" style="font-size:LABELFONT;width:150px;margin-top:20px" onchange="XCODE.onclick_formdata(this.id)" >
+        <p><select id="power" style="font-size:20px;width:150px;margin-top:20px" onchange="XCODE.onclick_formdata(this.id)" >
             <option value="0">auto</option>
             <option value="1">4,4,3,3,2,2,1,1</option>
             <option value="2">5,5,4,4,3,3,2,2,1,1</option>
@@ -89,9 +89,8 @@ local canvas:=;
 
 <<CANVAS>>
 
-    canvas::=strtran("CANVAS_WIDTH",  alltrim(str((tablesize()+1.5)*cellsize())) )
-    canvas::=strtran("CANVAS_HEIGHT", alltrim(str((tablesize()+1.5)*cellsize())) )
-    canvas::=strtran("LABELFONT","18px")
+    canvas::=strtran("CANVAS_WIDTH",   alltrim(str((tablesize()+1.5)*cellsize()))  )
+    canvas::=strtran("CANVAS_HEIGHT",  alltrim(str((tablesize()+1.5)*cellsize()))  )
 
     canvas::=strtran("BUTTON_MOVE",BUTTON(move,Move))
     canvas::=strtran("BUTTON_BACK",BUTTON(back,Back))
