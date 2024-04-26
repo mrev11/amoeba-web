@@ -23,12 +23,29 @@
 
 ******************************************************************************
 function label_bestline(x)
-local fd:=fd()
-    if( infolevel()>0 )
-        x::=strtran("color='","style='color:")
-        fd:put("bestline","Best line: "+x)
-        fd:update
+local fd:=fd(),v
+
+    if( infolevel()<=0 )
+        x:=""
+
+    elseif( x==NIL )
+        if( !empty(v:=recalc_string()) )
+            v::=val
+        elseif( !empty(v:=rating_string()) )
+            v::=val
+        else
+            v:=0
+        end
+        if( !empty(x:=bestline_array())  )
+            x:=bestline_format(x,v,if(turn_x(),1,0))
+        else
+            x:=""
+        end
     end
+
+    x::=strtran("color='","style='color:")
+    fd:put("bestline","Best line: "+x)
+    fd:update
 
 ******************************************************************************
 function label_state(flag)
@@ -72,10 +89,9 @@ local m:=movecount()
 ******************************************************************************
 function label_rate(x)
 local rating:=rating_string()
-local recalc:=recalc_string(),r
+local recalc:=recalc_string()
     if( !empty(recalc) )
-        r:=recalc_load()[1]
-        if( abs(r)>PVALUE_INFIN-100 )
+        if( abs(val(recalc))>PVALUE_INFIN-100 )
             recalc:="<span style='color:red'>"+recalc+"</span>"
         else
             recalc:="<span style='color:green'>"+recalc+"</span>"

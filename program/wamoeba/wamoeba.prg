@@ -24,7 +24,7 @@
 ******************************************************************************************
 function main(sessionid,sckstr,*)
 
-local msg,data
+local msg,data,power
 
     printlog()
     ? {*}
@@ -33,6 +33,11 @@ local msg,data
     tablesize(12)
     cellsize(48)
     cell_classinit()
+
+    setpower(power(parse_power())) 
+    setwidth()
+    power:=width()
+    power::=any2str[2..len(power)-1] // listbox text
 
     webapp.uploaddisplay(table_canvas())
     webapp.script(table_script())
@@ -45,6 +50,8 @@ local msg,data
     label_turn()
     label_rate(array(576))
     data:put("info",.t.)
+    data:put("power",power)
+    //data:list
     data:update
 
     // message loop
@@ -135,6 +142,7 @@ local cx:=topcell()
     label_move()
     label_turn()
     label_rate()
+    label_bestline()
 
 
 ******************************************************************************************
@@ -149,6 +157,7 @@ local cx:=topcell()
     label_move()
     label_turn()
     label_rate()
+    label_bestline()
 
 
 ******************************************************************************************
