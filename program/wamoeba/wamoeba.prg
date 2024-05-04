@@ -30,7 +30,7 @@ local msg,data,power
     ? {*}
     webapp.demo.defaults()
 
-    tablesize(12)
+    //tablesize(12)
     cellsize(48)
     cell_classinit()
 
@@ -111,7 +111,9 @@ local cx
 
 ******************************************************************************************
 static function cb_move(fd)
-    if( !game_over() )
+local cp:=.t.
+
+    while( !game_over() .and. cp )
 
         if( movecount()==0 )
             cell_randomize()
@@ -128,6 +130,8 @@ static function cb_move(fd)
         markmovecount()
         label_move()
         label_turn()
+
+        cp:=0<val( getenv("AMOEBA_CONTINUOUS_PLAY") )
     end
 
 

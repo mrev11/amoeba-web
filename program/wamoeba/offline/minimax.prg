@@ -19,6 +19,7 @@
  */
 
 #include "amoeba.ch"
+#include "pvalue.h"
 
 static node                         // ennyi állást értékelt ki
 static xbest                        // minimax futása után a legjobb lépés
@@ -81,7 +82,7 @@ local winner
             // azonnal válaszol
             xbest:=candidate_move[1]
             return NIL
-        elseif( depth<=maxenf )
+        elseif( forced_count<maxenf )
             // hosszabbítja az elemzőfát
             // (be nem vált kísérlet)
             ++forced_count
@@ -191,7 +192,7 @@ static function info(depth,x,v)
 #else
     if( depth==1 )
         ?? turn(),"["+v::int::str(5)+"]"
-        c_cb_button_press_stat(x)
+        print_cell_pattern(x)
     end
 #endif
 

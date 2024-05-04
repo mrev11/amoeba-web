@@ -18,34 +18,11 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
-#include "amoeba.ch"
-
-
-******************************************************************************
-function fd(data)
-static fd
-    if( data!=NIL )
-        fd:=data
-    end
-    return fd
-
-
-******************************************************************************
-function game_over()
-    if( winner()==asc('X') )
-        webapp.alert('<span style="font-size:20px">Game over, black won!</span>')
-    elseif( winner()==asc('O') )
-        webapp.alert('<span style="font-size:20px">Game over, white won!</span>')
-    elseif( movecount()>=ROWCOL )
-        webapp.alert("Table is full, draw!")
-    else
-        return .f.     
-    end
-    total_nodes() // print statistics
-    return .t.
-
-
-
-******************************************************************************
-
+#define PVALUE_INFIN    9999
+#define PVALUE_EGY       200
+#define PVALUE_KET2       40
+#define PVALUE_KET1       20
+#define PVALUE_HAR2       15
+#define PVALUE_HAR1        3
+#define PVALUE_NEGY2       2
+#define PVALUE_NEGY1       1

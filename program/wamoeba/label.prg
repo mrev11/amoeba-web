@@ -20,6 +20,7 @@
 
 
 #include "amoeba.ch"
+#include "pvalue.h"
 
 ******************************************************************************
 function label_bestline(x)
@@ -67,10 +68,10 @@ local m:=movecount()
 local x:=topcell()
 
     if( x==NIL )
-        fd:put("lastmove","Last move: <b>"+m::str::alltrim+"</b>")
+        fd:put("lastmove","Last move: <big>"+m::str::alltrim+"</big>")
     else
         x:=pos2rc(x)
-        fd:put("lastmove","Last move: <b>"+m::str::alltrim+":"+x+"</b>")
+        fd:put("lastmove","Last move: <big>"+m::str::alltrim+":"+x+"</big>")
     end
 
 
@@ -98,7 +99,7 @@ local recalc:=recalc_string()
         end
     end
 
-    fd():put("rating","Rating: <b>"+rating+recalc+"</b>")
+    fd():put("rating","Rating: <big>"+rating+" "+recalc+"</big>")
 
 
 ******************************************************************************

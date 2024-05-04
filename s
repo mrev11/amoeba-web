@@ -3,9 +3,14 @@ rm  -f log-webapp*
 
 export PATH=`pwd`/program:$PATH
 
-export AMOEBA_TABLESIZE=12
-export AMOEBA_CELLSIZE=56
-export AMOEBA_POWER=0+
+# teszteleshez  : export AMOEBA_CONTINUOUS_PLAY=1
+# hatastalan    : export AMOEBA_CELLSIZE=32
+# lehetseges    : export AMOEBA_TABLESIZE=14
 
-webapp.exe  #1>/dev/null 
+export AMOEBA_POWER=0
+#export AMOEBA_POWER_BLACK=3+
+#export AMOEBA_POWER_WHITE=3+
+
+webapp.exe  | tee log-amoeba
+
 
