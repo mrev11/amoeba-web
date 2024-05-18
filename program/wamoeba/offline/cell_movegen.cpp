@@ -38,24 +38,26 @@
 // ha MOVEGEN nincs definialva
 //  - akkor parameterekbol veszi az erteket
 
+
+static void print_movegen(int turn, int cnt);
+
+
 //--------------------------------------------------------------------------
-int cell::movegen(int total) //kikeresi a megadott szamu "legfontosabb" mezot
+int cell::movegen(int total, int think) //kikeresi a megadott szamu "legfontosabb" mezot
 {
     if( cell::winner!=' ' )
     {
         return cell::bestcnt=0;
     }
 
+    //printf("MOVEGEN> %d %c\n",total,think?think:'.');
+
     #ifndef MOVEGEN
-    int MOVEGEN=0;
-    if( (cell::moveforw&1)==0 )
-    {
-        MOVEGEN=cell::movegen_black;
-    }
-    else
-    {
-        MOVEGEN=cell::movegen_white;
-    }
+    int MOVEGEN=1000;
+    if( think=='O' ) MOVEGEN=cell::movegen_white;
+    if( think=='X' ) MOVEGEN=cell::movegen_black;
+    if( think== 1  ) MOVEGEN=cell::movegen_white;
+    if( think== 2  ) MOVEGEN=cell::movegen_black;
     #endif
 
     int cnt=0;
@@ -143,6 +145,7 @@ int cell::movegen(int total) //kikeresi a megadott szamu "legfontosabb" mezot
             cell::best[cnt].vt=vt;
             cell::best[cnt].vs=vs;
             cnt++;
+            //print_movegen(think,cnt);
         }
         else if( cnt<total )
         {
@@ -151,13 +154,14 @@ int cell::movegen(int total) //kikeresi a megadott szamu "legfontosabb" mezot
             cell::best[cnt].vt=vt;
             cell::best[cnt].vs=vs;
             cnt++;
+            //print_movegen(think,cnt);
         }
         else
         {
             minv=PVALUE_INFIN;
             for( int n=0; n<cnt; n++ )
             {
-                if( cell::best[n].vs<=minv )
+                if( cell::best[n].vs<minv )
                 {
                     minx=n;
                     minv=cell::best[n].vs;
@@ -171,6 +175,7 @@ int cell::movegen(int total) //kikeresi a megadott szamu "legfontosabb" mezot
                 cell::best[minx].vo=vo;
                 cell::best[minx].vt=vt;
                 cell::best[minx].vs=vs;
+                //print_movegen(think,cnt);
             }
         }
     }
@@ -202,8 +207,26 @@ int cell::movegen(int total) //kikeresi a megadott szamu "legfontosabb" mezot
         qsort(cell::best,cnt,sizeof(BEST),cell::cmp_best);
     }
 
+    //print_movegen(think,cnt);
     return cell::bestcnt=cnt;
 }
+
+
+//--------------------------------------------------------------------------
+static void print_movegen(int turn, int cnt)
+{
+    if( turn==0 ) turn=' ';
+    if( turn==1 ) turn='O';
+    if( turn==2 ) turn='X';
+
+    printf("%c %d ",turn,cnt);
+    for(int i=0; i<cnt; i++)
+    {
+        printf(" (%d,%d)",cell::best[i].cx,cell::best[i].vs);
+    }
+    printf("\n");
+}
+
 
 //--------------------------------------------------------------------------
 

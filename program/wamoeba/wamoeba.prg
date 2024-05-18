@@ -26,7 +26,7 @@ function main(sessionid,sckstr,*)
 
 local msg,data,power
 
-    printlog()
+    //printlog()
     ? {*}
     webapp.demo.defaults()
 
@@ -34,7 +34,7 @@ local msg,data,power
     cellsize(48)
     cell_classinit()
 
-    setpower(power(parse_power())) 
+    setpower(opt_power(parse_power())) 
     setwidth()
     power:=width()
     power::=any2str[2..len(power)-1] // listbox text

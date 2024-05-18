@@ -30,17 +30,10 @@
 //--------------------------------------------------------------------------
 void _clp_movegen(int argno)
 {
-    CCC_PROLOG("movegen",1);
+    CCC_PROLOG("movegen",2);
     int total=_parni(1);
-    int cnt=0;
-    if( (cell::movecount&1)==0 )
-    {
-        cnt=cell::movegen(total); // black
-    }
-    else
-    {
-        cnt=cell::movegen(total); // white
-    }
+    int turn=ISNIL(2)?' ':_parni(2);
+    int cnt=cell::movegen(total,turn);
     for(int i=0;i<cnt; i++)
     {
         number( cell::best[i].cx );
@@ -330,6 +323,29 @@ void _clp_spiral(int argno)
     }
     CCC_EPILOG();
 }
+
+//---------------------------------------------------------------------------
+void _clp_print_posvalue(int argno)
+{
+    CCC_PROLOG("print_posvalue",0);
+
+    printf( "turn:%c ",cell::movecount&1?'O':'X');
+    printf( "posvalue=%d\n",cell::posvalue() );
+    fflush(0);
+    _ret();
+    CCC_EPILOG();
+}
+
+//----------------------------------------------------------------------------------------
+void _clp_print_pattern(int argno)
+{
+    CCC_PROLOG("print_pattern",1);
+    int cx=_parni(1);
+    cell::print_pattern(cx);
+    _ret();
+    CCC_EPILOG();
+}
+
 
 
 //--------------------------------------------------------------------------

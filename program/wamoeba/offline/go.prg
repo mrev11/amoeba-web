@@ -28,13 +28,13 @@ function go_move()
 local x,v,n
 local curlev
 local bestline:={}
+local rts,pws
 
     if( topcell()!=NIL )
         drawcell(topcell())
     end
 
-
-    ? "-------------------------------------------------------------------------------------"
+    ? "-----------------------------------------------------------------------------------"
 
     if( continuous_play()>1 )
         ?  "Game="+(1+gamecount())::str::alltrim+"/"+continuous_play()::str::alltrim
@@ -43,7 +43,7 @@ local bestline:={}
     end
     ?
 
-    curlev:=setwidth(movecount())
+    curlev:=init_minimax()
     v:=minimax(0,-PVALUE_INFIN,PVALUE_INFIN,@bestline,0)
     x:=xbest()
 
@@ -55,24 +55,26 @@ local bestline:={}
 
     total_nodes(node())
 
-    ? turn(), "["+valstr(v)+"]",;
-              pos2rc(x)::padr(3),;
-              " Nodes="+nodestr(node()),;
-              " Power="+powstr(curlev),;
-              bestline::line2str(v)
-
     if( NIL!=x )
+
+        rts:=ratestr(v,curlev) // forw elott
+        pws:=powstr(curlev)    // forw elott
+
+        ? turn(), "["+valstr(v)+"]", pos2rc(x)::padr(3),;
+            " Nodes="+nodestr(node())," Power="+pws, bestline::line2str(v)
+
         forw(x)
-        rating_store( ratestr(v, curlev, if(turn_o(),movegen_black(),movegen_white())) )
-        recalc_store() // delete
+
+        rating_store(rts) // forw utan
+        recalc_store() // forw utan (delete)
         bestline_store(bestline)
         label_rate()
 
         for n:=1 to 3
             drawcell(x)
-            sleep(80)
+            sleep(100)
             drawtop()
-            sleep(80)
+            sleep(100)
         next
     end
 
@@ -83,6 +85,7 @@ function go_recalc()
 local cx,x,v,n
 local curlev
 local bestline:={}
+local rts,pws
 
     cell_save()
 
@@ -91,31 +94,27 @@ local bestline:={}
         return NIL
     end
 
-    ? "=====================================================================================";?
+    ? "===================================================================================";?
 
     drawcell(cx)
     label_turn()
 
-    curlev:=setwidth(movecount(),.t.)
+    curlev:=init_minimax(.t.)
     v:=minimax(0,-PVALUE_INFIN,PVALUE_INFIN,@bestline,0)
     x:=xbest()
 
-    ? turn(), "["+valstr(v)+"]",;
-              pos2rc(x)::padr(3),;
-              " Nodes="+nodestr(node()),;
-              " Power="+powstr(curlev),;
-              bestline::line2str(v)
-
-
     if( NIL!=x )
+
+        rts:=calcstr(v,curlev,x) // forw elott
+        pws:=powstr(curlev)      // forw elott
+
+        ? turn(), "["+valstr(v)+"]", pos2rc(x)::padr(3),;
+            " Nodes="+nodestr(node()), " Power="+pws, bestline::line2str(v)
+
         forw(x)
 
-        recalc_store( calcstr(v, curlev, if(turn_o(),movegen_black(),movegen_white()),x) ) 
-
-
-
+        recalc_store(rts) 
         bestline_store(bestline)
-
         label_rate()
 
         for n:=1 to 5
@@ -137,7 +136,7 @@ local bestline:={}
 ******************************************************************************************
 static function line2str(line,v)
 local x:="",n
-    if( !empty(line) )
+    if( !empty(line) .and. v!=NIL )
         x:=str(len(line),4)+":"
         x+=line[1]::pos2rc
         for n:=2 to len(line)
@@ -146,18 +145,6 @@ local x:="",n
         if( abs(v)>9000 )
             x+="#"
         end
-    end
-    return x
-
-
-******************************************************************************************
-static function powstr(x)
-    x::=str::alltrim
-    if( turn_x() .and. movegen_black()==0 )
-        x+="+"
-    end
-    if( turn_o() .and. movegen_white()==0 )
-        x+="+"
     end
     return x
 
@@ -173,19 +160,30 @@ static function nodestr(n)
 
 
 ******************************************************************************************
-static function ratestr(v,curlev,movegen)
+static function powstr(x) // forw() elott kell hivni
+    x::=str::alltrim
+    if( turn_x() .and. movegen_black()==0 )
+        x+="+"
+    end
+    if( turn_o() .and. movegen_white()==0 )
+        x+="+"
+    end
+    return x
+
+
+******************************************************************************************
+static function ratestr(v,curlev)  // forw() elott kell hivni
 local str
     if( v!=NIL )
         str:=v::str::alltrim
-        str+="/"+curlev::str::alltrim
-        str+=if(movegen==0,"+","")
+        str+="/"+powstr(curlev)
     end
     return str|""
 
 
 ******************************************************************************************
-static function calcstr(v,curlev,movegen,move)
-local str:=ratestr(v,curlev,movegen)
+static function calcstr(v,curlev,move)  // forw() elott kell hivni
+local str:=ratestr(v,curlev)
     str+=":"+pos2rc(move)
     return str
 

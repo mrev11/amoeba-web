@@ -7,10 +7,10 @@ export PATH=`pwd`/program:$PATH
 # hatastalan    : export AMOEBA_CELLSIZE=32
 # lehetseges    : export AMOEBA_TABLESIZE=14
 
-export AMOEBA_POWER=0
+export AMOEBA_POWER=0+
 #export AMOEBA_POWER_BLACK=3+
 #export AMOEBA_POWER_WHITE=3+
 
-webapp.exe  | tee log-amoeba
+webapp.exe   | tee log-amoeba
 
 
