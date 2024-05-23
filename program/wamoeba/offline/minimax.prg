@@ -45,9 +45,9 @@ function xbest()
 
 ******************************************************************************************
 function init_minimax(swflg)
-local curlev
+local mc,curlev
 
-    curlev:=setwidth(movecount(),swflg)
+    curlev:=setwidth(mc:=movecount(),swflg)
 
     node:=0
     xbest:=NIL
@@ -56,6 +56,10 @@ local curlev
     treshold:=int(len(width)/2)
     maxenf:=maxenf()
     ilevel:=infolevel()
+
+    if( mc<5 )
+        width:={6,5,4,3,2,1}
+    end
 
     return curlev
 
@@ -113,15 +117,13 @@ local winner
             forw(x)
             if( ilevel>=depth )
                 drawalt()
+                stabilize()
                 sleep(200)
             end
             vopt:=max(vopt,minimax(depth,alfa,beta,@bestline1,forced_count))
             back()
             if( ilevel>=depth )
                 drawcell(x)
-                if( depth>1 )
-                    drawalt()
-                end
             end
             info(depth,x,vopt)
 
@@ -153,15 +155,13 @@ local winner
             forw(x)
             if( ilevel>=depth )
                 drawalt()
+                stabilize()
                 sleep(200)
             end
             vopt:=min(vopt,minimax(depth,alfa,beta,@bestline1,forced_count))
             back()
             if( ilevel>=depth )
                 drawcell(x)
-                if( depth>1 )
-                    drawalt()
-                end
             end
             info(depth,x,vopt)
 
