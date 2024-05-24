@@ -35,9 +35,9 @@ local msg,data,power
     cell_classinit()
 
     setpower(opt_power(parse_power())) 
-    setwidth()
     power:=width()
     power::=any2str[2..len(power)-1] // listbox text
+    setwidth()
 
     webapp.uploaddisplay(table_canvas())
     webapp.script(table_script())
@@ -76,6 +76,8 @@ local msg,data,power
                 cb_power(data)
             elseif( data:source=="new" )
                 cb_new(data)
+            elseif( data:source=="demo" )
+                cb_demo(data)
             end
 
             data:update
@@ -191,6 +193,47 @@ static function cb_new(fd)
     label_bestline("")
     label_move()
     label_rate(array(576))
+
+
+******************************************************************************************
+static function cb_demo(fd)
+
+local top,msg,data
+
+    if( !game_over() )
+        webapp.setattrib("demo","value","Stop")
+    end
+
+    while( !game_over() )
+
+        if( movecount()==0 )
+            cell_randomize()
+        elseif( movecount()==1 )
+            cell_randomize(topcell())
+        end
+
+        label_state(.f.)
+        go_move()
+        label_state(.t.)
+        markmovecount()
+        label_move()
+        label_turn()
+
+        msg:=webapp.getmessage(@data,100) 
+        if( msg==NIL )
+            quit
+        elseif( "formdata."$msg )
+            if( data:source=="demo" )
+                exit // normal mode
+            elseif( data:source=="info" )
+                cb_info(data)
+            elseif( data:source=="power" )
+                cb_power(data)
+            end
+        end
+    end
+
+    webapp.setattrib("demo","value","Demo")
 
 
 ******************************************************************************************

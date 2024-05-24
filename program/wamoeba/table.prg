@@ -57,6 +57,7 @@ local canvas:=;
         <p>BUTTON_MOVE
         <p>BUTTON_BACK
         <p>BUTTON_FORW
+        <p>BUTTON_DEMO
         <hr style="margin:20px;width:60%"/>
 
         <div style="width:150px;margin:10;display:flex;align-items:center;">
@@ -98,6 +99,7 @@ local canvas:=;
     canvas::=strtran("BUTTON_FORW",BUTTON(forw,Forward))
     canvas::=strtran("BUTTON_RECALC",BUTTON(recalc,Recalc))
     canvas::=strtran("BUTTON_NEW",BUTTON(new,New))
+    canvas::=strtran("BUTTON_DEMO",BUTTON(demo,Demo))
     canvas::=strtran("VERSION_WEB",VERSION_WEB)
 
     return canvas

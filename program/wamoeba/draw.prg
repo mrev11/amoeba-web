@@ -37,10 +37,13 @@ static asco:=asc("O")
 ******************************************************************************************
 function drawcell(cx,fig)
 
-local x:=cx%TABLESIZE
-local y:=int(cx/TABLESIZE)
+local x,y,code
 
-local code:="XCODE.draw_circle(xx,yy,fig)"
+    if( cx==NIL )
+        return NIL
+    end
+
+    code:="XCODE.draw_circle(xx,yy,fig)"
 
     if( fig==NIL )
         fig:=figure(cx)
@@ -52,6 +55,9 @@ local code:="XCODE.draw_circle(xx,yy,fig)"
             fig:=FIG_EMPTY
         end
     end
+
+    x:=cx%TABLESIZE
+    y:=int(cx/TABLESIZE)
 
     code::=strtran("xx",x::str::alltrim)    
     code::=strtran("yy",y::str::alltrim)
