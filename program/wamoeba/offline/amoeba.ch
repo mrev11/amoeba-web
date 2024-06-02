@@ -20,8 +20,8 @@
 
 #include "draw.ch"
 
-#define VERSION         "Amoeba 2.1 for GTK2"
-#define VERSION_WEB     "Amoeba 2.1 for the WEB"
+#define VERSION         "Amoeba 2.2 for GTK2"
+#define VERSION_WEB     "Amoeba 2.2 for the WEB"
 
 
 #define TABLESIZE       tablesize()
@@ -42,4 +42,7 @@
 #define POW6  "7,7,6,6,5,5,4,4,3,3,2,2,1,1"     // 64-ig
 #define POW7  "8,7,7,6,6,5,5,4,4,3,3,2,2,1,1"   // 64 fölött
 #define POW8  "8,8,7,7,6,6,5,5,4,4,3,3,2,2,1,1" // interaktívan beállítható
+
+
+//#define DEBUG
 

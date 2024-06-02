@@ -125,7 +125,7 @@ local cp:=.t.
 
         label_state(.f.)
         if( topcell()!=NIL )
-            drawcell(topcell()) // -> normal shape
+            //drawcell(topcell()) // -> normal shape
         end
         go_move()
         label_state(.t.)
