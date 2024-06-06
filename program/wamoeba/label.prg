@@ -45,6 +45,8 @@ local fd:=fd(),v
     end
 
     x::=strtran("color='","style='color:")
+
+    x+="<span style='color:#b8b8b8'><big><big>|</big></big></span>"
     fd:put("bestline","Best line: "+x)
     fd:update
 

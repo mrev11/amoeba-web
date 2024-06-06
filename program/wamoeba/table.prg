@@ -33,7 +33,7 @@ local canvas:=;
 
 <hr style="margin-bottom:30px;width:98%"/>
 
-<label id="bestline" style="font-size:LABELFONT;color:#000;padding:20px">Best line: <span style="color:red">Próba</span> szerencse</label>
+<label id="bestline" style="font-size:LABELFONT;color:#000;padding:20px;"></label>
 
 
 <div style="display:flex">
@@ -121,7 +121,7 @@ const origo_y=40;
 const color_empty="#ccaa22";
 const color_black="#000000";
 const color_white="#ffffff";
-const radius=cellsize/3;
+let   radius=cellsize/3;
 
 region.style.background="#b8b8b8";
 
@@ -130,6 +130,21 @@ let delay=function(millis)
 {
     return new Promise( resolve => setTimeout(resolve,millis) );
 }
+
+
+let draw_normal=function() // block scope (de hol?)
+{
+    radius=cellsize/3;
+}
+XCODE.draw_normal=draw_normal;
+
+
+let draw_small=function() // block scope (de hol?)
+{
+    radius=cellsize/4;
+}
+XCODE.draw_small=draw_small;
+
 
 let draw_circle=function(x,y,fig) // block scope (de hol?)
 {

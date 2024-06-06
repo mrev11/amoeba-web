@@ -21,10 +21,18 @@
 #include "amoeba.ch"
 
 
+
+static bestnavig:=.f.
+static beststack:={}
+static bestline:=NIL
+static bestvalue:=NIL
+static bestturn:=NIL
+static besttop:=NIL
+
 ******************************************************************************************
 function main(sessionid,sckstr,*)
 
-local msg,data,power
+local msg,data,power,xb,xp,cx
 
     //printlog()
     ? {*}
@@ -41,6 +49,7 @@ local msg,data,power
 
     webapp.uploaddisplay(table_canvas())
     webapp.script(table_script())
+    webapp.script(keypress())
 
     // init
     fd(data:=webapp.formdataNew())
@@ -56,6 +65,8 @@ local msg,data,power
 
     // message loop
     while( NIL!=(msg:=webapp.getmessage(@data)) )
+    
+    
         if( "formdata."$msg )
             //data:list
             fd(data)
@@ -79,8 +90,83 @@ local msg,data,power
             elseif( data:source=="demo" )
                 cb_demo(data)
             end
-
             data:update
+
+        elseif( msg=="keyup" )
+            if( data:gettext=="Shift" )
+                bestnavig:=.f.
+                if( !empty(bestline) )
+                    webapp.script("XCODE.draw_normal()")
+                    while( len(beststack)>0 )
+                        xb:=back()
+                        xp:=apop(beststack)
+                        if( xp!=xb )
+                            break( "bestline pop all error" )
+                        end
+                        drawcell(xb)
+                    end
+                    forw(besttop)
+                    drawtop()
+                    label_bestline( bestline_format(bestline,bestvalue,bestturn,NIL) )
+                    bestline:=NIL
+                    bestvalue:=NIL
+                    bestturn:=NIL
+                    besttop:=NIL
+                    cell_restore()
+                end
+            end
+
+        elseif( msg=="keydown" )
+            if( data:gettext=="Shift" )
+                bestnavig:=.t.
+                if( !empty(bestline:=bestline_array()[..]) )
+                    cell_save()
+                    bestvalue:=recalc_value()|rating_value()
+                    bestturn:=if(turn_x(),1,0)
+                    besttop:=topcell()
+                    xb:=back()
+                    drawcell(xb)
+                    webapp.script("XCODE.draw_small()")
+                    forw(bestline[1])
+                    drawtop()
+                    beststack::apush( bestline[1] )
+                    label_bestline( bestline_format(bestline,bestvalue,bestturn,1) )
+                end
+
+            elseif( data:gettext=="ArrowRight" )
+                webapp.focus("table")
+                if( !bestnavig )
+                    cb_forw() // mint korabban
+                else
+                    if( len(beststack)+1<=len(bestline) )
+                        drawcell(topcell())
+                        if( !forw(bestline[len(beststack)+1]) )
+                            break("bestline push error")
+                        end
+                        drawtop()
+                        beststack::apush( bestline[len(beststack)+1] )
+                        label_bestline( bestline_format(bestline,bestvalue,bestturn,len(beststack)) )
+                    end
+                end
+
+            elseif( data:gettext=="ArrowLeft" )
+                webapp.focus("table")
+                if( !bestnavig )
+                    cb_back() // mint korabban
+                else
+                    if( len(beststack)>1  )
+                        xb:=back()
+                        xp:=apop(beststack)
+                        if( xp!=xb )
+                            break( "bestline pop error" )
+                        end
+                        drawcell(xb)
+                        drawtop()
+                        label_bestline( bestline_format(bestline,bestvalue,bestturn,len(beststack)) )
+                    end
+                end
+            end
+
         end
     end 
 
@@ -105,6 +191,7 @@ local cx
         label_move()
         label_turn()
         label_rate()
+        bestline_store({})
         if( winner()==32 )
             cb_move(fd)
         end
@@ -169,16 +256,16 @@ local cx:=topcell()
 ******************************************************************************************
 static function cb_info(fd)
 local info:=fd["info"]=="true"
-    if( !info )
-        label_bestline("")
-    end
     infolevel( info )
+    label_bestline()
+
 
 ******************************************************************************************
 static function cb_recalc(fd)
     label_state(.f.)
     go_recalc()
     label_state(.t.)
+    label_bestline()
 
 
 ******************************************************************************************
