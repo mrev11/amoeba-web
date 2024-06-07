@@ -42,7 +42,7 @@ local msg,data,power,xb,xp,cx
     cellsize(48)
     cell_classinit()
 
-    setpower(opt_power(parse_power())) 
+    setpower(opt_power(parse_power()))
     power:=width()
     power::=any2str[2..len(power)-1] // listbox text
     setwidth()
@@ -65,8 +65,8 @@ local msg,data,power,xb,xp,cx
 
     // message loop
     while( NIL!=(msg:=webapp.getmessage(@data)) )
-    
-    
+
+
         if( "formdata."$msg )
             //data:list
             fd(data)
@@ -138,15 +138,7 @@ local msg,data,power,xb,xp,cx
                 if( !bestnavig )
                     cb_forw() // mint korabban
                 else
-                    if( len(beststack)+1<=len(bestline) )
-                        drawcell(topcell())
-                        if( !forw(bestline[len(beststack)+1]) )
-                            break("bestline push error")
-                        end
-                        drawtop()
-                        beststack::apush( bestline[len(beststack)+1] )
-                        label_bestline( bestline_format(bestline,bestvalue,bestturn,len(beststack)) )
-                    end
+                    cb_bestright()
                 end
 
             elseif( data:gettext=="ArrowLeft" )
@@ -154,22 +146,40 @@ local msg,data,power,xb,xp,cx
                 if( !bestnavig )
                     cb_back() // mint korabban
                 else
-                    if( len(beststack)>1  )
-                        xb:=back()
-                        xp:=apop(beststack)
-                        if( xp!=xb )
-                            break( "bestline pop error" )
-                        end
-                        drawcell(xb)
-                        drawtop()
-                        label_bestline( bestline_format(bestline,bestvalue,bestturn,len(beststack)) )
-                    end
+                    cb_bestleft()
                 end
             end
 
         end
-    end 
+    end
 
+
+******************************************************************************************
+static function cb_bestright()
+      if( len(beststack)+1<=len(bestline) )
+        drawcell(topcell())
+        if( !forw(bestline[len(beststack)+1]) )
+            break("bestline push error")
+        end
+        drawtop()
+        beststack::apush( bestline[len(beststack)+1] )
+        label_bestline( bestline_format(bestline,bestvalue,bestturn,len(beststack)) )
+    end
+
+
+******************************************************************************************
+static function cb_bestleft()
+local xb,xp
+    if( len(beststack)>1  )
+        xb:=back()
+        xp:=apop(beststack)
+        if( xp!=xb )
+            break( "bestline pop error" )
+        end
+        drawcell(xb)
+        drawtop()
+        label_bestline( bestline_format(bestline,bestvalue,bestturn,len(beststack)) )
+    end
 
 ******************************************************************************************
 static function cb_table(fd)
@@ -177,6 +187,10 @@ static function cb_table(fd)
 local x:=fd["coord_x"]::val
 local y:=fd["coord_y"]::val
 local cx
+
+    if(bestnavig)
+        return NIL
+    end
 
     cx:=y*TABLESIZE+x
     if( !game_over() .and. figure(cx)==32  )
@@ -201,6 +215,10 @@ local cx
 ******************************************************************************************
 static function cb_move(fd)
 local cp:=.t.
+
+    if(bestnavig)
+        return NIL
+    end
 
     while( !game_over() .and. cp )
 
@@ -227,6 +245,12 @@ local cp:=.t.
 ******************************************************************************************
 static function cb_back(fd)
 local cx:=topcell()
+
+    if(bestnavig)
+        cb_bestleft()
+        return NIL
+    end
+
     if( cx!=NIL )
         c_cb_back()
         drawcell(cx)
@@ -241,6 +265,12 @@ local cx:=topcell()
 ******************************************************************************************
 static function cb_forw(fd)
 local cx:=topcell()
+
+    if(bestnavig)
+        cb_bestright()
+        return NIL
+    end
+
     c_cb_forward()
     if( cx!=NIL )
         drawcell(cx)
@@ -262,6 +292,11 @@ local info:=fd["info"]=="true"
 
 ******************************************************************************************
 static function cb_recalc(fd)
+
+    if(bestnavig)
+        return NIL
+    end
+
     label_state(.f.)
     go_recalc()
     label_state(.t.)
@@ -275,6 +310,11 @@ static function cb_power(fd)
 
 ******************************************************************************************
 static function cb_new(fd)
+
+    if(bestnavig)
+        return NIL
+    end
+
     c_cb_new()
     drawall()
     label_bestline("")
@@ -286,6 +326,10 @@ static function cb_new(fd)
 static function cb_demo(fd)
 
 local top,msg,data
+
+    if(bestnavig)
+        return NIL
+    end
 
     if( !game_over() )
         webapp.setattrib("demo","value","Stop")
@@ -306,7 +350,7 @@ local top,msg,data
         label_move()
         label_turn()
 
-        msg:=webapp.getmessage(@data,100) 
+        msg:=webapp.getmessage(@data,100)
         if( msg==NIL )
             quit
         elseif( "formdata."$msg )

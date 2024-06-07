@@ -130,6 +130,9 @@ input[type=button] {
   border-right-width: 10px;
   border-color: slateblue;
   transition: 0.3s;
+  height:40px;
+  width:100px;
+  font-size:x-large;
 }
 input[type=button]:focus {
   text-decoration: underline;

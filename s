@@ -8,10 +8,10 @@ export PATH=`pwd`/program:$PATH
 # lehetseges    : export AMOEBA_TABLESIZE=14
 
 export AMOEBA_TABLESIZE=16
-export AMOEBA_BLINK=2
+export AMOEBA_BLINK=1
 export AMOEBA_POWER=auto
 #export AMOEBA_POWER_BLACK=3+
-#export AMOEBA_POWER_WHITE=3+
+#export AMOEBA_POWER_WHITE=2
 
 webapp.exe   | tee log-amoeba
 
