@@ -19,34 +19,20 @@
  */
 
 
-#include "amoeba.ch"
-
 
 ******************************************************************************
-function fd(data)
-static fd
-    if( data!=NIL )
-        fd:=data
+function hit_depth_histogram(x)
+static histo:=array(32)::afill(0)
+local a,n
+    if( x==NIL )
+        a:=aclone(histo)
+        for n:=1 to len(a)
+            a[n]::=str::alltrim
+        next
+        ? "hit(depth):",a
+    elseif( x<=len(histo) )
+        histo[x]++    
     end
-    return fd
 
 
 ******************************************************************************
-function game_over()
-    if( winner()==asc('X') )
-        webapp.alert('<span style="font-size:20px">Game over, black won!</span>')
-    elseif( winner()==asc('O') )
-        webapp.alert('<span style="font-size:20px">Game over, white won!</span>')
-    elseif( movecount()>=ROWCOL )
-        webapp.alert("Table is full, draw!")
-    else
-        return .f.     
-    end
-    hit_depth_histogram()
-    total_nodes() // print statistics
-    return .t.
-
-
-
-******************************************************************************
-

@@ -42,10 +42,19 @@ local msg,data,power,xb,xp,cx
     cellsize(48)
     cell_classinit()
 
-    setpower(opt_power(parse_power()))
-    power:=width()
-    power::=any2str[2..len(power)-1] // listbox text
-    setwidth()
+    parse_power()
+    setpower(opt_power())
+    minimax_config()
+    minimax_init()
+
+    if( opt_power()==0 )
+        power:="auto" // listbox text
+    else
+        power:=width()
+        power::=any2str
+        power:=power[2..len(power)-1] // listbox text
+    end
+    ?? "POWER", power
 
     webapp.uploaddisplay(table_canvas())
     webapp.script(table_script())

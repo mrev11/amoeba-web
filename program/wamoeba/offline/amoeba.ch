@@ -20,8 +20,8 @@
 
 #include "draw.ch"
 
-#define VERSION         "Amoeba 2.3 for GTK2"
-#define VERSION_WEB     "Amoeba 2.3 for the WEB"
+#define VERSION         "Amoeba 3.0 for GTK2"
+#define VERSION_WEB     "Amoeba 3.0 for the WEB"
 
 
 #define TABLESIZE       tablesize()
@@ -36,15 +36,18 @@
 
 
 #define POW0  "auto"
-#define POW1  "4,4,3,3,2,2,1,1"                 //  2-ig
-#define POW2  "5,5,4,4,3,3,2,2,1,1"             //  4-ig
-#define POW3  "6,5,5,4,4,3,3,2,2,1,1"           //  8-ig
-#define POW4  "6,6,5,5,4,4,3,3,2,2,1,1"         // 16-ig
-#define POW5  "7,6,6,5,5,4,4,3,3,2,2,1,1"       // 32-ig
-#define POW6  "7,7,6,6,5,5,4,4,3,3,2,2,1,1"     // 64-ig
-#define POW7  "8,7,7,6,6,5,5,4,4,3,3,2,2,1,1"   // 64 fölött
-#define POW8  "8,8,7,7,6,6,5,5,4,4,3,3,2,2,1,1" // interaktívan beállítható
+#define POW1  "11,6,4,3,2"                       //  8-ig
+#define POW2  "12,7,5,4,3,3"                     // 16-ig
+#define POW3  "13,8,6,4,4,3,3"                   // 32-ig
+#define POW4  "14,8,6,5,4,4,3,3"                 // 32 fölött
+#define POW5  "15,8,7,5,5,4,4,3,3"               // interaktívan beállítható
+#define POW6  "16,9,7,6,5,5,4,4,3,3"             // interaktívan beállítható
+#define POW7  "17,9,8,7,6,6,5,5,4,4,3,3"         // interaktívan beállítható
+#define POW8  "18,9,8,7,6,5,5,5,4,4,4,3,3,3"     // interaktívan beállítható
 
 
-//#define DEBUG
 
+#define CACHE
+//#define NEGASCOUT
+
+#define POSVALUE   10

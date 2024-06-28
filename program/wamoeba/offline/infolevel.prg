@@ -19,34 +19,14 @@
  */
 
 
-#include "amoeba.ch"
 
-
-******************************************************************************
-function fd(data)
-static fd
-    if( data!=NIL )
-        fd:=data
+*****************************************************************************
+function infolevel(t)
+static level:=.t.
+    if( t!=NIL )
+        level:=t
     end
-    return fd
+    return if(level,1,0)
 
 
-******************************************************************************
-function game_over()
-    if( winner()==asc('X') )
-        webapp.alert('<span style="font-size:20px">Game over, black won!</span>')
-    elseif( winner()==asc('O') )
-        webapp.alert('<span style="font-size:20px">Game over, white won!</span>')
-    elseif( movecount()>=ROWCOL )
-        webapp.alert("Table is full, draw!")
-    else
-        return .f.     
-    end
-    hit_depth_histogram()
-    total_nodes() // print statistics
-    return .t.
-
-
-
-******************************************************************************
-
+*****************************************************************************
