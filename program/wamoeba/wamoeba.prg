@@ -217,6 +217,8 @@ local cx
         bestline_store({})
         if( winner()==32 )
             cb_move(fd)
+        else
+            game_over()
         end
     end
 
