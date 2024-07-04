@@ -34,8 +34,10 @@ static fd
 ******************************************************************************
 function game_over()
     if( winner()==asc('X') )
+        animate()
         webapp.alert('<span style="font-size:20px">Game over, black won!</span>')
     elseif( winner()==asc('O') )
+        animate()
         webapp.alert('<span style="font-size:20px">Game over, white won!</span>')
     elseif( movecount()>=ROWCOL )
         webapp.alert("Table is full, draw!")
@@ -46,6 +48,43 @@ function game_over()
     total_nodes() // print statistics
     return .t.
 
+
+
+******************************************************************************
+static function animate()
+local wp,n,i
+    wp:=winpattern()
+    if( wp!=NIL )
+        asort(wp)
+
+        for n:=1 to 3
+            for i:=1 to 5
+                drawcell( wp[i], if(figure(topcell())==asc("X"),5,6) )
+                sleep(100)
+                drawcell(wp[i])
+            next
+        next
+        sleep(200)
+
+        for n:=1 to 3
+            webapp.script("XCODE.draw_normal()")
+            for i:=1 to len(wp)
+                drawcell(wp[i],0)
+            next
+            webapp.script("XCODE.draw_small()")
+            for i:=1 to len(wp)
+                drawcell(wp[i])
+            next
+            sleep(300)
+            webapp.script("XCODE.draw_normal()")
+            for i:=1 to len(wp)
+                drawcell(wp[i])
+            next
+            sleep(200)
+        next
+
+        drawtop()
+    end
 
 
 ******************************************************************************
