@@ -42,10 +42,10 @@ local canvas:=;
             <canvas id="table" width="CANVAS_WIDTH" height="CANVAS_HEIGHT" style="border:0px solid #d3d3d3;"/>
         </div>
         <div style="display:flex;padding:0px;margin-left:20px;margin-right:20px;align-items:center">
-            <label id="lastmove" style="font-size:LABELFONT;text-align:left;color:#000;flex:4">Last move:</label>
+            <label id="lastmove" style="font-size:LABELFONT;text-align:left;color:#000;flex:5">Last move:</label>
             <label id="turnlab"  style="font-size:LABELFONT;color:#000;flex:1">Turn:</label>
-            <label id="turnfig"  style="flex:1.8"></label>
-            <label id="rating"   style="font-size:LABELFONT;text-align:left;color:#000;flex:5">Rating:</label>
+            <label id="turnfig"  style="flex:2"></label>
+            <label id="rating"   style="font-size:LABELFONT;text-align:left;color:#000;flex:8">Rating:</label>
         </div>
     </div>
 

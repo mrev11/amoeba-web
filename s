@@ -7,9 +7,9 @@ export PATH=`pwd`/program:$PATH
 # hatastalan    : export AMOEBA_CELLSIZE=32
 # lehetseges    : export AMOEBA_TABLESIZE=14
 
- export AMOEBA_TABLESIZE=15
+# export AMOEBA_TABLESIZE=16
  export AMOEBA_BLINK=1
- export AMOEBA_POWER=auto
+ export AMOEBA_POWER=auto.8+
 # export AMOEBA_POWER_BLACK=3+
 # export AMOEBA_POWER_WHITE=2
 

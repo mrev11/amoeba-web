@@ -1,5 +1,5 @@
 
-iface=i3x                   # interface to listen (default: localhost)
+iface=0.0.0.0               # interface to listen (default: localhost)
 port=45678                  # port to listen (default: 45678)
 ssl=false                   # use SSL (default: true)
 keyfile=keys/webapp.pem
