@@ -1,5 +1,6 @@
+b2823fda90baf5da460708b8f15f016e0c77ea72 2024071715:16:11-UTC ./program/wamoeba/offline/rating_store.prg
+0328855cad2bdbe02dc254c569859b0d3bfb973e 2024071414:32:52-UTC ./program/wamoeba/offline/minimax.prg
 2bb1acc65aa797b86e19ae2df3b79c24255e56f3 2024071213:46:43-UTC ./CHANGELOG_vermes
-6116eaf22486b4879c86a0d78b42a853765e766a 2024071213:42:17-UTC ./program/wamoeba/offline/minimax.prg
 10466a70e64458c92377b9925a62bb7016965d73 2024071211:45:50-UTC ./program/wamoeba/offline/process_utime.cpp
 c20b1f537ea1c5ac41efa0124b95813c0dffcf90 2024071210:59:01-UTC ./program/wamoeba/offline/amoeba.ch
 49a3445a15a64ea7d96173ee64c1536740cc2bfb 2024071210:45:16-UTC ./program/wamoeba/offline/draw.ch
@@ -22,7 +23,6 @@ af5a6aa8edace038d212a5513d3c7d5095e5cbe5 2024062212:37:29-UTC ./program/wamoeba/
 2c6a1eb7204a21d7b6946c583350768a936861bf 2024062211:13:34-UTC ./program/wamoeba/offline/pattern.cpp
 f4f6b0d477ac58dc86446928dc5cfccc03a68b5a 2024062109:47:18-UTC ./program/wamoeba/offline/infolevel.prg
 841fba7401c0e5df2ed0ab3e9f98c9f2f984a13a 2024062022:36:11-UTC ./program/wamoeba/offline/precalc.prg
-6056c613945c0a419d4459a6f95d017e1317d0d7 2024061912:26:40-UTC ./program/wamoeba/offline/rating_store.prg
 6a903cde532012a023e7b4e90c4b48a8f0789342 2024061113:33:59-UTC ./program/wamoeba/offline/size.prg
 2ba60fe5a44e1eff081c5474f6e96b3f8a361292 2024060717:42:45-UTC ./common/webapp.css
 a0efd859ce45a3f7492128f0e8bfaf2c98451b1a 2024060517:33:30-UTC ./program/wamoeba/keypress.prg
@@ -44,7 +44,6 @@ c5a8aef135324b52722efd319514ee1a9f69dbfb 2023122117:55:54-UTC ./program/wamoeba/
 5d14f51e66902ec94859a68d9c01182a9991897c 2023122117:55:36-UTC ./program/wamoeba/parfile.bld
 f06fa95363335ff98346913fb5c55e93d10e5c3e 2023122013:42:40-UTC ./m
 99449163e997d3d79d24db53348606a6614b9953 2023101511:35:47-UTC ./push-as_bare
-bc4e52039c679d8601dfdecd6b5e1b4ed4e747a4 2023091612:22:06-UTC ./push-comfirm
 6a915bde4b72ae6e1737136273523d2a00fd3537 2022042922:17:19-UTC ./common/m
 58e245d8da8b6e9ec69235c7ca948c59070d61ff 2020020509:09:34-UTC ./common/webapp.js
 3f827ec3d22f7c789dfb517e48ce1fbefe8b82e5 2020020509:09:26-UTC ./common/src/javascript/webapp-readfile.js
