@@ -70,14 +70,14 @@ local canvas:=;
 
         <p><select id="power" style="font-size:LABELFONT;width:150px;margin-top:20px" onchange="XCODE.onclick_formdata(this.id)" >
             <option value="0">auto</option>
-            <option value="1">11,6,4,3,2                    </option>
-            <option value="2">12,7,5,4,3,3                  </option>
-            <option value="3">13,8,6,4,4,3,3                </option>
-            <option value="4">14,8,6,5,4,4,3,3              </option>
-            <option value="5">15,8,7,5,5,4,4,3,3            </option>
-            <option value="6">16,9,7,6,5,5,4,4,3,3          </option>
-            <option value="7">17,9,8,7,6,6,5,5,4,4,3,3      </option>
-            <option value="8">18,9,8,7,6,5,5,5,4,4,4,3,3,3  </option>
+            <option value="1">POW1</option>
+            <option value="2">POW2</option>
+            <option value="3">POW3</option>
+            <option value="4">POW4</option>
+            <option value="5">POW5</option>
+            <option value="6">POW6</option>
+            <option value="7">POW7</option>
+            <option value="8">POW8</option>
         </select>
 
         <hr style="margin:20px;width:60%"/>
@@ -101,6 +101,15 @@ local canvas:=;
     canvas::=strtran("BUTTON_NEW",BUTTON(new,New))
     canvas::=strtran("BUTTON_DEMO",BUTTON(demo,Demo))
     canvas::=strtran("VERSION_WEB",VERSION_WEB)
+
+    canvas::=strtran("POW1",POW1)
+    canvas::=strtran("POW2",POW2)
+    canvas::=strtran("POW3",POW3)
+    canvas::=strtran("POW4",POW4)
+    canvas::=strtran("POW5",POW5)
+    canvas::=strtran("POW6",POW6)
+    canvas::=strtran("POW7",POW7)
+    canvas::=strtran("POW8",POW8)
 
     return canvas
 
