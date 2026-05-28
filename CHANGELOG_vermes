@@ -1,10 +1,12 @@
-2024-08-24 javitasok atveve; 
+2026-05-28 systemd installációs scriptek;
 
-2024-08-02 javitasok atveve; 
+2024-08-24 javitasok atveve;
 
-2024-08-01 javitgatas; 
+2024-08-02 javitasok atveve;
 
-2024-07-30 
+2024-08-01 javitgatas;
+
+2024-07-30
    POW1,POW2,... bedrotozas helyett strtran-nal helyettesitve;
    javitasok atveve;
 
@@ -14,9 +16,9 @@
 
 2024-07-03
     idokorlat;
-    stabilizalas; 
+    stabilizalas;
 
-2024-06-30 
+2024-06-30
     megvaltozott pontrendszer;
     hot lepesek kovetese, elemzofa ag hosszabitasa;
     movegen passziv modja;
@@ -33,17 +35,17 @@
   Shift+Forward (button) -> Shift+Right (key)
   Shift+Back    (button) -> Shift+Left  (key)
 
-2024-06-05 
+2024-06-05
     navigalas a bestline agban;
     bestline navigacioban kisebb kovek;
 
 2024-06-02 version 2.2
 
-2024-05-24 Demo gombbal atkapcsol folyamatos jatekra; 
+2024-05-24 Demo gombbal atkapcsol folyamatos jatekra;
 
-2024-05-23 2.1 verzio; 
+2024-05-23 2.1 verzio;
 
-2024-05-18 
+2024-05-18
     offline reszek valtozasainek atvetele;
     nem kell a printlog();
 
@@ -68,13 +70,13 @@
 
 2024-04-06 verzio: 1.6.2
 
-2024-03-27 1.6.1 
+2024-03-27 1.6.1
    negy1 tipusu alakzatok berajzolsa javitva
    (javitas atveve az offline verziobol);
 
-2024-02-11 1.6.0  
+2024-02-11 1.6.0
 
-2024-01-18 1.5.2  
+2024-01-18 1.5.2
     best line kiirasa valtakozo szinekkel;
     a best line label torles helyett megtartva;
 

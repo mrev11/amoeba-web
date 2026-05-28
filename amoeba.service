@@ -1,0 +1,21 @@
+
+
+
+
+# ezt be kell masolni /etc/systemd/system ala
+
+[Unit]
+Description=amoeba
+After=network.target
+
+[Service]
+Type=simple
+
+User=vermes
+
+ExecStart=/home/vermes/amoeba-web/amoeba-server
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

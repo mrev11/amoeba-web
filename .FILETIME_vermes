@@ -1,4 +1,12 @@
-1fac3d769afe59b0cd78af7132b2336cb96e3a97 2024082421:59:30-UTC ./CHANGELOG_vermes
+57f21d11395f6021cea91937bfc203529f8f490d 2026052817:04:40-UTC ./CHANGELOG_vermes
+9422726e0bc79c2edb70d1ebbc882ee37dc79a98 2026052813:28:20-UTC ./amoeba-server
+0438539b9224cf06642cc4f1d6d4d23ae8ecc155 2026052813:26:51-UTC ./amoeba-server-log
+6721eed232de1380c00de475e0c48080f0297f0f 2026052813:24:32-UTC ./amoeba-server-start
+09946aa54fa40b01b067945efa6af37620a7b79e 2026052813:22:47-UTC ./amoeba-server-stop
+6636acf1ef21152f4ac544cdd3244a20cd44a9fb 2026052813:21:55-UTC ./amoeba-server-install
+0f88d2e48032272d2e86f059a06014d69b57f847 2026052813:21:08-UTC ./amoeba-server-status
+15d16a3a41e3866a82e93e408e29800b629dc155 2026052813:01:59-UTC ./amoeba.service
+aca8c4664cb6aafad353f654665e000c85796588 2026052812:50:44-UTC ./program/wamoeba/m
 901fb78a1378f1154dbabb4e3a7e76ae7b1b4676 2024082218:28:48-UTC ./program/wamoeba/offline/amoeba.ch
 644bc466f33c54a00957faa3f6911899e5570e1c 2024082119:17:49-UTC ./program/wamoeba/offline/go.prg
 368138ed7f80d112d353277bbb21b6bd55759dd0 2024081112:42:07-UTC ./program/wamoeba/offline/cell.cpp
@@ -138,4 +146,3 @@ fdd09e0b9f01b4dc20f9c6d39bfcd44fb65f3ed6 2017071717:42:55-UTC ./common/src/javas
 0b39d665614645d0c9aac5d8c4a2cb6c2bd99822 2017071717:24:49-UTC ./common/src/javascript/webapp-compat.js
 bb621715329f7c4d7bb62521a2f50d6e7ff08a0e 2017061914:35:15-UTC ./program/wamoeba/printlog.prg
 94e9bfacc2d4a1f998892ce9a138d49a0ef63267 2012111713:15:24-UTC ./keys/webapp.pem
-91eab751b24ae7b6113fc5e3dc837dac02de6820 2007072108:58:33-UTC ./program/wamoeba/m
