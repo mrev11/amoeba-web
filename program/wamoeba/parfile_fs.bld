@@ -6,6 +6,9 @@
 -bccc3_crypto
 -bccc3_zlib
 -bcrypto
+-bz
 
+-p/usr/local/lib/crypto
 
+BUILD_SHR=fullstatic
 BUILD_EXE=..
