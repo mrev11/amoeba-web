@@ -1,3 +1,4 @@
+fd3419c51a7408a8cc4e7213ae2e4eb7cf15cbdd 2026060116:28:58-UTC ./program/wamoeba/offline/x.ds
 0e10b0b66e9e04270b156a0edbe1474460085fa4 2026052817:20:06-UTC ./CHANGELOG_vermes
 22ba34591f63906316122e83fcca6ccaa3ea6417 2026052817:16:48-UTC ./program/wamoeba/mfs
 ac66a6cbe77d466f6638046ca920646a72d584ae 2026052817:16:01-UTC ./program/wamoeba/parfile_fs.bld
@@ -20,7 +21,6 @@ e46590efef02e2092307c66fe556ed4159d8c09b 2024080217:32:46-UTC ./program/wamoeba/
 4317f6d9fb3a4fbe40c3e1d55d764c4c56bb2f1f 2024080109:56:16-UTC ./program/wamoeba/offline/pattern.cpp
 218b5afec0d4fb11780cf5d295a41fedf2116f10 2024073011:44:33-UTC ./program/wamoeba/table.prg
 c5e810d53567e660306bfc43b67052436c1842b0 2024071815:47:42-UTC ./s
-ab68be7a7a2a1e320001c298d075478a299b0a74 2024071815:45:55-UTC ./program/wamoeba/offline/s.savex
 4ea8fcf4164368fab71f7d328313fc54c6ed26bb 2024071814:36:25-UTC ./webapp_config
 b2823fda90baf5da460708b8f15f016e0c77ea72 2024071715:16:11-UTC ./program/wamoeba/offline/rating_store.prg
 10466a70e64458c92377b9925a62bb7016965d73 2024071211:45:50-UTC ./program/wamoeba/offline/process_utime.cpp
