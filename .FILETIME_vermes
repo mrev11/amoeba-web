@@ -1,8 +1,12 @@
-cf3ebf0da2328d41f5b8d36b8a1e2b64d82970f4 2026060714:25:44-UTC ./CHANGELOG_vermes
+5ec9ae112ecc7f7ee5b1eb680d0d48368aedb3b0 2026061107:48:56-UTC ./CHANGELOG_vermes
+aee252fefe28c1a2cb3da06b9a938416e3f2b3d5 2026061018:40:44-UTC ./program/wamoeba/offline/hp.ds
+069b5f5b5b81a11692af4ebc7d4e952220e4af34 2026061016:39:19-UTC ./program/wamoeba/offline/minimax.prg
+28556a621849112e1769c900d083d199b2cdedfd 2026060920:59:33-UTC ./program/wamoeba/offline/pos2rc.prg
+5680457776667c8abf9ccef9dfc61ae8250a5b53 2026060920:55:07-UTC ./program/wamoeba/offline/cell_fun.cpp
+d3b0418def38792dabae49da53cabc25237968da 2026060916:03:08-UTC ./program/wamoeba/offline/cell_print.cpp
+423cadf28964ac9ac6d450a141876309b1aff940 2026060914:15:26-UTC ./program/wamoeba/offline/precalc.prg
 f5a93712db26f02180750732926df4e2ad012587 2026060714:24:08-UTC ./README.md
-752bca2647a449690f52b7800f1651034cf31694 2026060523:06:47-UTC ./program/wamoeba/offline/minimax.prg
 3e7018f6ad069f23b84746f5cd735f8f1715460c 2026060523:05:54-UTC ./program/wamoeba/offline/go.prg
-58f16862cb5264ad5fcfb1a8806852787cbab0b1 2026060515:54:18-UTC ./program/wamoeba/offline/precalc.prg
 12c3736bc584b49cbdb4a9174df2f780bb5e6812 2026060507:58:56-UTC ./program/wamoeba/offline/amoeba.ch
 849c88296527db8ad816853e20e28f22370f8210 2026060318:30:14-UTC ./program/wamoeba/offline/process_utime.cpp
 2905c62e57b3431a67be34d7ce4a64ec3cbf19b3 2026060317:36:46-UTC ./program/wamoeba/offline/totalnodes.prg
@@ -21,7 +25,6 @@ ac66a6cbe77d466f6638046ca920646a72d584ae 2026052817:16:01-UTC ./program/wamoeba/
 aca8c4664cb6aafad353f654665e000c85796588 2026052812:50:44-UTC ./program/wamoeba/m
 368138ed7f80d112d353277bbb21b6bd55759dd0 2024081112:42:07-UTC ./program/wamoeba/offline/cell.cpp
 1828deef0a443883bff29eb3198c8ef161c881bc 2024081112:42:07-UTC ./program/wamoeba/offline/cell.h
-dcf1d004e1104c49e8391924e9fdc6ec630998f1 2024081112:42:07-UTC ./program/wamoeba/offline/cell_print.cpp
 4317f6d9fb3a4fbe40c3e1d55d764c4c56bb2f1f 2024080109:56:16-UTC ./program/wamoeba/offline/pattern.cpp
 218b5afec0d4fb11780cf5d295a41fedf2116f10 2024073011:44:33-UTC ./program/wamoeba/table.prg
 c5e810d53567e660306bfc43b67052436c1842b0 2024071815:47:42-UTC ./s
@@ -30,7 +33,6 @@ b2823fda90baf5da460708b8f15f016e0c77ea72 2024071715:16:11-UTC ./program/wamoeba/
 49a3445a15a64ea7d96173ee64c1536740cc2bfb 2024071210:45:16-UTC ./program/wamoeba/offline/draw.ch
 a713ae6b8435740cb686e63fb253df036fc2290c 2024071210:34:22-UTC ./program/wamoeba/offline/cell_movegen.cpp
 6d0e0ac2cfaae288cd1638435de748b73c3f87aa 2024070710:16:42-UTC ./program/wamoeba/offline/power.prg
-3c86264946daf855153ba8e866ccce5603e0cad1 2024070619:23:10-UTC ./program/wamoeba/offline/cell_fun.cpp
 21439d89cfac2153d7d82060ef4a62a417f59ede 2024070414:20:34-UTC ./program/wamoeba/util.prg
 da6672a4d7622e9c8e7801ac39e012334c505155 2024070312:03:56-UTC ./program/wamoeba/wamoeba.prg
 311b4c12fc74d230e0c8c53655f219b43171b846 2024070205:55:01-UTC ./program/wamoeba/offline/cache.cpp
@@ -48,14 +50,11 @@ f7a9c803cb2934137288657dbe2a33230970a6e7 2024052408:19:22-UTC ./program/wamoeba/
 44988f5cc88957ef70f9b00a97f5948ce0ba3714 2024050217:51:26-UTC ./program/wamoeba/offline/posvalue.cpp
 61180f0342d6e299bbf9c3e35730349aa43b4c7a 2024050207:30:06-UTC ./program/wamoeba/offline/pattern.h
 2e44edde040beff8e701a5945330ec674d93b877 2024050108:35:46-UTC ./program/wamoeba/offline/cell_randomize.cpp
-e65b2370299485f845510d6cd182abbb0de45b80 2024040514:23:07-UTC ./program/wamoeba/offline/pos2rc.prg
 8c5bcf38603eadcb63de92e8027757c282df1800 2024011410:08:48-UTC ./common/favicon.svg
 c71333f4ed6e90c4ceeed0afb4422efaa1f23f7d 2023122314:45:03-UTC ./program/wamoeba/svgcircle.prg
 fc0a3e3175bbd4039b6f1ae8644d6e2151520422 2023122122:34:22-UTC ./program/m
 c5a8aef135324b52722efd319514ee1a9f69dbfb 2023122117:55:54-UTC ./program/wamoeba/offline/OLVASS
 f06fa95363335ff98346913fb5c55e93d10e5c3e 2023122013:42:40-UTC ./m
-99449163e997d3d79d24db53348606a6614b9953 2023101511:35:47-UTC ./push-as_bare
-bc4e52039c679d8601dfdecd6b5e1b4ed4e747a4 2023091612:22:06-UTC ./push-comfirm
 6a915bde4b72ae6e1737136273523d2a00fd3537 2022042922:17:19-UTC ./common/m
 58e245d8da8b6e9ec69235c7ca948c59070d61ff 2020020509:09:34-UTC ./common/webapp.js
 3f827ec3d22f7c789dfb517e48ce1fbefe8b82e5 2020020509:09:26-UTC ./common/src/javascript/webapp-readfile.js
