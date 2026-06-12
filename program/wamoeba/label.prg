@@ -72,7 +72,7 @@ local x:=topcell()
     if( x==NIL )
         fd:put("lastmove","Last move: <big>"+m::str::alltrim+"</big>")
     else
-        x:=pos2rc(x)
+        x:=pos2rcx(x,.t.)
         fd:put("lastmove","Last move: <big>"+m::str::alltrim+":"+x+"</big>")
     end
 

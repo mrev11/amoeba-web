@@ -1,12 +1,15 @@
-5ec9ae112ecc7f7ee5b1eb680d0d48368aedb3b0 2026061107:48:56-UTC ./CHANGELOG_vermes
+d51c58b888a6d36d61a11e16579ac28b8d592f90 2026061211:35:15-UTC ./CHANGELOG_vermes
+23ede2a6858eb4403511513486a1d44f5d5bf395 2026061111:52:07-UTC ./log-webapp
+804aff382ab66c0ae54d70a3f373d0e478f9dc46 2026061111:52:02-UTC ./log-amoeba
+b7e4a06c2e52ed9f534e39816737377383aedb7c 2026061111:28:37-UTC ./program/wamoeba/label.prg
+865c8b40e548933f376a632d447c426d3f42e2de 2026061111:26:00-UTC ./program/wamoeba/offline/go.prg
+05c94ccede73101e74ff7b9c87116400366b6d99 2026061110:40:08-UTC ./program/wamoeba/offline/minimax.prg
+0f79aadc8d574a80def20b43c9523bf381f8dc98 2026061110:26:11-UTC ./program/wamoeba/offline/pos2rc.prg
 aee252fefe28c1a2cb3da06b9a938416e3f2b3d5 2026061018:40:44-UTC ./program/wamoeba/offline/hp.ds
-069b5f5b5b81a11692af4ebc7d4e952220e4af34 2026061016:39:19-UTC ./program/wamoeba/offline/minimax.prg
-28556a621849112e1769c900d083d199b2cdedfd 2026060920:59:33-UTC ./program/wamoeba/offline/pos2rc.prg
 5680457776667c8abf9ccef9dfc61ae8250a5b53 2026060920:55:07-UTC ./program/wamoeba/offline/cell_fun.cpp
 d3b0418def38792dabae49da53cabc25237968da 2026060916:03:08-UTC ./program/wamoeba/offline/cell_print.cpp
 423cadf28964ac9ac6d450a141876309b1aff940 2026060914:15:26-UTC ./program/wamoeba/offline/precalc.prg
 f5a93712db26f02180750732926df4e2ad012587 2026060714:24:08-UTC ./README.md
-3e7018f6ad069f23b84746f5cd735f8f1715460c 2026060523:05:54-UTC ./program/wamoeba/offline/go.prg
 12c3736bc584b49cbdb4a9174df2f780bb5e6812 2026060507:58:56-UTC ./program/wamoeba/offline/amoeba.ch
 849c88296527db8ad816853e20e28f22370f8210 2026060318:30:14-UTC ./program/wamoeba/offline/process_utime.cpp
 2905c62e57b3431a67be34d7ce4a64ec3cbf19b3 2026060317:36:46-UTC ./program/wamoeba/offline/totalnodes.prg
@@ -43,7 +46,6 @@ f4f6b0d477ac58dc86446928dc5cfccc03a68b5a 2024062109:47:18-UTC ./program/wamoeba/
 6a903cde532012a023e7b4e90c4b48a8f0789342 2024061113:33:59-UTC ./program/wamoeba/offline/size.prg
 2ba60fe5a44e1eff081c5474f6e96b3f8a361292 2024060717:42:45-UTC ./common/webapp.css
 a0efd859ce45a3f7492128f0e8bfaf2c98451b1a 2024060517:33:30-UTC ./program/wamoeba/keypress.prg
-e863eff94c4d8641a406dcc7ae396e0e817946f9 2024060515:28:15-UTC ./program/wamoeba/label.prg
 f7a9c803cb2934137288657dbe2a33230970a6e7 2024052408:19:22-UTC ./program/wamoeba/draw.prg
 3a3061b43e354ea65a627032ccd83998de3de940 2024052318:22:14-UTC ./program/wamoeba/compat.prg
 08f19d0347277bf6f23d8f3c1b2a344ead761776 2024050313:30:39-UTC ./program/wamoeba/offline/numformat.cpp
