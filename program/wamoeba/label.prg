@@ -95,7 +95,8 @@ local rating:=rating_string()
 local recalc:=recalc_string()
     if( !empty(recalc) )
         if( abs(val(recalc))>PVALUE_INFIN-100 )
-            recalc:="<span style='color:red'>"+recalc+"</span>"
+            //recalc:="<span style='color:red'>"+recalc+"</span>"
+            recalc:="<span style='color:#d00000'>"+recalc+"</span>"
         else
             recalc:="<span style='color:green'>"+recalc+"</span>"
         end
