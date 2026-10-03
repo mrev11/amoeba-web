@@ -1,10 +1,10 @@
 #!/bin/bash
-# ez a script service-kent is es 
+# ez a script service-kent is es
 # parancssorbol is elinditja webapp-ot
 
 HERE=${0%/*}
+. ~/envccc
 cd $HERE
-. ~/bashrcx
 
 export PATH=$(pwd)/program:$PATH
 

@@ -2,7 +2,7 @@
 # bemasolni ~/.config/systemd/user ala
 
 [Unit]
-Description=amoeba
+Description=Amoeba for the WEB
 After=network.target
 
 [Service]
@@ -14,7 +14,7 @@ Type=simple
 # aktualizalni kell az s-hez vezeto path-t
 
 
-ExecStart=%h/amo/amoeba-web/s
+ExecStart=%h/amoeba-web/s
 Restart=always
 RestartSec=10
 
