@@ -1,18 +1,17 @@
 #!/bin/bash
-rm  -f log-webapp*
+# ez a script service-kent is es 
+# parancssorbol is elinditja webapp-ot
 
-export PATH=`pwd`/program:$PATH
+HERE=${0%/*}
+cd $HERE
+. ~/bashrcx
 
-# teszteleshez  : export AMOEBA_CONTINUOUS_PLAY=1
-# hatastalan    : export AMOEBA_CELLSIZE=32
-# lehetseges    : export AMOEBA_TABLESIZE=14
+export PATH=$(pwd)/program:$PATH
 
-# export AMOEBA_TABLESIZE=16
- export AMOEBA_BLINK=1
- export AMOEBA_POWER=auto.8+
-# export AMOEBA_POWER_BLACK=3+
-# export AMOEBA_POWER_WHITE=2
+export AMOEBA_BLINK=1
+export AMOEBA_POWER=auto.8+
+export AMOEBA_TIME_LIMIT=300
 
-webapp.exe   | tee log-amoeba
+webapp.exe | tee log-amoeba
 
 

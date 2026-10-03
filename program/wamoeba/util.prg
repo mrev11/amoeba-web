@@ -67,16 +67,16 @@ local wp,n,i
         sleep(200)
 
         for n:=1 to 3
-            webapp.script("XCODE.draw_normal()")
+            webapp.script("WEBAPP.draw_normal()")
             for i:=1 to len(wp)
                 drawcell(wp[i],0)
             next
-            webapp.script("XCODE.draw_small()")
+            webapp.script("WEBAPP.draw_small()")
             for i:=1 to len(wp)
                 drawcell(wp[i])
             next
             sleep(300)
-            webapp.script("XCODE.draw_normal()")
+            webapp.script("WEBAPP.draw_normal()")
             for i:=1 to len(wp)
                 drawcell(wp[i])
             next

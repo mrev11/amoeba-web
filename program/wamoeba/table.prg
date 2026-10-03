@@ -21,7 +21,7 @@
 #include "amoeba.ch"
 
 #define BUTTON(ID,VALUE); 
-'<input id="ID" type="button" value="VALUE" style="width:150px;height:50px;font-size:20px" onclick="XCODE.onclick_formdata(this.id)" ></input>'::strtran("ID",#ID)::strtran("VALUE",#VALUE)
+'<input id="ID" type="button" value="VALUE" style="width:150px;height:50px;font-size:20px" onclick="WEBAPP.formdata(this.id)" ></input>'::strtran("ID",#ID)::strtran("VALUE",#VALUE)
 
 
 
@@ -61,14 +61,14 @@ local canvas:=;
         <hr style="margin:20px;width:60%"/>
 
         <div style="width:150px;margin:10;display:flex;align-items:center;">
-            <input id="info" type="checkbox" style="flex:1;height:20px" onclick="XCODE.onclick_formdata(this.id)"/>
+            <input id="info" type="checkbox" style="flex:1;height:20px" onclick="WEBAPP.formdata(this.id)"/>
             <span style="flex:3;color:#000;font-size:20px">Info</span>
         </div>
         
         
         <p>BUTTON_RECALC
 
-        <p><select id="power" style="font-size:LABELFONT;width:150px;margin-top:20px" onchange="XCODE.onclick_formdata(this.id)" >
+        <p><select id="power" style="font-size:LABELFONT;width:150px;margin-top:20px;padding:10px;" onchange="WEBAPP.formdata(this.id)" >
             <option value="0">auto</option>
             <option value="1">POW1</option>
             <option value="2">POW2</option>
@@ -145,14 +145,14 @@ let draw_normal=function() // block scope (de hol?)
 {
     radius=cellsize/3;
 }
-XCODE.draw_normal=draw_normal;
+WEBAPP.draw_normal=draw_normal;
 
 
 let draw_small=function() // block scope (de hol?)
 {
     radius=cellsize/4;
 }
-XCODE.draw_small=draw_small;
+WEBAPP.draw_small=draw_small;
 
 
 let draw_circle=function(x,y,fig) // block scope (de hol?)
@@ -204,7 +204,7 @@ let draw_circle=function(x,y,fig) // block scope (de hol?)
         ctx.fill();
     }    
 }
-XCODE.draw_circle=draw_circle;
+WEBAPP.draw_circle=draw_circle;
 
 
 let event_mouse=function(event)
@@ -237,7 +237,7 @@ let event_mouse=function(event)
             //}
             document.getElementById("coord_x").value=x;
             document.getElementById("coord_y").value=y;
-            XCODE.formdata(this.id);
+            WEBAPP.formdata(this.id);
         }
     }
 }

@@ -1,8 +1,5 @@
 
-
-
-
-# ezt be kell masolni /etc/systemd/system ala
+# bemasolni ~/.config/systemd/user ala
 
 [Unit]
 Description=amoeba
@@ -11,11 +8,16 @@ After=network.target
 [Service]
 Type=simple
 
-User=vermes
 
-ExecStart=/home/vermes/amoeba-web/amoeba-server
+# az s script service-kent is es 
+# parancssorbol is elinditja webapp-ot
+# aktualizalni kell az s-hez vezeto path-t
+
+
+ExecStart=%h/amo/amoeba-web/s
 Restart=always
 RestartSec=10
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
+

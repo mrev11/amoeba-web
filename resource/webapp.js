@@ -1,135 +1,84 @@
 
 
-var XCODE={};
-
-
-//------------------------------------------------------------------------------
-XCODE.onload=function(uri)
-//------------------------------------------------------------------------------
+if( String.prototype.includes==undefined )
 {
-    //burkolo objektumok
-    XCODE.window={x:window};
-    XCODE.document={x:window.document};
-    XCODE.body={x:window.document.body};
-
-    XCODE.websckuri=uri;
-    XCODE.connected=false;
-    XCODE.privatedata=[]; //array
-    XCODE.debug=true;
-
-    XCODE.websocket = new window.WebSocket(uri);
-    XCODE.window.x.onkeydown=function(event)
+    String.prototype.includes=function(x)
     {
-        //a websocket lezáródása ellen
-        if( event.which==27 )
-        {
-            event.preventDefault();
-        }
+        return this.indexOf(x)>=0;
     }
-    XCODE.websocket.onopen = function(evt) { XCODE.onopen(evt) };
-    XCODE.websocket.onclose = function(evt) { XCODE.onclose(evt) };
-    XCODE.websocket.onmessage = function(evt) { XCODE.onmessage(evt) };
-    XCODE.websocket.onerror = function(evt) { XCODE.onerror(evt) };
-
-    XCODE.webapp=XCODE.region("webapp");
-    XCODE.body.x.appendChild(XCODE.webapp.x);
-
-    XCODE.menuicon=XCODE.div("menuicon");
-    XCODE.webapp.scroll.x.insertBefore(XCODE.menuicon.x,XCODE.webapp.display.x);
-    XCODE.menuicon.x.appendChild(XCODE.document.x.createElement("div"))
-    XCODE.menuicon.x.appendChild(XCODE.document.x.createElement("div"))
-    XCODE.menuicon.x.appendChild(XCODE.document.x.createElement("div"))
-    XCODE.menuicon.x.accessKey="m";
-    XCODE.menuicon.x.onclick=function(){XCODE.menuicon_clicked()};
-
-    XCODE.overlay=XCODE.div("overlay");
-    XCODE.body.x.appendChild(XCODE.overlay.x);
-    XCODE.blind=XCODE.div("blind");
-    XCODE.overlay.x.appendChild(XCODE.blind.x);
-
-    XCODE.dnloadlink=XCODE.document.x.createElement("a");
-    XCODE.body.x.appendChild(XCODE.dnloadlink);
-    XCODE.dnloadlink.id="dnloadlink";
-    XCODE.dnloadlink.download="";
-    XCODE.dnloadlink.target="_blank";
-    XCODE.dnloadlink.style.display="none";
-
-
-    XCODE.frmaux=XCODE.region("frmaux"); 
-    XCODE.body.x.appendChild(XCODE.frmaux.x);
-    XCODE.frmaux.clear=function(){XCODE.frmaux.display.x.innerHTML='';}
-    XCODE.frmaux.write=function(message){XCODE.frmaux.display.x.innerHTML+=message+' ';}
-    XCODE.frmaux.writeln=function(message)
-    {
-        var x=XCODE.frmaux.display.x.innerHTML;
-        var n=24, pos=x.length;
-        while( n>0 && (pos=x.lastIndexOf("###",pos-1))>=0 )
-        {
-            n--;
-            if( x.length-pos>100*1024  )
-            {
-                n=0;
-                break;
-            }
-        }
-        if( n==0 && pos>=0 )
-        {
-            x=x.substring(pos);
-        }
-        XCODE.frmaux.display.x.innerHTML=x+message+' <br/>';
-        //az aljára scrolloz
-        var scr=XCODE.frmaux.scroll.x;
-        scr.scrollTop=scr.scrollHeight-scr.clientHeight; 
-    }
-    XCODE.frmaux.visible=function(flag)
-    {
-        // true-ra debug mode on
-        // false-ra debug mode off
-        
-        if( flag )
-        {
-            XCODE.frmaux.x.style.display="block";
-            XCODE.webapp.resize.x.style.display="block";
-            XCODE.webapp.x.style.flex="0 0 auto";
-            //XCODE.webapp.x.style.height="300px";
-            XCODE.webapp.x.style.height=(XCODE.window.x.innerHeight*0.66+"px")   ;
-        }
-        else
-        {
-            XCODE.frmaux.x.style.display="none";
-            XCODE.webapp.resize.x.style.display="none";
-            XCODE.webapp.x.style.flex="1 0 auto";
-            XCODE.webapp.x.style.height="initial";
-        }
-    }
-
-    //ezzel ebred
-    XCODE.debug=false;
-    XCODE.frmaux.visible(XCODE.debug);
 }
 
+if( String.prototype.startsWith==undefined )
+{
+    String.prototype.startsWith=function(x)
+    {
+        return this.indexOf(x)==0;
+    }
+}
+
+if( String.prototype.endsWith==undefined )
+{
+    String.prototype.endsWith=function(x)
+    {
+        return this.lastIndexOf(x)==(this.length-x.length);
+    }
+}
+
+if( String.prototype.repeat==undefined )
+{
+    String.prototype.repeat=function(x)
+    {
+        var r="";
+        while(x>0.5)
+        {
+            r+=this;
+            x--;
+        } 
+        return r;
+    }
+}
+
+
+var WEBAPP={};
+
+
+WEBAPP.xlib={}; //objektumtár
+WEBAPP.xlib.isdefined=function(id)
+{
+    if( WEBAPP.xlib[id]!=undefined  )
+    {
+        WEBAPP.echo('<isdefined>true</isdefined>');
+    }
+    else
+    {
+        WEBAPP.echo('<isdefined>false</isdefined>');
+    }
+};
+
+
+
 //------------------------------------------------------------------------------
-XCODE.div=function(id,cl) //div-et tartalmazo burkolokat gyart
+WEBAPP.div=function(id,cl) //div-et tartalmazo burkolokat gyart
 //------------------------------------------------------------------------------
 {
-    var x=XCODE.document.x.createElement("div");
+    var x=WEBAPP.document.x.createElement("div");
     if(id!=undefined) x.id=id;
     if(cl!=undefined) x.className=cl;
     return {x:x};
 }
 
 //------------------------------------------------------------------------------
-XCODE.region=function(id)
+WEBAPP.region=function(id)
 //------------------------------------------------------------------------------
 {
-    var reg=XCODE.div("region_"+id,"region");    
-    reg.scroll=XCODE.div("scroll_"+id,"scroll");    
+    var reg=WEBAPP.div("region_"+id,"region");    
+    reg.scroll=WEBAPP.div("scroll_"+id,"scroll");    
     reg.x.appendChild(reg.scroll.x);
 
-    reg.display=XCODE.div("display_"+id,"display"); 
+    reg.display=WEBAPP.div("display_"+id,"display"); 
     reg.scroll.x.appendChild(reg.display.x);
 
-    reg.resize=XCODE.div("resize_"+id,"resize"); 
+    reg.resize=WEBAPP.div("resize_"+id,"resize"); 
     reg.x.appendChild(reg.resize.x);
     
     
@@ -157,7 +106,7 @@ XCODE.region=function(id)
         if( elem.active )
         {
             var par=elem.parentElement;
-            par.style.height=String(e.clientY-par.offsetTop+XCODE.body.x.scrollTop)+'px';
+            par.style.height=String(e.clientY-par.offsetTop+WEBAPP.body.x.scrollTop)+'px';
             e.preventDefault();
         }
     }
@@ -167,44 +116,151 @@ XCODE.region=function(id)
 }
 
 //------------------------------------------------------------------------------
-XCODE.menuicon_clicked=function()
+WEBAPP.menuicon_clicked=function()
 //------------------------------------------------------------------------------
 {
-    XCODE.frmaux.visible(XCODE.frmaux.x.style.display=="none");
+    WEBAPP.frmaux.visible(WEBAPP.frmaux.x.style.display=="none");
+}
+
+//------------------------------------------------------------------------------
+WEBAPP.onload=function(uri)
+//------------------------------------------------------------------------------
+{
+    //burkolo objektumok
+    WEBAPP.window={x:window};
+    WEBAPP.document={x:window.document};
+    WEBAPP.body={x:window.document.body};
+
+    WEBAPP.websckuri=uri;
+    WEBAPP.connected=false;
+    WEBAPP.privatedata=[]; //array
+    WEBAPP.debug=true;
+
+    WEBAPP.websocket = new window.WebSocket(uri);
+    WEBAPP.window.x.onkeydown=function(event)
+    {
+        //a websocket lezáródása ellen
+        if( event.which==27 )
+        {
+            event.preventDefault();
+        }
+    }
+    WEBAPP.websocket.onopen = function(evt) { WEBAPP.onopen(evt) };
+    WEBAPP.websocket.onclose = function(evt) { WEBAPP.onclose(evt) };
+    WEBAPP.websocket.onmessage = function(evt) { WEBAPP.onmessage(evt) };
+    WEBAPP.websocket.onerror = function(evt) { WEBAPP.onerror(evt) };
+
+    WEBAPP.webapp=WEBAPP.region("webapp");
+    WEBAPP.body.x.appendChild(WEBAPP.webapp.x);
+
+    WEBAPP.menuicon=WEBAPP.div("menuicon");
+    WEBAPP.webapp.scroll.x.insertBefore(WEBAPP.menuicon.x,WEBAPP.webapp.display.x);
+    WEBAPP.menuicon.x.appendChild(WEBAPP.document.x.createElement("div"))
+    WEBAPP.menuicon.x.appendChild(WEBAPP.document.x.createElement("div"))
+    WEBAPP.menuicon.x.appendChild(WEBAPP.document.x.createElement("div"))
+    WEBAPP.menuicon.x.accessKey="m";
+    WEBAPP.menuicon.x.onclick=function(){WEBAPP.menuicon_clicked()};
+
+    WEBAPP.overlay=WEBAPP.div("overlay");
+    WEBAPP.body.x.appendChild(WEBAPP.overlay.x);
+    WEBAPP.blind=WEBAPP.div("blind");
+    WEBAPP.overlay.x.appendChild(WEBAPP.blind.x);
+
+    WEBAPP.dnloadlink=WEBAPP.document.x.createElement("a");
+    WEBAPP.body.x.appendChild(WEBAPP.dnloadlink);
+    WEBAPP.dnloadlink.id="dnloadlink";
+    WEBAPP.dnloadlink.download="";
+    WEBAPP.dnloadlink.target="_blank";
+    WEBAPP.dnloadlink.style.display="none";
+
+
+    WEBAPP.frmaux=WEBAPP.region("frmaux"); 
+    WEBAPP.body.x.appendChild(WEBAPP.frmaux.x);
+    WEBAPP.frmaux.clear=function(){WEBAPP.frmaux.display.x.innerHTML='';}
+    WEBAPP.frmaux.write=function(message){WEBAPP.frmaux.display.x.innerHTML+=message+' ';}
+    WEBAPP.frmaux.writeln=function(message)
+    {
+        var x=WEBAPP.frmaux.display.x.innerHTML;
+        var n=24, pos=x.length;
+        while( n>0 && (pos=x.lastIndexOf("###",pos-1))>=0 )
+        {
+            n--;
+            if( x.length-pos>100*1024  )
+            {
+                n=0;
+                break;
+            }
+        }
+        if( n==0 && pos>=0 )
+        {
+            x=x.substring(pos);
+        }
+        WEBAPP.frmaux.display.x.innerHTML=x+message+' <br/>';
+        //az aljára scrolloz
+        var scr=WEBAPP.frmaux.scroll.x;
+        scr.scrollTop=scr.scrollHeight-scr.clientHeight; 
+    }
+    WEBAPP.frmaux.visible=function(flag)
+    {
+        // true-ra debug mode on
+        // false-ra debug mode off
+        
+        if( flag )
+        {
+            WEBAPP.frmaux.x.style.display="block";
+            WEBAPP.webapp.resize.x.style.display="block";
+            WEBAPP.webapp.x.style.flex="0 0 auto";
+            //WEBAPP.webapp.x.style.height="300px";
+            WEBAPP.webapp.x.style.height=(WEBAPP.window.x.innerHeight*0.66+"px")   ;
+        }
+        else
+        {
+            WEBAPP.frmaux.x.style.display="none";
+            WEBAPP.webapp.resize.x.style.display="none";
+            WEBAPP.webapp.x.style.flex="1 0 auto";
+            WEBAPP.webapp.x.style.height="initial";
+        }
+    }
+
+    //ezzel ebred
+    WEBAPP.debug=false;
+    WEBAPP.frmaux.visible(WEBAPP.debug);
+    
+    //console.log(WEBAPP);
 }
 
 //------------------------------------------------------------------------------
 
 
 //------------------------------------------------------------------------------
-XCODE.onopen=function(evt)
+WEBAPP.onopen=function(evt)
 //------------------------------------------------------------------------------
 {
-    XCODE.frmaux.writeln("CONNECTED");
-    XCODE.connected=true;
+    WEBAPP.frmaux.writeln("CONNECTED");
+    WEBAPP.connected=true;
 }
 
 //------------------------------------------------------------------------------
-XCODE.onclose=function(evt)
+WEBAPP.onclose=function(evt)
 //------------------------------------------------------------------------------
 {
     alert("websocket closed");
-    XCODE.frmaux.writeln("DISCONNECTED");
-    XCODE.connected=false;
+    WEBAPP.frmaux.writeln("DISCONNECTED");
+    WEBAPP.connected=false;
 }
 
 //------------------------------------------------------------------------------
-XCODE.onmessage=function(evt)
+WEBAPP.onmessage=function(evt)
 //------------------------------------------------------------------------------
 {
     var txt=evt.data;
 
     try
     {
-        if( XCODE.debug )
+        if( WEBAPP.debug )
         {
             //mutatja, mit kapott
-            XCODE.frmaux.writeln('###<span style="color: blue;">'+XCODE.htmlstring(txt)+'</span>');
+            WEBAPP.frmaux.writeln('###<span style="color: blue;">'+WEBAPP.htmlstring(txt)+'</span>');
         }
         eval(txt);
     }
@@ -215,33 +271,33 @@ XCODE.onmessage=function(evt)
         console.log(txt);
 
         //üzenet: frmaux-ba        
-        XCODE.frmaux.writeln('<span style="color: red;">'+err+'</span>');
-        XCODE.frmaux.writeln('###<span style="color: red;">'+XCODE.htmlstring(txt)+'</span>');
+        WEBAPP.frmaux.writeln('<span style="color: red;">'+err+'</span>');
+        WEBAPP.frmaux.writeln('###<span style="color: red;">'+WEBAPP.htmlstring(txt)+'</span>');
 
         //üzenet: szervernek
-        XCODE.senderror(err.toString(),txt);
+        WEBAPP.senderror(err.toString(),txt);
     }
 }
 
 //------------------------------------------------------------------------------
-XCODE.onerror=function(evt)
+WEBAPP.onerror=function(evt)
 //------------------------------------------------------------------------------
 {
-    XCODE.frmaux.write('websocket error:');
-    XCODE.frmaux.writeln(evt.toString());
-    XCODE.connected=false;
+    WEBAPP.frmaux.write('websocket error:');
+    WEBAPP.frmaux.writeln(evt.toString());
+    WEBAPP.connected=false;
 }
 
 
 //------------------------------------------------------------------------------
-XCODE.send=function(message)
+WEBAPP.send=function(message)
 //------------------------------------------------------------------------------
 {
-    if( XCODE.connected )
+    if( WEBAPP.connected )
     {
-        XCODE.websocket.send(message);
+        WEBAPP.websocket.send(message);
         //mutatja, mit küldött
-        if( XCODE.debug )
+        if( WEBAPP.debug )
         {
             var x='###<span style="color:COLOR;">'
             if( 0==message.indexOf("<error>") )
@@ -256,78 +312,326 @@ XCODE.send=function(message)
             {
                 x=x.replace("COLOR","green");
             }
-            x+=XCODE.htmlstring(message);
+            x+=WEBAPP.htmlstring(message);
             x+='</span>';
-            XCODE.frmaux.writeln(x);
+            WEBAPP.frmaux.writeln(x);
         }
     }
     else
     {
-        alert("A munkamenet megszakadt");
+        alert("session closed");
     }
 }
 
 //------------------------------------------------------------------------------
-XCODE.senderror=function(desc,args)
+WEBAPP.senderror=function(desc,args)
 //------------------------------------------------------------------------------
 {
     var msg="";
     msg+='<error>';
     msg+='<description>';
-    msg+=XCODE.cdataif( desc );
+    msg+=WEBAPP.cdataif( desc );
     msg+='</description>';
     msg+='<args>';
-    msg+=XCODE.cdataif(args);
+    msg+=WEBAPP.cdataif(args);
     msg+='</args>';
     msg+='</error>';
-    XCODE.send(msg);
+    WEBAPP.send(msg);
 }
 
 //------------------------------------------------------------------------------
-XCODE.sendwarning=function(desc,args)
+WEBAPP.sendwarning=function(desc,args)
 //------------------------------------------------------------------------------
 {
     var msg="";
     msg+='<warning>';
     msg+='<description>';
-    msg+=XCODE.cdataif( desc );
+    msg+=WEBAPP.cdataif( desc );
     msg+='</description>';
     msg+='<args>';
-    msg+=XCODE.cdataif(args);
+    msg+=WEBAPP.cdataif(args);
     msg+='</args>';
     msg+='</warning>';
-    XCODE.send(msg);
+    WEBAPP.send(msg);
 }
 
 //------------------------------------------------------------------------------
 
 
 
-XCODE.onclick_in_progress=false;
-
 //------------------------------------------------------------------------------
-XCODE.onclick_formdata=function(srcid) //fékezve küld
+WEBAPP.privatelength=function()
 //------------------------------------------------------------------------------
 {
-    if(!XCODE.onclick_in_progress)
+    WEBAPP.send("<PRIVATELENGTH>"+WEBAPP.privatedata.length.toString()+"</PRIVATELENGTH>");
+}
+
+//------------------------------------------------------------------------------
+WEBAPP.privatepop=function(len)
+//------------------------------------------------------------------------------
+{
+    while(WEBAPP.privatedata.length>len)
     {
-        XCODE.onclick_in_progress=true;
-        setTimeout("XCODE.onclick_in_progress=false",100);
-        XCODE.formdata(srcid);
+        WEBAPP.privatedata.pop();
+    }
+}
+
+//------------------------------------------------------------------------------
+WEBAPP.privatepush=function()
+//------------------------------------------------------------------------------
+{
+    WEBAPP.privatedata.push(new Array());
+}
+
+//------------------------------------------------------------------------------
+WEBAPP.setprivatedata=function(key,data)
+//------------------------------------------------------------------------------
+{
+    tail=WEBAPP.privatedata[ WEBAPP.privatedata.length-1 ]; //utolsó elem
+    tail[key]=data;
+}
+
+//------------------------------------------------------------------------------
+WEBAPP.getprivatedata=function(key)
+//------------------------------------------------------------------------------
+{
+    tail=WEBAPP.privatedata[ WEBAPP.privatedata.length-1 ]; //utolsó elem
+    return tail[key];
+}
+
+//------------------------------------------------------------------------------
+WEBAPP.savedisplay=function(key)
+//------------------------------------------------------------------------------
+{
+    WEBAPP.webapp.display.savefocus=WEBAPP.document.x.activeElement;
+    WEBAPP.setprivatedata(key,WEBAPP.webapp.display); //burkolo
+}
+
+//------------------------------------------------------------------------------
+WEBAPP.emptydisplay=function()
+//------------------------------------------------------------------------------
+{
+    var dsp=WEBAPP.div("display_webapp","display");
+    WEBAPP.webapp.display.x.parentNode.replaceChild(dsp.x,WEBAPP.webapp.display.x);
+    WEBAPP.webapp.display=dsp;
+}
+
+//------------------------------------------------------------------------------
+WEBAPP.restoredisplay=function(key)
+//------------------------------------------------------------------------------
+{
+    var dsp=WEBAPP.getprivatedata(key) //burkolo
+    WEBAPP.webapp.display.x.parentNode.replaceChild(dsp.x,WEBAPP.webapp.display.x);
+    WEBAPP.webapp.display=dsp;
+    WEBAPP.webapp.display.savefocus.focus();
+    delete WEBAPP.webapp.display.savefocus;
+}
+
+//------------------------------------------------------------------------------
+
+
+//------------------------------------------------------------------------------
+WEBAPP.cdataif=function(x)
+//------------------------------------------------------------------------------
+{
+    if( 0<=x.indexOf("<") || 0<=x.indexOf(">") || 0<=x.indexOf("&") )
+    {
+        x=WEBAPP.cdata(x);
+    }
+    return x;
+}
+
+
+//------------------------------------------------------------------------------
+WEBAPP.cdata=function(x)
+//------------------------------------------------------------------------------
+{
+    //<![CDATA[ xxx ]]>
+    var y="",n;
+    while( 0<=(n=x.indexOf("]]>")) )
+    {
+        y+='<![CDATA['+x.substr(0,n+1)+']]>';
+        x=x.substr(n+1);
+    }
+    y+='<![CDATA['+x+']]>';
+    return y;
+}
+
+
+//------------------------------------------------------------------------------
+WEBAPP.evententer=function(event)
+//------------------------------------------------------------------------------
+{
+    return event.which==13;
+}
+
+
+//------------------------------------------------------------------------------
+function chr(code)
+//------------------------------------------------------------------------------
+{
+    return String.fromCharCode(code);
+}
+
+
+//------------------------------------------------------------------------------
+WEBAPP.htmlstring=function(x)
+//------------------------------------------------------------------------------
+{
+    x=x.replace(/&/g,"&amp;");
+    x=x.replace(/>/g,"&gt;");
+    x=x.replace(/</g,"&lt;");
+    return x;
+}
+
+
+//------------------------------------------------------------------------------
+WEBAPP.click=function(id)
+//------------------------------------------------------------------------------
+{
+    var ctrl=WEBAPP.document.x.getElementById(id);
+    if( ctrl==null )
+    {
+        console.log( "click: getElementById("+id+") returned null" );
     }
     else
     {
-        var ctrl=XCODE.document.x.getElementById(srcid);
-        if( ctrl.nodeName=="INPUT" && ctrl.type=="checkbox" )
+        ctrl.click();
+        //console.log("click on "+ctrl.id);
+    }
+}
+
+//------------------------------------------------------------------------------
+WEBAPP.onclick_row=function(row)
+//------------------------------------------------------------------------------
+{
+    //<table><tbody><tr></tr></tbody></table>
+    var sec=row.parentElement; //HTMLTableSectionElement 
+    var tab=sec.parentElement; //HTMLTableElement
+    WEBAPP.unclick_row(tab.selectedrow);
+    tab.selectedrow=row;
+    row.className+="X";
+}
+
+
+//------------------------------------------------------------------------------
+WEBAPP.unclick_row=function(row)
+//------------------------------------------------------------------------------
+{
+    if( row )
+    {
+        if( row.className=="evenX" )
         {
-            //visszaállítani
-            ctrl.checked=!ctrl.checked;
+            row.className="even";
+        }
+        else if( row.className=="oddX" )
+        {
+            row.className="odd";
+        }
+    }
+}
+
+
+//------------------------------------------------------------------------------
+WEBAPP.echo=function(x)
+//------------------------------------------------------------------------------
+{
+    WEBAPP.send(x);
+}
+
+
+//------------------------------------------------------------------------------
+WEBAPP.settle=function()
+//------------------------------------------------------------------------------
+{
+    var ctrl,n;
+    ctrl=WEBAPP.document.x.getElementsByTagName("input");
+    for( n=0; n<ctrl.length; n++ )
+    {
+        if( ctrl[n].onblur!=undefined )
+        {
+            ctrl[n].onblur();
+        }
+    }
+}
+
+
+//------------------------------------------------------------------------------
+WEBAPP.edit_in_progress=function(ctrl)
+//------------------------------------------------------------------------------
+{
+    //console.log('edit_in_progress',ctrl.id)
+    ctrl.edit_in_progress={};
+    ctrl.edit_in_progress.settle=false;
+    ctrl.edit_in_progress.origvalue=ctrl.value;
+}
+
+
+//------------------------------------------------------------------------------
+WEBAPP.loadscript=function(url)
+//------------------------------------------------------------------------------
+{
+    var element=WEBAPP.document.x.createElement("script");
+    element.src=url;
+    WEBAPP.document.x.head.appendChild(element);
+}
+
+//------------------------------------------------------------------------------
+WEBAPP.loadstyle=function(url)
+//------------------------------------------------------------------------------
+{
+    var element=WEBAPP.document.x.createElement("link");
+    element.rel="stylesheet";
+    element.type="text/css";
+    element.href=url;
+    WEBAPP.document.x.head.appendChild(element);
+}
+
+//------------------------------------------------------------------------------
+WEBAPP.unloadstyle=function(url)
+//------------------------------------------------------------------------------
+{
+    var rx=new RegExp(url);
+    var styles=WEBAPP.document.x.getElementsByTagName("link");
+    for( var i=styles.length-1; i>=0; i-- )
+    {
+        if( styles[i].getAttribute("href")!=null )
+        {
+            if( rx.test(styles[i].getAttribute("href")) )
+            {
+                console.log("removed:",styles[i]);
+                styles[i].parentNode.removeChild(styles[i]);
+            }
         }
     }
 }
 
 //------------------------------------------------------------------------------
-XCODE.formdata=function(srcid) //feltétel nélkül küld
+WEBAPP.bringintoview=function(div,elmnt)
+{
+    //div: ebben scrollozodik elmnt
+    //elmnt: ezt akarjuk lathato helyre scrollozni
+    //
+    //elmnt.scrollIntoView()-t helyettesiti,
+    //ami nem jo, mert az egesz ablakot rangatja
+
+    if( div.scrollTop>elmnt.offsetTop )
+    {
+        div.scrollTop=elmnt.offsetTop;
+    }
+    else if( div.scrollTop<elmnt.offsetTop+elmnt.scrollHeight-div.offsetHeight )
+    {
+        div.scrollTop=elmnt.offsetTop+elmnt.scrollHeight-div.offsetHeight
+    }
+
+}
+
+//------------------------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------
+WEBAPP.formdata=function(srcid)
 //------------------------------------------------------------------------------
 {
     //console.log("formdata",srcid);
@@ -336,7 +640,7 @@ XCODE.formdata=function(srcid) //feltétel nélkül küld
     var x="<formdata>";
     x+="<source>"+srcid+"</source>";
     
-    var sctrl=XCODE.document.x.getElementById(srcid);
+    var sctrl=WEBAPP.document.x.getElementById(srcid);
     if( sctrl!=null )
     {
         if( sctrl.type!=null )
@@ -349,7 +653,7 @@ XCODE.formdata=function(srcid) //feltétel nélkül küld
         }
     }
 
-    ctrl=XCODE.document.x.getElementsByTagName("input");
+    ctrl=WEBAPP.document.x.getElementsByTagName("input");
     for( n=0; n<ctrl.length; n++ )
     {
         if( ctrl[n].type=="text" ||
@@ -385,7 +689,7 @@ XCODE.formdata=function(srcid) //feltétel nélkül küld
                 {
                     //console.log( i, ctrl[n].files[i].name );
                     x+="<file>"
-                    x+=XCODE.cdataif( ctrl[n].files[i].name );
+                    x+=WEBAPP.cdataif( ctrl[n].files[i].name );
                     x+="</file>"
                 }
                 x+="</filelist>"
@@ -399,35 +703,35 @@ XCODE.formdata=function(srcid) //feltétel nélkül küld
                     ctrl[n].edit_in_progress.settle=true;
                     ctrl[n].onblur();
                 }  
-                x+="<value>"+XCODE.cdataif(XCODE.xreadvalue(ctrl[n]))+"</value>";
+                x+="<value>"+WEBAPP.cdataif(WEBAPP.xreadvalue(ctrl[n]))+"</value>";
             }
             x+="</control>";
         }
     }
 
-    ctrl=XCODE.document.x.getElementsByTagName("textarea");
+    ctrl=WEBAPP.document.x.getElementsByTagName("textarea");
     for( n=0; n<ctrl.length; n++ )
     {
         x+="<control>";
         x+="<id>"+ctrl[n].id+"</id>";
         x+="<type>"+ctrl[n].type+"</type>";
         //x+="<value><![CDATA["+ctrl[n].value+"]]></value>";
-        x+="<value>"+XCODE.cdataif(ctrl[n].value)+"</value>";
+        x+="<value>"+WEBAPP.cdataif(ctrl[n].value)+"</value>";
         x+="</control>";
     }
 
-    ctrl=XCODE.document.x.getElementsByTagName("select");
+    ctrl=WEBAPP.document.x.getElementsByTagName("select");
     for( n=0; n<ctrl.length; n++ )
     {
         x+="<control>";
         x+="<id>"+ctrl[n].id+"</id>";
         x+="<type>select</type>";
         //x+="<value><![CDATA["+ctrl[n].value+"]]></value>";
-        x+="<value>"+XCODE.cdataif(ctrl[n].value)+"</value>";
+        x+="<value>"+WEBAPP.cdataif(ctrl[n].value)+"</value>";
         x+="</control>";
     }
 
-    ctrl=XCODE.document.x.getElementsByTagName("table");
+    ctrl=WEBAPP.document.x.getElementsByTagName("table");
     for( n=0; n<ctrl.length; n++ )
     {
         if( ctrl[n].id )
@@ -447,12 +751,12 @@ XCODE.formdata=function(srcid) //feltétel nélkül küld
 
     x+="</formdata>";
 
-    XCODE.send(x);
+    WEBAPP.send(x);
 }
 
 
 //------------------------------------------------------------------------------
-XCODE.xreadvalue=function(ctrl)
+WEBAPP.xreadvalue=function(ctrl)
 //------------------------------------------------------------------------------
 {
     if( ctrl.xreadvalue!=undefined )
@@ -467,15 +771,15 @@ XCODE.xreadvalue=function(ctrl)
 
 
 //------------------------------------------------------------------------------
-XCODE.updatecontrol=function(id,value)
+WEBAPP.updatecontrol=function(id,value)
 //------------------------------------------------------------------------------
 {
-    var ctrl=XCODE.document.x.getElementById(id);
+    var ctrl=WEBAPP.document.x.getElementById(id);
 
     if( ctrl==null )
     {
         console.log("updatecontrol - unknown ctrlid "+id);
-        XCODE.sendwarning( "updatecontrol - unknown ctrlid",id)
+        WEBAPP.sendwarning( "updatecontrol - unknown ctrlid",id)
     }
     else if( ctrl.nodeName=="LABEL" )
     {
@@ -499,7 +803,7 @@ XCODE.updatecontrol=function(id,value)
     }
     else if( ctrl.nodeName=="TABLE" )
     {
-        XCODE.unclick_row(ctrl.selectedrow);
+        WEBAPP.unclick_row(ctrl.selectedrow);
         ctrl.selectedrow=null;
         var body=ctrl.getElementsByTagName("tbody")[0];
         var row=body.getElementsByTagName("tr"); //összes tr tag
@@ -507,8 +811,8 @@ XCODE.updatecontrol=function(id,value)
         {
             if( row[i].id==value )
             {
-                XCODE.onclick_row(row[i]);
-                XCODE.bringintoview(ctrl.parentNode,row[i]);
+                WEBAPP.onclick_row(row[i]);
+                WEBAPP.bringintoview(ctrl.parentNode,row[i]);
                 break;
             }
         }
@@ -543,306 +847,20 @@ XCODE.updatecontrol=function(id,value)
 
 //------------------------------------------------------------------------------
 
-
 //------------------------------------------------------------------------------
-XCODE.privatelength=function()
-//------------------------------------------------------------------------------
-{
-    XCODE.send("<PRIVATELENGTH>"+XCODE.privatedata.length.toString()+"</PRIVATELENGTH>");
-}
-
-//------------------------------------------------------------------------------
-XCODE.privatepop=function(len)
+WEBAPP.openalert=function(alert_as_html)
 //------------------------------------------------------------------------------
 {
-    while(XCODE.privatedata.length>len)
-    {
-        XCODE.privatedata.pop();
-    }
-}
-
-//------------------------------------------------------------------------------
-XCODE.privatepush=function()
-//------------------------------------------------------------------------------
-{
-    XCODE.privatedata.push(new Array());
-}
-
-//------------------------------------------------------------------------------
-XCODE.setprivatedata=function(key,data)
-//------------------------------------------------------------------------------
-{
-    tail=XCODE.privatedata[ XCODE.privatedata.length-1 ]; //utolsó elem
-    tail[key]=data;
-}
-
-//------------------------------------------------------------------------------
-XCODE.getprivatedata=function(key)
-//------------------------------------------------------------------------------
-{
-    tail=XCODE.privatedata[ XCODE.privatedata.length-1 ]; //utolsó elem
-    return tail[key];
-}
-
-//------------------------------------------------------------------------------
-XCODE.savedisplay=function(key)
-//------------------------------------------------------------------------------
-{
-    XCODE.webapp.display.savefocus=XCODE.document.x.activeElement;
-    XCODE.setprivatedata(key,XCODE.webapp.display); //burkolo
-}
-
-//------------------------------------------------------------------------------
-XCODE.emptydisplay=function()
-//------------------------------------------------------------------------------
-{
-    var dsp=XCODE.div("display_webapp","display");
-    XCODE.webapp.display.x.parentNode.replaceChild(dsp.x,XCODE.webapp.display.x);
-    XCODE.webapp.display=dsp;
-}
-
-//------------------------------------------------------------------------------
-XCODE.restoredisplay=function(key)
-//------------------------------------------------------------------------------
-{
-    var dsp=XCODE.getprivatedata(key) //burkolo
-    XCODE.webapp.display.x.parentNode.replaceChild(dsp.x,XCODE.webapp.display.x);
-    XCODE.webapp.display=dsp;
-    XCODE.webapp.display.savefocus.focus();
-    delete XCODE.webapp.display.savefocus;
-}
-
-//------------------------------------------------------------------------------
-
-
-XCODE.xlib={}; //objektumtár
-XCODE.xlib.isdefined=function(id)
-{
-    if( XCODE.xlib[id]!=undefined  )
-    {
-        XCODE.echo('<isdefined>true</isdefined>');
-    }
-    else
-    {
-        XCODE.echo('<isdefined>false</isdefined>');
-    }
-};
-
-
-
-
-//------------------------------------------------------------------------------
-XCODE.cdataif=function(x)
-//------------------------------------------------------------------------------
-{
-    if( 0<=x.indexOf("<") || 0<=x.indexOf(">") || 0<=x.indexOf("&") )
-    {
-        x=XCODE.cdata(x);
-    }
-    return x;
-}
-
-
-//------------------------------------------------------------------------------
-XCODE.cdata=function(x)
-//------------------------------------------------------------------------------
-{
-    //<![CDATA[ xxx ]]>
-    var y="",n;
-    while( 0<=(n=x.indexOf("]]>")) )
-    {
-        y+='<![CDATA['+x.substr(0,n+1)+']]>';
-        x=x.substr(n+1);
-    }
-    y+='<![CDATA['+x+']]>';
-    return y;
-}
-
-
-//------------------------------------------------------------------------------
-XCODE.evententer=function(event)
-//------------------------------------------------------------------------------
-{
-    return event.which==13;
-}
-
-
-//------------------------------------------------------------------------------
-function chr(code)
-//------------------------------------------------------------------------------
-{
-    return String.fromCharCode(code);
-}
-
-
-//------------------------------------------------------------------------------
-XCODE.htmlstring=function(x)
-//------------------------------------------------------------------------------
-{
-    x=x.replace(/&/g,"&amp;");
-    x=x.replace(/>/g,"&gt;");
-    x=x.replace(/</g,"&lt;");
-    return x;
-}
-
-
-//------------------------------------------------------------------------------
-XCODE.click=function(id)
-//------------------------------------------------------------------------------
-{
-    var ctrl=XCODE.document.x.getElementById(id);
-    if( ctrl==null )
-    {
-        console.log( "click: getElementById("+id+") returned null" );
-    }
-    else
-    {
-        ctrl.click();
-        //console.log("click on "+ctrl.id);
-    }
-}
-
-//------------------------------------------------------------------------------
-XCODE.onclick_row=function(row)
-//------------------------------------------------------------------------------
-{
-    //<table><tbody><tr></tr></tbody></table>
-    var sec=row.parentElement; //HTMLTableSectionElement 
-    var tab=sec.parentElement; //HTMLTableElement
-    XCODE.unclick_row(tab.selectedrow);
-    tab.selectedrow=row;
-    row.className+="X";
-}
-
-
-//------------------------------------------------------------------------------
-XCODE.unclick_row=function(row)
-//------------------------------------------------------------------------------
-{
-    if( row )
-    {
-        if( row.className=="evenX" )
-        {
-            row.className="even";
-        }
-        else if( row.className=="oddX" )
-        {
-            row.className="odd";
-        }
-    }
-}
-
-
-//------------------------------------------------------------------------------
-XCODE.echo=function(x)
-//------------------------------------------------------------------------------
-{
-    XCODE.send(x);
-}
-
-
-//------------------------------------------------------------------------------
-XCODE.settle=function()
-//------------------------------------------------------------------------------
-{
-    var ctrl,n;
-    ctrl=XCODE.document.x.getElementsByTagName("input");
-    for( n=0; n<ctrl.length; n++ )
-    {
-        if( ctrl[n].onblur!=undefined )
-        {
-            ctrl[n].onblur();
-        }
-    }
-}
-
-
-//------------------------------------------------------------------------------
-XCODE.edit_in_progress=function(ctrl)
-//------------------------------------------------------------------------------
-{
-    //console.log('edit_in_progress',ctrl.id)
-    ctrl.edit_in_progress={};
-    ctrl.edit_in_progress.settle=false;
-    ctrl.edit_in_progress.origvalue=ctrl.value;
-}
-
-
-//------------------------------------------------------------------------------
-XCODE.loadscript=function(url)
-//------------------------------------------------------------------------------
-{
-    var element=XCODE.document.x.createElement("script");
-    element.src=url;
-    XCODE.document.x.head.appendChild(element);
-}
-
-//------------------------------------------------------------------------------
-XCODE.loadstyle=function(url)
-//------------------------------------------------------------------------------
-{
-    var element=XCODE.document.x.createElement("link");
-    element.rel="stylesheet";
-    element.type="text/css";
-    element.href=url;
-    XCODE.document.x.head.appendChild(element);
-}
-
-//------------------------------------------------------------------------------
-XCODE.unloadstyle=function(url)
-//------------------------------------------------------------------------------
-{
-    var rx=new RegExp(url);
-    var styles=XCODE.document.x.getElementsByTagName("link");
-    for( var i=styles.length-1; i>=0; i-- )
-    {
-        if( styles[i].getAttribute("href")!=null )
-        {
-            if( rx.test(styles[i].getAttribute("href")) )
-            {
-                console.log("removed:",styles[i]);
-                styles[i].parentNode.removeChild(styles[i]);
-            }
-        }
-    }
-}
-
-//------------------------------------------------------------------------------
-XCODE.bringintoview=function(div,elmnt)
-{
-    //div: ebben scrollozodik elmnt
-    //elmnt: ezt akarjuk lathato helyre scrollozni
-    //
-    //elmnt.scrollIntoView()-t helyettesiti,
-    //ami nem jo, mert az egesz ablakot rangatja
-
-    if( div.scrollTop>elmnt.offsetTop )
-    {
-        div.scrollTop=elmnt.offsetTop;
-    }
-    else if( div.scrollTop<elmnt.offsetTop+elmnt.scrollHeight-div.offsetHeight )
-    {
-        div.scrollTop=elmnt.offsetTop+elmnt.scrollHeight-div.offsetHeight
-    }
-
-}
-
-//------------------------------------------------------------------------------
-
-//------------------------------------------------------------------------------
-XCODE.openalert=function(alert_as_html)
-//------------------------------------------------------------------------------
-{
-    var ovl=XCODE.overlay.x;
-    var bln=XCODE.blind.x;
+    var ovl=WEBAPP.overlay.x;
+    var bln=WEBAPP.blind.x;
     bln.style.height="0px";
     bln.innerHTML=alert_as_html;
 
     var alr=bln.firstChild;
-    var style=XCODE.window.x.getComputedStyle(alr);
+    var style=WEBAPP.window.x.getComputedStyle(alr);
     var height=style.getPropertyValue("height");
     height=(Number(height.replace("px",""))+16).toString()+"px";
-    XCODE.document.savefocus=XCODE.document.x.activeElement;
+    WEBAPP.document.savefocus=WEBAPP.document.x.activeElement;
     ovl.style.transitionDelay="0s, 0s";
     ovl.style.backgroundColor="rgba(0,0,0,0.3)" //transition!
     ovl.style.height="100%"; //transition=0!
@@ -850,25 +868,25 @@ XCODE.openalert=function(alert_as_html)
 }
 
 //------------------------------------------------------------------------------
-XCODE.closealert=function()
+WEBAPP.closealert=function()
 //------------------------------------------------------------------------------
 {
-    var ovl=XCODE.overlay.x;
-    var bln=XCODE.blind.x;
+    var ovl=WEBAPP.overlay.x;
+    var bln=WEBAPP.blind.x;
     var alr=bln.firstChild;
     bln.style.height="0%"; //transition
     ovl.style.transitionDelay="0s, 0.3s";
     ovl.style.backgroundColor="rgba(0,0,0,0.0)" //transition
     ovl.style.height="0px"; //transition-delay 0.3s
-    XCODE.document.savefocus.focus();
-    delete XCODE.document.savefocus;
+    WEBAPP.document.savefocus.focus();
+    delete WEBAPP.document.savefocus;
 }
 
 //------------------------------------------------------------------------------
 
 
 //------------------------------------------------------------------------------
-XCODE.dat2str=function(d) //datumok formazasa: YYYY-MM-DD
+WEBAPP.dat2str=function(d) //datumok formazasa: YYYY-MM-DD
 //------------------------------------------------------------------------------
 {
     var yyyy=(d.getFullYear()).toString();
@@ -882,7 +900,7 @@ XCODE.dat2str=function(d) //datumok formazasa: YYYY-MM-DD
 
 
 //------------------------------------------------------------------------------
-XCODE.datisvalid=function(s) //datumstring ellenorzes
+WEBAPP.datisvalid=function(s) //datumstring ellenorzes
 //------------------------------------------------------------------------------
 {
     //elfogadja, ha kiegeszitheto (!) ervenyes datumma 
@@ -892,11 +910,11 @@ XCODE.datisvalid=function(s) //datumstring ellenorzes
     s+="19991010".slice(s.length); //kiegesziti 8 hosszura
     s=s.slice(0,4)+"-"+s.slice(4,6)+"-"+s.slice(6); //tagol:yyyy-mm-ddx*
     s=s.replace("-00","-01"); //korrekcio
-    return s==XCODE.dat2str(new Date(s));
+    return s==WEBAPP.dat2str(new Date(s));
 }
 
 //------------------------------------------------------------------------------
-XCODE.datreadvalue=function(ctrl)
+WEBAPP.datreadvalue=function(ctrl)
 //------------------------------------------------------------------------------
 {
     var v=ctrl.value;
@@ -907,7 +925,7 @@ XCODE.datreadvalue=function(ctrl)
     }
     x=x.replace(/-/g,"" );
     x=x.replace(/ /g,"" );
-    if( x.length!=8 || !XCODE.datisvalid(x) )
+    if( x.length!=8 || !WEBAPP.datisvalid(x) )
     {
         return "? "+x;  //invalid
     }
@@ -915,7 +933,7 @@ XCODE.datreadvalue=function(ctrl)
 } 
 
 //------------------------------------------------------------------------------
-XCODE.datsettlevalue=function(ctrl)
+WEBAPP.datsettlevalue=function(ctrl)
 //------------------------------------------------------------------------------
 {
     var edit=false;
@@ -934,7 +952,7 @@ XCODE.datsettlevalue=function(ctrl)
     {
         ctrl.xreadvalue=function()
         {
-            return XCODE.datreadvalue(this);                
+            return WEBAPP.datreadvalue(this);                
         }
     }
     var v=ctrl.value;
@@ -984,7 +1002,7 @@ XCODE.datsettlevalue=function(ctrl)
     {
         return "? "+x;
     }
-    if( !XCODE.datisvalid(x) )
+    if( !WEBAPP.datisvalid(x) )
     {
         x+=" " //ne illeszkedjen!
     }
@@ -1002,12 +1020,12 @@ XCODE.datsettlevalue=function(ctrl)
 } 
 
 //------------------------------------------------------------------------------
-XCODE.datkeypress=function(e) 
+WEBAPP.datkeypress=function(e) 
 //------------------------------------------------------------------------------
 {
     var ctrl=e.target; //input mezo
 
-    if( XCODE.evententer(e) && e.target.onblur!=undefined )
+    if( WEBAPP.evententer(e) && e.target.onblur!=undefined )
     {
         ctrl.onblur(ctrl);
     }
@@ -1055,7 +1073,7 @@ XCODE.datkeypress=function(e)
             }
         }
 
-        if( j>=x.length && XCODE.datisvalid(x) )
+        if( j>=x.length && WEBAPP.datisvalid(x) )
         {
             //(balfel + uj karakter) illeszkedik
             //(balfel + uj karakter) kiegeszitheto datumma
@@ -1067,7 +1085,7 @@ XCODE.datkeypress=function(e)
                 xr=xr.slice(offs)
             }
             ctrl.value=x+xr;
-            if( !XCODE.datisvalid(ctrl.value) )
+            if( !WEBAPP.datisvalid(ctrl.value) )
             {
                 ctrl.value+=" " //ne illeszkedjen!
             }
@@ -1083,7 +1101,7 @@ XCODE.datkeypress=function(e)
 
 
 //------------------------------------------------------------------------------
-XCODE.num2str=function(num,dec) //szamok formazasa
+WEBAPP.num2str=function(num,dec) //szamok formazasa
 //------------------------------------------------------------------------------
 // dec=undef: tizedesek nelkul, elvalaszto vesszok nelkul
 // dec=0    : tizedesek nelkul, elvalaszto vesszokkel
@@ -1103,7 +1121,7 @@ XCODE.num2str=function(num,dec) //szamok formazasa
 } 
 
 //------------------------------------------------------------------------------
-XCODE.numsettlevalue=function(ctrl,dec,zero)
+WEBAPP.numsettlevalue=function(ctrl,dec,zero)
 //------------------------------------------------------------------------------
 {
     var edit=false;
@@ -1133,18 +1151,18 @@ XCODE.numsettlevalue=function(ctrl,dec,zero)
     }
     else
     {
-        ctrl.value=XCODE.num2str(num,dec);
+        ctrl.value=WEBAPP.num2str(num,dec);
     }
 }
 
 
 //------------------------------------------------------------------------------
-XCODE.numkeypress=function(e) 
+WEBAPP.numkeypress=function(e) 
 //------------------------------------------------------------------------------
 {
     var ctrl=e.target; //input mezo
 
-    if( XCODE.evententer(e) && e.target.onblur!=undefined )
+    if( WEBAPP.evententer(e) && e.target.onblur!=undefined )
     {
         ctrl.onblur(ctrl);
     }
@@ -1171,7 +1189,7 @@ XCODE.numkeypress=function(e)
 
 
 //------------------------------------------------------------------------------
-XCODE.xpicture=function(ctrl)
+WEBAPP.xpicture=function(ctrl)
 //------------------------------------------------------------------------------
 {
     if( ctrl.xpicture==undefined )
@@ -1246,7 +1264,7 @@ XCODE.xpicture=function(ctrl)
             addexp();
         }
         xpat+="$";
-        //console.log(new Error("testing XCODE.xpicture").stack);
+        //console.log(new Error("testing WEBAPP.xpicture").stack);
         //console.log(ctrl.xpicture);
         //console.log(xpat);
         ctrl.pattern=xpat;
@@ -1256,7 +1274,7 @@ XCODE.xpicture=function(ctrl)
 }
 
 //------------------------------------------------------------------------------
-XCODE.picreadvalue=function(ctrl)
+WEBAPP.picreadvalue=function(ctrl)
 //------------------------------------------------------------------------------
 {
     var v=ctrl.value;
@@ -1268,7 +1286,7 @@ XCODE.picreadvalue=function(ctrl)
     var num="0123456789";
     var abc="abcdefghijklmnopqrstuvwxyz";
     var ABC="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    var pic=XCODE.xpicture(ctrl);
+    var pic=WEBAPP.xpicture(ctrl);
     for(var i=0, j=0; i<pic.length && j<v.length; i++,j++ )
     {
         var t=pic.charAt(i);
@@ -1324,7 +1342,7 @@ XCODE.picreadvalue=function(ctrl)
 
 
 //------------------------------------------------------------------------------
-XCODE.picsettlevalue=function(ctrl)
+WEBAPP.picsettlevalue=function(ctrl)
 //------------------------------------------------------------------------------
 {
     var edit=false;
@@ -1343,7 +1361,7 @@ XCODE.picsettlevalue=function(ctrl)
     {
         ctrl.xreadvalue=function()
         {
-            return XCODE.picreadvalue(this);                
+            return WEBAPP.picreadvalue(this);                
         }
     }
     var v=ctrl.value;
@@ -1360,7 +1378,7 @@ XCODE.picsettlevalue=function(ctrl)
     var num="0123456789";
     var abc="abcdefghijklmnopqrstuvwxyz";
     var ABC="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    var pic=XCODE.xpicture(ctrl);
+    var pic=WEBAPP.xpicture(ctrl);
     var i=0,j=0;
     for(i=0,j=0; i<pic.length && j<v.length; i++,j++)
     {
@@ -1439,12 +1457,12 @@ XCODE.picsettlevalue=function(ctrl)
 
 
 //------------------------------------------------------------------------------
-XCODE.pickeypress=function(e)                                                  
+WEBAPP.pickeypress=function(e)                                                  
 //------------------------------------------------------------------------------
 {
     var ctrl=e.target; //input mezo
 
-    if( XCODE.evententer(e) && e.target.onblur!=undefined )
+    if( WEBAPP.evententer(e) && e.target.onblur!=undefined )
     {
         ctrl.onblur(ctrl);
     }
@@ -1462,7 +1480,7 @@ XCODE.pickeypress=function(e)
         var num="0123456789";
         var abc="abcdefghijklmnopqrstuvwxyz";
         var ABC="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        var pic=XCODE.xpicture(ctrl);
+        var pic=WEBAPP.xpicture(ctrl);
 
         var i=0, j=0;
         for(i=0, j=0; i<pic.length && j<x.length; i++ )
@@ -1552,7 +1570,7 @@ XCODE.pickeypress=function(e)
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-XCODE.xpattern=function(ctrl)
+WEBAPP.xpattern=function(ctrl)
 //------------------------------------------------------------------------------
 {
     if( ctrl.xpattern==undefined )
@@ -1600,7 +1618,7 @@ XCODE.xpattern=function(ctrl)
 }
 
 //------------------------------------------------------------------------------
-XCODE.patsettlevalue=function(ctrl)
+WEBAPP.patsettlevalue=function(ctrl)
 //------------------------------------------------------------------------------
 {
     var edit=false;
@@ -1644,7 +1662,7 @@ XCODE.patsettlevalue=function(ctrl)
 }
 
 //------------------------------------------------------------------------------
-XCODE.patkeypress=function(e)
+WEBAPP.patkeypress=function(e)
 //------------------------------------------------------------------------------
 {
     var ctrl=e.target; //input mezo
@@ -1661,7 +1679,7 @@ XCODE.patkeypress=function(e)
         var x=v.slice(0,pos)+chr; //balfel + uj karakter
         var xr=v.slice(pos); //jobbfel
 
-        var pat=XCODE.xpattern(ctrl);
+        var pat=WEBAPP.xpattern(ctrl);
         var reg=new RegExp(pat);
         var str=x+String.fromCharCode(11).repeat(1024);  // chr(11)=\v (vertical tab)
 
@@ -1680,284 +1698,11 @@ XCODE.patkeypress=function(e)
 
 
 
-
-if( String.prototype.includes==undefined )
-{
-    String.prototype.includes=function(x)
-    {
-        return this.indexOf(x)>=0;
-    }
-}
-
-if( String.prototype.startsWith==undefined )
-{
-    String.prototype.startsWith=function(x)
-    {
-        return this.indexOf(x)==0;
-    }
-}
-
-if( String.prototype.endsWith==undefined )
-{
-    String.prototype.endsWith=function(x)
-    {
-        return this.lastIndexOf(x)==(this.length-x.length);
-    }
-}
-
-if( String.prototype.repeat==undefined )
-{
-    String.prototype.repeat=function(x)
-    {
-        var r="";
-        while(x>0.5)
-        {
-            r+=this;
-            x--;
-        } 
-        return r;
-    }
-}
-
-
-/**
-*
-*  MD5 (Message-Digest Algorithm)
-*  http://www.webtoolkit.info/
-*
-**/
- 
 //------------------------------------------------------------------------------
-XCODE.md5=function (string) 
-//------------------------------------------------------------------------------
-{ 
-    function RotateLeft(lValue, iShiftBits) {
-        return (lValue<<iShiftBits) | (lValue>>>(32-iShiftBits));
-    }
- 
-    function AddUnsigned(lX,lY) {
-        var lX4,lY4,lX8,lY8,lResult;
-        lX8 = (lX & 0x80000000);
-        lY8 = (lY & 0x80000000);
-        lX4 = (lX & 0x40000000);
-        lY4 = (lY & 0x40000000);
-        lResult = (lX & 0x3FFFFFFF)+(lY & 0x3FFFFFFF);
-        if (lX4 & lY4) {
-            return (lResult ^ 0x80000000 ^ lX8 ^ lY8);
-        }
-        if (lX4 | lY4) {
-            if (lResult & 0x40000000) {
-                return (lResult ^ 0xC0000000 ^ lX8 ^ lY8);
-            } else {
-                return (lResult ^ 0x40000000 ^ lX8 ^ lY8);
-            }
-        } else {
-            return (lResult ^ lX8 ^ lY8);
-        }
-    }
- 
-    function F(x,y,z) { return (x & y) | ((~x) & z); }
-    function G(x,y,z) { return (x & z) | (y & (~z)); }
-    function H(x,y,z) { return (x ^ y ^ z); }
-    function I(x,y,z) { return (y ^ (x | (~z))); }
- 
-    function FF(a,b,c,d,x,s,ac) {
-        a = AddUnsigned(a, AddUnsigned(AddUnsigned(F(b, c, d), x), ac));
-        return AddUnsigned(RotateLeft(a, s), b);
-    };
- 
-    function GG(a,b,c,d,x,s,ac) {
-        a = AddUnsigned(a, AddUnsigned(AddUnsigned(G(b, c, d), x), ac));
-        return AddUnsigned(RotateLeft(a, s), b);
-    };
- 
-    function HH(a,b,c,d,x,s,ac) {
-        a = AddUnsigned(a, AddUnsigned(AddUnsigned(H(b, c, d), x), ac));
-        return AddUnsigned(RotateLeft(a, s), b);
-    };
- 
-    function II(a,b,c,d,x,s,ac) {
-        a = AddUnsigned(a, AddUnsigned(AddUnsigned(I(b, c, d), x), ac));
-        return AddUnsigned(RotateLeft(a, s), b);
-    };
- 
-    function ConvertToWordArray(string) {
-        var lWordCount;
-        var lMessageLength = string.length;
-        var lNumberOfWords_temp1=lMessageLength + 8;
-        var lNumberOfWords_temp2=(lNumberOfWords_temp1-(lNumberOfWords_temp1 % 64))/64;
-        var lNumberOfWords = (lNumberOfWords_temp2+1)*16;
-        var lWordArray=Array(lNumberOfWords-1);
-        var lBytePosition = 0;
-        var lByteCount = 0;
-        while ( lByteCount < lMessageLength ) {
-            lWordCount = (lByteCount-(lByteCount % 4))/4;
-            lBytePosition = (lByteCount % 4)*8;
-            lWordArray[lWordCount] = (lWordArray[lWordCount] | (string.charCodeAt(lByteCount)<<lBytePosition));
-            lByteCount++;
-        }
-        lWordCount = (lByteCount-(lByteCount % 4))/4;
-        lBytePosition = (lByteCount % 4)*8;
-        lWordArray[lWordCount] = lWordArray[lWordCount] | (0x80<<lBytePosition);
-        lWordArray[lNumberOfWords-2] = lMessageLength<<3;
-        lWordArray[lNumberOfWords-1] = lMessageLength>>>29;
-        return lWordArray;
-    };
- 
-    function WordToHex(lValue) {
-        var WordToHexValue="",WordToHexValue_temp="",lByte,lCount;
-        for (lCount = 0;lCount<=3;lCount++) {
-            lByte = (lValue>>>(lCount*8)) & 255;
-            WordToHexValue_temp = "0" + lByte.toString(16);
-            WordToHexValue = WordToHexValue + WordToHexValue_temp.substr(WordToHexValue_temp.length-2,2);
-        }
-        return WordToHexValue;
-    };
- 
-    function Utf8Encode(string) {
-        string = string.replace(/\r\n/g,"\n");
-        var utftext = "";
- 
-        for (var n = 0; n < string.length; n++) {
- 
-            var c = string.charCodeAt(n);
- 
-            if (c < 128) {
-                utftext += String.fromCharCode(c);
-            }
-            else if((c > 127) && (c < 2048)) {
-                utftext += String.fromCharCode((c >> 6) | 192);
-                utftext += String.fromCharCode((c & 63) | 128);
-            }
-            else {
-                utftext += String.fromCharCode((c >> 12) | 224);
-                utftext += String.fromCharCode(((c >> 6) & 63) | 128);
-                utftext += String.fromCharCode((c & 63) | 128);
-            }
- 
-        }
- 
-        return utftext;
-    };
- 
-    var x=Array();
-    var k,AA,BB,CC,DD,a,b,c,d;
-    var S11=7, S12=12, S13=17, S14=22;
-    var S21=5, S22=9 , S23=14, S24=20;
-    var S31=4, S32=11, S33=16, S34=23;
-    var S41=6, S42=10, S43=15, S44=21;
- 
-    string = Utf8Encode(string);
- 
-    x = ConvertToWordArray(string);
- 
-    a = 0x67452301; b = 0xEFCDAB89; c = 0x98BADCFE; d = 0x10325476;
- 
-    for (k=0;k<x.length;k+=16) {
-        AA=a; BB=b; CC=c; DD=d;
-        a=FF(a,b,c,d,x[k+0], S11,0xD76AA478);
-        d=FF(d,a,b,c,x[k+1], S12,0xE8C7B756);
-        c=FF(c,d,a,b,x[k+2], S13,0x242070DB);
-        b=FF(b,c,d,a,x[k+3], S14,0xC1BDCEEE);
-        a=FF(a,b,c,d,x[k+4], S11,0xF57C0FAF);
-        d=FF(d,a,b,c,x[k+5], S12,0x4787C62A);
-        c=FF(c,d,a,b,x[k+6], S13,0xA8304613);
-        b=FF(b,c,d,a,x[k+7], S14,0xFD469501);
-        a=FF(a,b,c,d,x[k+8], S11,0x698098D8);
-        d=FF(d,a,b,c,x[k+9], S12,0x8B44F7AF);
-        c=FF(c,d,a,b,x[k+10],S13,0xFFFF5BB1);
-        b=FF(b,c,d,a,x[k+11],S14,0x895CD7BE);
-        a=FF(a,b,c,d,x[k+12],S11,0x6B901122);
-        d=FF(d,a,b,c,x[k+13],S12,0xFD987193);
-        c=FF(c,d,a,b,x[k+14],S13,0xA679438E);
-        b=FF(b,c,d,a,x[k+15],S14,0x49B40821);
-        a=GG(a,b,c,d,x[k+1], S21,0xF61E2562);
-        d=GG(d,a,b,c,x[k+6], S22,0xC040B340);
-        c=GG(c,d,a,b,x[k+11],S23,0x265E5A51);
-        b=GG(b,c,d,a,x[k+0], S24,0xE9B6C7AA);
-        a=GG(a,b,c,d,x[k+5], S21,0xD62F105D);
-        d=GG(d,a,b,c,x[k+10],S22,0x2441453);
-        c=GG(c,d,a,b,x[k+15],S23,0xD8A1E681);
-        b=GG(b,c,d,a,x[k+4], S24,0xE7D3FBC8);
-        a=GG(a,b,c,d,x[k+9], S21,0x21E1CDE6);
-        d=GG(d,a,b,c,x[k+14],S22,0xC33707D6);
-        c=GG(c,d,a,b,x[k+3], S23,0xF4D50D87);
-        b=GG(b,c,d,a,x[k+8], S24,0x455A14ED);
-        a=GG(a,b,c,d,x[k+13],S21,0xA9E3E905);
-        d=GG(d,a,b,c,x[k+2], S22,0xFCEFA3F8);
-        c=GG(c,d,a,b,x[k+7], S23,0x676F02D9);
-        b=GG(b,c,d,a,x[k+12],S24,0x8D2A4C8A);
-        a=HH(a,b,c,d,x[k+5], S31,0xFFFA3942);
-        d=HH(d,a,b,c,x[k+8], S32,0x8771F681);
-        c=HH(c,d,a,b,x[k+11],S33,0x6D9D6122);
-        b=HH(b,c,d,a,x[k+14],S34,0xFDE5380C);
-        a=HH(a,b,c,d,x[k+1], S31,0xA4BEEA44);
-        d=HH(d,a,b,c,x[k+4], S32,0x4BDECFA9);
-        c=HH(c,d,a,b,x[k+7], S33,0xF6BB4B60);
-        b=HH(b,c,d,a,x[k+10],S34,0xBEBFBC70);
-        a=HH(a,b,c,d,x[k+13],S31,0x289B7EC6);
-        d=HH(d,a,b,c,x[k+0], S32,0xEAA127FA);
-        c=HH(c,d,a,b,x[k+3], S33,0xD4EF3085);
-        b=HH(b,c,d,a,x[k+6], S34,0x4881D05);
-        a=HH(a,b,c,d,x[k+9], S31,0xD9D4D039);
-        d=HH(d,a,b,c,x[k+12],S32,0xE6DB99E5);
-        c=HH(c,d,a,b,x[k+15],S33,0x1FA27CF8);
-        b=HH(b,c,d,a,x[k+2], S34,0xC4AC5665);
-        a=II(a,b,c,d,x[k+0], S41,0xF4292244);
-        d=II(d,a,b,c,x[k+7], S42,0x432AFF97);
-        c=II(c,d,a,b,x[k+14],S43,0xAB9423A7);
-        b=II(b,c,d,a,x[k+5], S44,0xFC93A039);
-        a=II(a,b,c,d,x[k+12],S41,0x655B59C3);
-        d=II(d,a,b,c,x[k+3], S42,0x8F0CCC92);
-        c=II(c,d,a,b,x[k+10],S43,0xFFEFF47D);
-        b=II(b,c,d,a,x[k+1], S44,0x85845DD1);
-        a=II(a,b,c,d,x[k+8], S41,0x6FA87E4F);
-        d=II(d,a,b,c,x[k+15],S42,0xFE2CE6E0);
-        c=II(c,d,a,b,x[k+6], S43,0xA3014314);
-        b=II(b,c,d,a,x[k+13],S44,0x4E0811A1);
-        a=II(a,b,c,d,x[k+4], S41,0xF7537E82);
-        d=II(d,a,b,c,x[k+11],S42,0xBD3AF235);
-        c=II(c,d,a,b,x[k+2], S43,0x2AD7D2BB);
-        b=II(b,c,d,a,x[k+9], S44,0xEB86D391);
-        a=AddUnsigned(a,AA);
-        b=AddUnsigned(b,BB);
-        c=AddUnsigned(c,CC);
-        d=AddUnsigned(d,DD);
-    }
- 
-    var temp = WordToHex(a)+WordToHex(b)+WordToHex(c)+WordToHex(d);
- 
-    return temp.toLowerCase();
-}
-
-//------------------------------------------------------------------------------
-
-//------------------------------------------------------------------------------
-XCODE.getpassword=function(srcid,salt1,salt2)
+WEBAPP.getpwstrength=function(srcid)
 //------------------------------------------------------------------------------
 {
-    var x="<password>"
-    var ctrl=XCODE.document.x.getElementById(srcid);
-    var pswd=ctrl.value
-    if( salt1!=null )
-    {
-        pswd=XCODE.md5(pswd+salt1)
-    }
-    if( salt2!=null )
-    {
-        pswd=XCODE.md5(pswd+salt2)
-    }
-    x+=pswd
-    x+="</password>"
-    XCODE.send(x);
-
-}
-
-//------------------------------------------------------------------------------
-XCODE.getpwstrength=function(srcid)
-//------------------------------------------------------------------------------
-{
-    var ctrl=XCODE.document.x.getElementById(srcid);
+    var ctrl=WEBAPP.document.x.getElementById(srcid);
     var pswd=ctrl.value
 
 
@@ -1990,15 +1735,275 @@ XCODE.getpwstrength=function(srcid)
     var x="<pwstrength>"
     x+=parseInt(score).toString();
     x+="</pwstrength>"
-    XCODE.send(x);
+    WEBAPP.send(x);
 }
 
+
+
+//----------------------------------------------------------------------------------------
+WEBAPP.password=async function(srcid,srvkey,envelope,challenge)
+//----------------------------------------------------------------------------------------
+{
+//az alábbi függvények mind belsők
+//----------------------------------------------------------------------------------------
+function arrayBufferToBase64(buffer)
+//----------------------------------------------------------------------------------------
+{
+    var bytes=new Uint8Array(buffer);
+    return bytes.toBase64();
+}
+
+//----------------------------------------------------------------------------------------
+function base64ToArrayBuffer(base64)
+//----------------------------------------------------------------------------------------
+{
+    var bytes=Uint8Array.fromBase64(base64);
+    return bytes.buffer.slice();
+}
+
+//----------------------------------------------------------------------------------------
+function buf2str(buf) // ArrayBuffer -> UTF-8 string  (kivételt dob hibás UTF-8 esetén)
+//----------------------------------------------------------------------------------------
+{
+    var view=new Uint8Array(buf);
+    var str=new TextDecoder().decode(view);
+    return str; // UTF-8 string
+}
+
+//----------------------------------------------------------------------------------------
+function str2buf(str)  // UTF-8 string -> ArrayBuffer
+//----------------------------------------------------------------------------------------
+{
+    var arr=new TextEncoder().encode(str); // Uint8Array
+    var buf=arr.buffer.slice(); // ArrayBuffer
+    return buf;
+}
+
+
+//----------------------------------------------------------------------------------------
+async function generatePair()
+//----------------------------------------------------------------------------------------
+{
+    var pair = await crypto.subtle.generateKey(
+        {name: "Ed25519"},
+        true,
+        ["sign", "verify"]
+    );
+    return pair;
+}
+
+//----------------------------------------------------------------------------------------
+async function exportPublicKey(key)
+//----------------------------------------------------------------------------------------
+{
+    var exp=await window.crypto.subtle.exportKey("raw",key);  // spki helyett raw
+    var view=new Uint8Array(exp);
+    return view.toBase64();
+};
+
+//----------------------------------------------------------------------------------------
+async function exportPrivateKey(key)
+//----------------------------------------------------------------------------------------
+{
+    var exp=await window.crypto.subtle.exportKey("pkcs8",key);
+    var view=new Uint8Array(exp);
+    return view.toBase64();
+}
+
+//----------------------------------------------------------------------------------------
+async function importPublicKey(pem)
+//----------------------------------------------------------------------------------------
+{
+    var imp=Uint8Array.fromBase64(pem);
+    var key = window.crypto.subtle.importKey(
+        "raw",   // spki helyett raw
+        imp,
+        {name:"Ed25519"},
+        true,
+        ["verify"]
+    );
+    return key;
+}
+
+//----------------------------------------------------------------------------------------
+async function importPrivateKey(pem)
+//----------------------------------------------------------------------------------------
+{
+    var imp=Uint8Array.fromBase64(pem); // Uint8Array
+    var key = await window.crypto.subtle.importKey(
+        "pkcs8",
+        imp,
+        {name:"Ed25519"},
+        true,
+        ["sign"]
+    );
+    return key;
+}
+
+//----------------------------------------------------------------------------------------
+async function ED25519sign(key,msg)
+//----------------------------------------------------------------------------------------
+{
+    msg=new TextEncoder().encode(msg); Uint8Array
+    msg=await crypto.subtle.sign(
+        {name:"Ed25519"},
+        key,
+        msg
+    ); // ArrayBuffer
+    msg=new Uint8Array(msg); // Uint8Array
+    msg=msg.toBase64(); // base64 string
+    return msg;
+}
+
+//----------------------------------------------------------------------------------------
+async function ED25519verify(key,sig,msg)
+//----------------------------------------------------------------------------------------
+{
+    sig=Uint8Array.fromBase64(sig); // Uint8Array
+    msg=new TextEncoder().encode(msg); // Uint8Arrayc
+    var res=await crypto.subtle.verify(
+        {name:"Ed25519"},
+        key,
+        sig,
+        msg
+    );
+    return res; // true/false
+}
+
+//--------------------------------------------------------------------
+async function generateAesKey(sharedSecret)
+//--------------------------------------------------------------------
+{
+    const encoder=new TextEncoder();
+    const secret=encoder.encode(sharedSecret);
+    const salt=encoder.encode("HUSZg1f3");
+
+    // shared secre -> PBKDF2 alapkulcs
+    const keyMaterial = await crypto.subtle.importKey(
+        "raw",
+        secret,
+        "PBKDF2",
+        false,
+        ["deriveKey"]
+    );
+
+    // ugyanaz a salt + iterations + hash + key length
+    // => ugyanabból a shared secretből ugyanaz az AES kulcs
+    const key=crypto.subtle.deriveKey(
+        {name:"PBKDF2", salt:salt, iterations:100000, hash:"SHA-256"},
+        keyMaterial,
+        {name:"AES-CBC", length:256},
+        false,
+        ["encrypt", "decrypt"]
+    );
+    return key;
+}
+
+//--------------------------------------------------------------------
+async function generateIV(key)
+//--------------------------------------------------------------------
+{
+    var iv=new TextEncoder().encode(key);
+    iv = await crypto.subtle.digest('SHA-256',iv);
+    iv=iv.slice(0,16);
+    return iv;
+}
+
+//----------------------------------------------------------------------------------------
+async function AESencrypt(passkey,msg) // UTF-8 string -> base64
+//----------------------------------------------------------------------------------------
+{
+    var key=await generateAesKey(passkey);
+    var iv=await generateIV(passkey);
+
+    msg=new TextEncoder().encode(msg);
+    msg = await window.crypto.subtle.encrypt(
+        {name:"AES-CBC",iv},
+        key,
+        msg
+    );
+    msg=arrayBufferToBase64(msg);
+    return msg;
+};
+
+//----------------------------------------------------------------------------------------
+async function AESdecrypt(passkey,msg) // base64 -> UTF-8 string
+//----------------------------------------------------------------------------------------
+{
+    var key=await generateAesKey(passkey);
+    var iv=await generateIV(passkey);
+
+    msg=base64ToArrayBuffer(msg);
+    msg=await window.crypto.subtle.decrypt(
+        {name: "AES-CBC", iv},
+        key,
+        msg
+    );
+    msg=new TextDecoder().decode(msg);
+    return msg;
+};
+
+//----------------------------------------------------------------------------------------
+//belső függvények vége
+//WEBAPP.password=async function(srcid,srvkey,envelope,challenge)
+//----------------------------------------------------------------------------------------
+
+    var ctrl=WEBAPP.document.x.getElementById(srcid);
+    var password=ctrl.value // tudjuk a jelszavunkat
+
+    // envelope==null esetén regisztráció
+    // envelope!=null esetén jelszó ellenőrzés
+
+    var msg;
+    var prvkey;
+    var pubkey;
+    var response
+
+    if( envelope==null )
+    {
+        // REGISZTRÁCIÓ
+        var pair = await generatePair();
+        prvkey = await exportPrivateKey(pair.privateKey);
+        pubkey = await exportPublicKey(pair.publicKey);
+        envelope = await AESencrypt(password+srvkey,prvkey);
+
+        msg="<password>"
+        msg+="<pubkey>"+pubkey+"</pubkey>"
+        msg+="<envelope>"+envelope+"</envelope>"
+        msg+="</password>"
+        WEBAPP.send(msg);
+    }
+    else
+    {
+        // LOGIN
+        // srvkey: ugyanaz a string, mint a regisztrációban
+        // envelope: AES kulccsal titkositott private kulcs
+        // nem szabad elszállni, mert a szerver örökké vár a válaszra
+        try
+        {
+            prvkey=await AESdecrypt(password+srvkey,envelope); // kivesszük a borítékból
+            prvkey=await importPrivateKey(prvkey); // importáljuk
+            response=await ED25519sign(prvkey,challenge); // alkalmazzuk -> signature
+        }
+        catch
+        {
+            response="!";
+        }
+
+        msg="<password>";
+        msg+=response;
+        msg+="</password>";
+        WEBAPP.send(msg);
+    }
+}
+
+//----------------------------------------------------------------------------------------
+
+
+
+
 //------------------------------------------------------------------------------
-
-
-
-//------------------------------------------------------------------------------
-XCODE.readfile=function(ctrlid,x,mode) 
+WEBAPP.readfile=function(ctrlid,x,mode) 
 //------------------------------------------------------------------------------
 {
     var ctrl=document.getElementById(ctrlid); //browse: <input type="file">
@@ -2012,19 +2017,19 @@ XCODE.readfile=function(ctrlid,x,mode)
         console.log(err);
 
         //üzenet: frmaux-ba        
-        XCODE.frmaux.writeln('<span style="color: red;">'+err+'</span>');
+        WEBAPP.frmaux.writeln('<span style="color: red;">'+err+'</span>');
 
         var x="<readfile>"+err+"</readfile>";
-        XCODE.send(x);
+        WEBAPP.send(x);
     }
 
     reader.onload=function()
     {
         //console.log( reader.result );
         var x="<readfile>"
-        x+=XCODE.cdataif(reader.result);
+        x+=WEBAPP.cdataif(reader.result);
         x+="</readfile>";
-        XCODE.send(x);
+        WEBAPP.send(x);
     }
     
     if( mode==null )
@@ -2064,9 +2069,9 @@ XCODE.readfile=function(ctrlid,x,mode)
 
 
 
-XCODE.xlib.combo={}
+WEBAPP.xlib.combo={}
 
-XCODE.xlib.combo.show=function(input_id) //input-onclick
+WEBAPP.xlib.combo.show=function(input_id) //input-onclick
 {
     //console.log("show",input_id);
     var combo_id=input_id+"-combo";
@@ -2075,10 +2080,10 @@ XCODE.xlib.combo.show=function(input_id) //input-onclick
     if( combo.style.display=="none" )
     {
         combo.style.display="block";
-        row=XCODE.xlib.combo.findrow(combo,input.value);
+        row=WEBAPP.xlib.combo.findrow(combo,input.value);
         if(row)
         {
-            XCODE.bringintoview(combo,row);
+            WEBAPP.bringintoview(combo,row);
         }
     }
     else
@@ -2087,34 +2092,33 @@ XCODE.xlib.combo.show=function(input_id) //input-onclick
     }
 }
 
-XCODE.xlib.combo.clear=function(combo_id) //input-onblur
+
+WEBAPP.xlib.combo.clear=function(combo_id) //input-onblur
 {
-    //console.log("clear",combo_id);
-    var combo=document.getElementById(combo_id)
+    var combo=document.getElementById(combo_id);
     combo.style.display="none";
 }
 
 
-XCODE.xlib.combo.pick=function(ctrl) //click on a <tr> element
+WEBAPP.xlib.combo.pick=function(event) // mousedown on a <tr> element
 {
+    event.preventDefault(); //maradjon a fokusz az inputon
+    var ctrl=event.target;
     //console.log("pick",ctrl.textContent.trim().replace(/\n/g,';'));
-    var input=XCODE.xlib.combo.getinput(ctrl);
+    var input=WEBAPP.xlib.combo.getinput(ctrl);
     input.value=ctrl.textContent.trim().split('\n')[0];
     input.setAttribute("rowid",ctrl.id);
     input.dispatchEvent(new Event('change'));
+    var combo_id=input.getAttribute("id")+"-combo";
+    var combo=document.getElementById(combo_id);
+    combo.style.display="none";
 }
 
 
-XCODE.xlib.combo.keyup=function(event)  //editalas
+WEBAPP.xlib.combo.keyup=function(event)  //editalas
 { 
     var input=event.target; //input mezo
     var combo_id=input.id+"-combo";
-    if( input.type=="button" )
-    {
-        var input_id=input.id.replace("-button","");
-        input=document.getElementById(input_id);
-        combo_id=input.id+"-combo";
-    }
     var combo=document.getElementById(combo_id);
 
     //console.log(event,input.value);
@@ -2122,35 +2126,28 @@ XCODE.xlib.combo.keyup=function(event)  //editalas
     if( event.key.length==1 )
     {
         combo.style.display="block";
-        XCODE.xlib.combo.findrow(combo,input.value);
+        WEBAPP.xlib.combo.findrow(combo,input.value);
     }
 }
 
 
-XCODE.xlib.combo.keydown=function(event)  //navigalas
+WEBAPP.xlib.combo.keydown=function(event)  //navigalas
 {
     var input=event.target; //input mezo
     var combo_id=input.id+"-combo";
-    if( input.type=="button" )
-    {
-        var input_id=input.id.replace("-button","");
-        input=document.getElementById(input_id);
-        combo_id=input.id+"-combo";
-    }
     var combo=document.getElementById(combo_id);
 
-    //console.log(event,input.value);
 
-    if( event.key=='Enter' /* || event.key=='Tab' */ )
+    if( event.key=='Enter' )
     {
         var row=null;
         if( combo.style.display!='none' )
         {
-            row=XCODE.xlib.combo.findselectedrow(combo);
+            row=WEBAPP.xlib.combo.findselectedrow(combo);
         }
         if( !row )
         {
-            row=XCODE.xlib.combo.findrow(combo,input.value);
+            row=WEBAPP.xlib.combo.findrow(combo,input.value);
         }
 
         if( row )
@@ -2166,34 +2163,39 @@ XCODE.xlib.combo.keydown=function(event)  //navigalas
         }
     }
 
+    else if( event.key=="Escape" )
+    {
+        combo.style.display='none';
+    }
+
     else if( event.key=="ArrowDown" )
     {
         if( combo.style.display=='none' )
         {
             combo.style.display="block";
-            XCODE.xlib.combo.findrow(combo,input.value);
+            WEBAPP.xlib.combo.findrow(combo,input.value);
         }
         else
         {
-            var row=XCODE.xlib.combo.findselectedrow(combo);
+            var row=WEBAPP.xlib.combo.findselectedrow(combo);
 
             if( row )
             {
                 var num1=Number(row.id.substr(5,row.id.length))+1;
                 var rowid1='ROWID'+num1;
-                var row1=XCODE.xlib.combo.findrowid(combo,rowid1);
+                var row1=WEBAPP.xlib.combo.findrowid(combo,rowid1);
                 if( row1 )
                 {
                     var cls=row.getAttribute('class');
                     var cls1=row1.getAttribute('class');
                     row.setAttribute('class',cls.replace('X',''));
                     row1.setAttribute('class',cls1+"X");
-                    XCODE.bringintoview(combo,row1);
+                    WEBAPP.bringintoview(combo,row1);
                 }
             }
             else
             {
-                XCODE.xlib.combo.findrow(combo,input.value);
+                WEBAPP.xlib.combo.findrow(combo,input.value);
             }
         }
     }
@@ -2203,36 +2205,36 @@ XCODE.xlib.combo.keydown=function(event)  //navigalas
         if( combo.style.display=='none' )
         {
             combo.style.display="block";
-            XCODE.xlib.combo.findrow(combo,input.value);
+            WEBAPP.xlib.combo.findrow(combo,input.value);
         }
         else
         {
-            var row=XCODE.xlib.combo.findselectedrow(combo);
+            var row=WEBAPP.xlib.combo.findselectedrow(combo);
 
             if( row  )
             {
                 var num1=Number(row.id.substr(5,row.id.length))-1;
                 var rowid1='ROWID'+num1;
-                var row1=XCODE.xlib.combo.findrowid(combo,rowid1);
+                var row1=WEBAPP.xlib.combo.findrowid(combo,rowid1);
                 if( row1 )
                 {
                     var cls=row.getAttribute('class');
                     var cls1=row1.getAttribute('class');
                     row.setAttribute('class',cls.replace('X',''));
                     row1.setAttribute('class',cls1+"X");
-                    XCODE.bringintoview(combo,row1);
+                    WEBAPP.bringintoview(combo,row1);
                 }
             }
             else
             {
-                XCODE.xlib.combo.findrow(combo,input.value);
+                WEBAPP.xlib.combo.findrow(combo,input.value);
             }
         }
     }
 }
 
 
-XCODE.xlib.combo.findrow=function(node,value) //input.value egyezes alapjan keres
+WEBAPP.xlib.combo.findrow=function(node,value) //input.value egyezes alapjan keres
 {
     var row=null;
     var ch=node.childNodes;
@@ -2259,7 +2261,7 @@ XCODE.xlib.combo.findrow=function(node,value) //input.value egyezes alapjan kere
         }
         else
         {
-            ch1=XCODE.xlib.combo.findrow(ch1,value);
+            ch1=WEBAPP.xlib.combo.findrow(ch1,value);
             if( !row )
             {
                 row=ch1;
@@ -2270,7 +2272,7 @@ XCODE.xlib.combo.findrow=function(node,value) //input.value egyezes alapjan kere
 }
 
 
-XCODE.xlib.combo.findselectedrow=function(node) // class='oddX/evenX'-et keres
+WEBAPP.xlib.combo.findselectedrow=function(node) // class='oddX/evenX'-et keres
 {
     var ch=node.childNodes;
     for(var n=0; n<ch.length; n++)
@@ -2288,7 +2290,7 @@ XCODE.xlib.combo.findselectedrow=function(node) // class='oddX/evenX'-et keres
         }
         else
         {
-            ch1=XCODE.xlib.combo.findselectedrow(ch1);
+            ch1=WEBAPP.xlib.combo.findselectedrow(ch1);
             if( ch1 )
             {
                 return ch1;
@@ -2298,7 +2300,7 @@ XCODE.xlib.combo.findselectedrow=function(node) // class='oddX/evenX'-et keres
 }
 
 
-XCODE.xlib.combo.findrowid=function(node,rowid) //ROWID<n>-et keres
+WEBAPP.xlib.combo.findrowid=function(node,rowid) //ROWID<n>-et keres
 {
     var ch=node.childNodes;
     for(var n=0; n<ch.length; n++)
@@ -2314,7 +2316,7 @@ XCODE.xlib.combo.findrowid=function(node,rowid) //ROWID<n>-et keres
         }
         else
         {
-            ch1=XCODE.xlib.combo.findrowid(ch1,rowid);
+            ch1=WEBAPP.xlib.combo.findrowid(ch1,rowid);
             if( ch1 )
             {
                 return ch1;
@@ -2324,7 +2326,7 @@ XCODE.xlib.combo.findrowid=function(node,rowid) //ROWID<n>-et keres
 }
 
 
-XCODE.xlib.combo.getpicker=function(ctrl)
+WEBAPP.xlib.combo.getpicker=function(ctrl)
 {
     while( ctrl!=null )
     {
@@ -2339,7 +2341,7 @@ XCODE.xlib.combo.getpicker=function(ctrl)
     }
 }
 
-XCODE.xlib.combo.getinput=function(ctrl)
+WEBAPP.xlib.combo.getinput=function(ctrl)
 {
     while( ctrl!=null )
     {
@@ -2355,7 +2357,7 @@ XCODE.xlib.combo.getinput=function(ctrl)
 }
 
 
-XCODE.xlib.combo.gettable=function(combo)
+WEBAPP.xlib.combo.gettable=function(combo)
 {
     var children=combo.childNodes;
     for( var n=0; n<children.length; n++ )
@@ -2368,16 +2370,16 @@ XCODE.xlib.combo.gettable=function(combo)
 }
 
 
-XCODE.xlib.datepicker={};
+WEBAPP.xlib.datepicker={};
 
 
-XCODE.xlib.datepicker.show=function(input_id) //input-onclick
+WEBAPP.xlib.datepicker.show=function(input_id) //input-onclick
 {
     //console.log("show",input_id);
     var datepicker_id=input_id+"-datepicker";
     var input=document.getElementById(input_id);
     var datepicker=document.getElementById(datepicker_id);
-    datepicker.innerHTML=XCODE.xlib.datepicker.table(input.value);
+    datepicker.innerHTML=WEBAPP.xlib.datepicker.table(input.value);
     if( datepicker.style.display=="none" )
     {
         datepicker.style.display="block";
@@ -2390,7 +2392,7 @@ XCODE.xlib.datepicker.show=function(input_id) //input-onclick
 }
 
 
-XCODE.xlib.datepicker.clear=function(datepicker_id) //input-onblur
+WEBAPP.xlib.datepicker.clear=function(datepicker_id) //input-onblur
 {
     //console.log("clear",datepicker_id);
     var datepicker=document.getElementById(datepicker_id)
@@ -2398,27 +2400,33 @@ XCODE.xlib.datepicker.clear=function(datepicker_id) //input-onblur
 }
 
 
-XCODE.xlib.datepicker.pick=function(ctrl,n_date,otherpage) //td-onmousedown
+WEBAPP.xlib.datepicker.pick=function(event,n_date,otherpage) //td-onmousedown
 {
+    event.preventDefault(); // maradjon a fokusz az inputon
+    var ctrl=event.target;
     //console.log("pick",ctrl.textContent);
-    var input=XCODE.xlib.datepicker.getinput(ctrl);
-    var picker=XCODE.xlib.datepicker.getpicker(ctrl);
+    var input=WEBAPP.xlib.datepicker.getinput(ctrl);
+    var picker=WEBAPP.xlib.datepicker.getpicker(ctrl);
 
     if( otherpage ) 
     {
-        picker.innerHTML=XCODE.xlib.datepicker.table(input.value,n_date);
-        event.preventDefault();
+        // év vagy hónap váltás
+        picker.innerHTML=WEBAPP.xlib.datepicker.table(input.value,n_date);
     }
     else 
     {
+        // klikk a hónap napján
         var d_date=new Date(n_date);
-        input.value=XCODE.dat2str(d_date);
-        //input.dispatchEvent(new Event('change'));
-        //console.log('datepicker_pick: dispatch-change');
+        input.value=WEBAPP.dat2str(d_date);
+        input.dispatchEvent(new Event('change'));
+        var picker_id=input.getAttribute("id")+"-datepicker";
+        var picker=document.getElementById(picker_id);
+        picker.style.display="none";
     }
+
 }
 
-XCODE.xlib.datepicker.getpicker=function(ctrl)
+WEBAPP.xlib.datepicker.getpicker=function(ctrl)
 {
     while( ctrl!=null )
     {
@@ -2433,7 +2441,7 @@ XCODE.xlib.datepicker.getpicker=function(ctrl)
     }
 }
 
-XCODE.xlib.datepicker.getinput=function(ctrl)
+WEBAPP.xlib.datepicker.getinput=function(ctrl)
 {
     while( ctrl!=null )
     {
@@ -2449,7 +2457,7 @@ XCODE.xlib.datepicker.getinput=function(ctrl)
 }
 
 
-XCODE.xlib.datepicker.table=function(inputvalue,n_date) 
+WEBAPP.xlib.datepicker.table=function(inputvalue,n_date) 
 {
     //-----------------------
     var DATEPICKER_CONFIG = {
@@ -2487,7 +2495,7 @@ XCODE.xlib.datepicker.table=function(inputvalue,n_date)
                 d_result.setDate(0); //last day of previous month
             }
         }
-        return ' onmousedown="XCODE.xlib.datepicker.pick(this,'+ d_result.valueOf() + (d_diff?',1':'')  +')"';
+        return ' onmousedown="WEBAPP.xlib.datepicker.pick(event,'+ d_result.valueOf() + (d_diff?',1':'')  +')"';
     }
     //-----------------------
 
@@ -2591,14 +2599,14 @@ XCODE.xlib.datepicker.table=function(inputvalue,n_date)
 
 
 
-XCODE.xlib.popup={};
+WEBAPP.xlib.popup={};
 
 
-XCODE.xlib.popup.clicked=function(ctrl)
+WEBAPP.xlib.popup.clicked=function(ctrl)
 {
     //console.log("popup_clicked");
 
-    var popup=XCODE.xlib.popup;
+    var popup=WEBAPP.xlib.popup;
     if(!popup.active)
     {
         popup.ctrl=ctrl;
@@ -2611,25 +2619,25 @@ XCODE.xlib.popup.clicked=function(ctrl)
         var msg="<"+popup.popuptag+">"
         msg+=popup.popupid
         msg+="</"+popup.popuptag+">"
-        XCODE.echo(msg)
+        WEBAPP.echo(msg)
     }
 }
 
 
-XCODE.xlib.popup.show=function(html)
+WEBAPP.xlib.popup.show=function(html)
 {
     //console.log("popup_show");
 
-    if( XCODE.xlib.popup.active==null && 
-        XCODE.xlib.popup.posx!=null && 
-        XCODE.xlib.popup.posy!=null )
+    if( WEBAPP.xlib.popup.active==null && 
+        WEBAPP.xlib.popup.posx!=null && 
+        WEBAPP.xlib.popup.posy!=null )
     {
-        XCODE.xlib.popup.active=true;
-        XCODE.xlib.popup.x=XCODE.document.x.createElement("div");
-        var popup=XCODE.xlib.popup.x;
+        WEBAPP.xlib.popup.active=true;
+        WEBAPP.xlib.popup.x=WEBAPP.document.x.createElement("div");
+        var popup=WEBAPP.xlib.popup.x;
         popup.innerHTML=html;
     
-        var parent=XCODE.xlib.popup.ctrl;
+        var parent=WEBAPP.xlib.popup.ctrl;
         while(parent)
         {
             //console.log(parent.nodeName);
@@ -2641,50 +2649,50 @@ XCODE.xlib.popup.show=function(html)
         }
         if(!parent)
         {
-            parent=XCODE.webapp.scroll.x;
+            parent=WEBAPP.webapp.scroll.x;
         }
         else
         {
             var rect=parent.getBoundingClientRect(); 
-            XCODE.xlib.popup.posx-=rect.left;
-            XCODE.xlib.popup.posy-=rect.top;
+            WEBAPP.xlib.popup.posx-=rect.left;
+            WEBAPP.xlib.popup.posy-=rect.top;
         }
-        XCODE.xlib.popup.parent=parent;
+        WEBAPP.xlib.popup.parent=parent;
     
-        popup.style.top=XCODE.xlib.popup.posy.toString()+"px";
-        popup.style.left=XCODE.xlib.popup.posx.toString()+"px";
+        popup.style.top=WEBAPP.xlib.popup.posy.toString()+"px";
+        popup.style.left=WEBAPP.xlib.popup.posx.toString()+"px";
         popup.style.display='block';
-        popup.setAttribute("class",XCODE.xlib.popup.popupcls);
+        popup.setAttribute("class",WEBAPP.xlib.popup.popupcls);
         popup.setAttribute("onclick","event.stopPropagation()"); //mukodjon a drag
     
         parent.appendChild(popup);
-        document.body.setAttribute("onclick","XCODE.xlib.popup.clear()");
-        XCODE.xlib.dragElement(popup); 
+        document.body.setAttribute("onclick","WEBAPP.xlib.popup.clear()");
+        WEBAPP.xlib.dragElement(popup); 
     }
 }
 
 
-XCODE.xlib.popup.clear=function()
+WEBAPP.xlib.popup.clear=function()
 {   
     //console.log("popup_clear");
 
-    var popup=XCODE.xlib.popup.x;
-    XCODE.xlib.popup.parent.removeChild(popup);
-    XCODE.xlib.popup.x=null;
-    XCODE.xlib.popup.ctrl=null;
-    XCODE.xlib.popup.parent=null;
-    XCODE.xlib.popup.popupid=null;
-    XCODE.xlib.popup.popupcls=null;
-    XCODE.xlib.popup.popuptag=null;
-    XCODE.xlib.popup.posx=null;
-    XCODE.xlib.popup.posy=null;
-    XCODE.xlib.popup.active=null;
+    var popup=WEBAPP.xlib.popup.x;
+    WEBAPP.xlib.popup.parent.removeChild(popup);
+    WEBAPP.xlib.popup.x=null;
+    WEBAPP.xlib.popup.ctrl=null;
+    WEBAPP.xlib.popup.parent=null;
+    WEBAPP.xlib.popup.popupid=null;
+    WEBAPP.xlib.popup.popupcls=null;
+    WEBAPP.xlib.popup.popuptag=null;
+    WEBAPP.xlib.popup.posx=null;
+    WEBAPP.xlib.popup.posy=null;
+    WEBAPP.xlib.popup.active=null;
     document.body.removeAttribute("onclick")
 }
 
 
 
-XCODE.xlib.dragElement=function(elmnt) 
+WEBAPP.xlib.dragElement=function(elmnt) 
 {
     //console.log("dragElement");
 
@@ -2734,3 +2742,82 @@ XCODE.xlib.dragElement=function(elmnt)
     }
 }
 
+
+//------------------------------------------------------------------------------
+WEBAPP.register_focus=function(element)
+//------------------------------------------------------------------------------
+{
+    var p=element.parentElement;
+    while( p!=null )
+    {
+        if( p.getAttribute("class")=="subform" )
+        {
+            //console.log("LASTFOCUS",p.id,"<-",element.id);
+            p.setAttribute("lastfocus",element.id);
+            break;
+        }
+        p=p.parentElement;
+    }
+}
+
+//------------------------------------------------------------------------------
+WEBAPP.page_focus_handler=function( inputid )
+//------------------------------------------------------------------------------
+{
+    //console.log("page_focus_handler",inputid);
+
+    var inputs=document.querySelectorAll('input[type="text"],select'); // SELECTOR: osszes input mezore
+    for(inp of inputs)
+    {
+        // console.log("ONFOCUS",inp.id);
+        inp.setAttribute("onfocus","WEBAPP.register_focus(this)");
+    }
+
+    var callback_subform_visibility=function(mutList,observer)
+    {
+        for( mutation of mutList )
+        {
+            var subform=mutation.target; // ennek valtozhatott a lathatosaga
+            var lastid=subform.getAttribute("lastfocus"); // ezen volt utoljara a focus
+            if( lastid!=null && subform.style.display!=="none" )
+            {
+                var element=document.getElementById(lastid);
+                if( element!=null )
+                {
+                    element.focus();
+                }
+                break;
+            }
+        }
+    }
+    var observer_subform_visibility=new MutationObserver( callback_subform_visibility );
+    var subforms=document.getElementsByClassName("subform"); // osszes subform
+    for( i=0; i<subforms.length; i++ )
+    {
+        var sub=subforms[i];
+        observer_subform_visibility.observe( sub, {attributes:"true",attributeFilter:['style']})
+        var inp=sub.querySelector("input[type='text'],select"); // SELECTOR:  elso input elem sub-ban
+        if( inp!=null && inp.id!=null )
+        {
+            sub.setAttribute("lastfocus",inp.id);
+        }
+        if( inp!=null &&  i==0 )
+        {
+            inp.focus(); // elso subform elso input elemere
+        }
+    }
+    
+    if( inputid!=null ) 
+    { 
+        inp=document.getElementById(inputid);
+        if( inp!=null )
+        {
+            //console.log("FOCUS on",inp);
+            WEBAPP.register_focus(inp)
+            inp.focus(); // fokusz a megadott elemre
+        }
+    }
+}
+
+
+//------------------------------------------------------------------------------

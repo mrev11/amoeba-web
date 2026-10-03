@@ -29,6 +29,9 @@ local fd:=fd(),v
     if( infolevel()<=0 )
         x:=""
 
+    elseif( time_limit_reached() )
+        x:="<span color='#d00000'><b>time limit overrun ("+time_limit()::str::alltrim+"sec)</b></span>"
+
     elseif( x==NIL )
         if( !empty(v:=recalc_string()) )
             v::=val

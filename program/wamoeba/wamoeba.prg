@@ -105,7 +105,7 @@ local msg,data,power,xb,xp,cx
             if( data:gettext=="Shift" )
                 bestnavig:=.f.
                 if( !empty(bestline) )
-                    webapp.script("XCODE.draw_normal()")
+                    webapp.script("WEBAPP.draw_normal()")
                     while( len(beststack)>0 )
                         xb:=back()
                         xp:=apop(beststack)
@@ -135,7 +135,7 @@ local msg,data,power,xb,xp,cx
                     besttop:=topcell()
                     xb:=back()
                     drawcell(xb)
-                    webapp.script("XCODE.draw_small()")
+                    webapp.script("WEBAPP.draw_small()")
                     forw(bestline[1])
                     drawtop()
                     beststack::apush( bestline[1] )

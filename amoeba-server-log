@@ -1,3 +1,0 @@
-#!/bin/bash
-sudo journalctl  --since "5 min ago" -u amoeba.service
-

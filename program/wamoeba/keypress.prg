@@ -3,7 +3,7 @@
 function keypress()
 
 local code:=<<CODE>>
-XCODE.keydn=function(e)
+WEBAPP.keydn=function(e)
 {
     //console.log("<keydown>"+e.key+"</keydown>")
 
@@ -14,9 +14,9 @@ XCODE.keydn=function(e)
         return
 
     e.preventDefault()
-    XCODE.send("<keydown>"+e.key+"</keydown>")
+    WEBAPP.send("<keydown>"+e.key+"</keydown>")
 }
-XCODE.keyup=function(e)
+WEBAPP.keyup=function(e)
 {
     //console.log("<keyup>"+e.key+"</keyup>")
 
@@ -25,11 +25,11 @@ XCODE.keyup=function(e)
         return
 
     e.preventDefault()
-    XCODE.send("<keyup>"+e.key+"</keyup>")
+    WEBAPP.send("<keyup>"+e.key+"</keyup>")
 }
 
-document.onkeydown=XCODE.keydn;
-document.onkeyup=XCODE.keyup;
+document.onkeydown=WEBAPP.keydn;
+document.onkeyup=WEBAPP.keyup;
 <<CODE>>
 
     return code

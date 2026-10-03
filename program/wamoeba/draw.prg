@@ -43,7 +43,7 @@ local x,y,code
         return NIL
     end
 
-    code:="XCODE.draw_circle(xx,yy,fig)"
+    code:="WEBAPP.draw_circle(xx,yy,fig)"
 
     if( fig==NIL )
         fig:=figure(cx)
