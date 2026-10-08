@@ -12,6 +12,6 @@ export AMOEBA_BLINK=1
 export AMOEBA_POWER=auto.8+
 export AMOEBA_TIME_LIMIT=300
 
-webapp.exe | tee log-amoeba
+webapp.exe #| tee log-amoeba
 
 
